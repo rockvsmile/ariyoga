@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ari Film Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🎬 Ari Film Studio</div>
+  <select id="projectSelect" aria-label="Chọn dự án"></select>
+  <button id="newProjectBtn" class="btn">+ Dự án mới</button>
+  <label class="mode" title="Từng bước: AI dừng ở mỗi khung chờ bạn duyệt. Tự động: AI chạy liền các khung chưa khoá.">
+    Chế độ
+    <select id="modeSelect">
+      <option value="tung_buoc">Từng bước (duyệt từng khung)</option>
+      <option value="tu_dong">Tự động</option>
+    </select>
+  </label>
+  <span id="saveState" class="save-state">—</span>
+</header>
+
+<div id="banner" class="banner hidden"></div>
+
+<nav id="pipeline" class="pipeline" aria-label="Quy trình"></nav>
+
+<main id="main">
+  <section id="empty" class="empty">
+    <h2>Chào mừng đến Ari Film Studio</h2>
+    <p>Tạo dự án mới hoặc chọn một dự án ở góc trên. Mỗi dự án đi qua 9 khung — bạn điền, chỉnh, khoá những gì muốn giữ; các AI chuyên biệt trong Claude Code làm phần còn lại.</p>
+  </section>
+  <section id="panel" class="panel hidden"></section>
+</main>
+
+<aside class="cmdbar">
+  <span>Lệnh cho Claude Code:</span>
+  <code id="cmdText">/tiep-tuc</code>
+  <button id="copyCmd" class="btn small">Sao chép</button>
+  <span class="hint" id="cmdHint"></span>
+</aside>
+
+<script src="app.js"></script>
+</body>
+</html>

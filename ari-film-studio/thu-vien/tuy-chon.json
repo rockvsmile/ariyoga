@@ -1,0 +1,41 @@
+{
+  "_ghi_chu": "Danh sách lựa chọn cho các ô dạng menu trên bảng điều khiển. Thêm/bớt thoải mái — bảng điều khiển vẫn cho gõ giá trị tự do ngoài danh sách.",
+  "ti_le_khung": ["16:9", "9:16", "1:1", "4:5", "2.39:1"],
+  "trang_thai": ["nhap", "cho_duyet", "da_duyet", "can_sua"],
+  "trang_thai_shot": ["nhap", "cho_duyet", "da_duyet", "can_sua", "dang_tao", "xong", "loi"],
+  "co_canh": [
+    "Extreme wide (toàn cảnh rất rộng)", "Wide (toàn cảnh)", "Full shot (toàn thân)",
+    "Medium wide (trung toàn)", "Medium (trung cảnh)", "Medium close-up (cận trung)",
+    "Close-up (cận cảnh)", "Extreme close-up (đặc tả)", "Macro (siêu cận)",
+    "Over-the-shoulder (qua vai)", "POV (góc nhìn nhân vật)", "Insert (chèn chi tiết)"
+  ],
+  "goc_may": [
+    "Eye level (ngang mắt)", "Low angle (góc thấp)", "Extreme low / ground (sát đất)",
+    "High angle (góc cao)", "Bird's eye / top-down (thẳng từ trên)", "Dutch angle (nghiêng)",
+    "Shoulder level (ngang vai)", "Hip level (ngang hông)", "Aerial / drone (trên không)"
+  ],
+  "chuyen_dong": [
+    "Static / locked-off (đứng yên)", "Slow push in (đẩy vào chậm)", "Pull out (lùi ra)",
+    "Dolly in", "Dolly out", "Tracking / follow (bám theo)", "Truck left/right (trượt ngang)",
+    "Pan (lia ngang)", "Tilt up (ngước lên)", "Tilt down (cúi xuống)", "Arc / orbit (vòng cung)",
+    "360 orbit (xoay vòng)", "Crane up (cẩu lên)", "Crane down (cẩu xuống)", "Handheld (cầm tay)",
+    "Steadicam / gimbal (trôi mượt)", "Drone flyover (bay qua)", "Whip pan (lia nhanh)",
+    "Crash zoom", "Slow zoom in", "Rack focus (chuyển nét)", "Speed ramp (đổi tốc độ)"
+  ],
+  "tieu_cu": ["14mm", "16mm", "18mm", "24mm", "28mm", "35mm", "40mm anamorphic", "50mm", "65mm", "85mm", "100mm macro", "135mm", "200mm tele"],
+  "thiet_bi": [
+    "ARRI Alexa 35", "ARRI Alexa Mini LF", "RED V-Raptor", "Sony Venice 2", "Sony FX3",
+    "Canon C70", "Blackmagic Pocket 6K", "iPhone (look điện thoại)", "Film 35mm (Kodak Vision3)",
+    "Film 16mm", "Super 8", "Drone DJI Inspire", "GoPro / action cam"
+  ],
+  "phu_kien_may": ["Tripod", "Dolly track", "Slider", "Gimbal", "Steadicam", "Crane / jib", "Cable cam", "Probe lens", "Handheld rig"],
+  "anh_sang": [
+    "Natural daylight (tự nhiên)", "Golden hour (giờ vàng)", "Blue hour (giờ xanh)",
+    "Soft window light (cửa sổ mềm)", "Soft top light (trên cao mềm)", "Backlight / rim (ngược sáng / viền)",
+    "Hard light (sáng cứng)", "Side light (sáng bên)", "Chiaroscuro / low-key (tương phản tối)",
+    "High-key (sáng đều)", "Practical lights (đèn trong cảnh)", "Neon", "Candle / firelight (ánh nến)",
+    "Volumetric / god rays (tia sáng)", "Silhouette (bóng đen)"
+  ],
+  "chuyen_canh": ["cat", "mo", "den"],
+  "chuyen_canh_mo_ta": {"cat": "Cắt thẳng", "mo": "Hoà tan (crossfade)", "den": "Mờ qua màu đen"}
+}

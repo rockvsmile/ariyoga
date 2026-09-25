@@ -1,0 +1,9 @@
+# Media nặng của dự án không đưa lên git (giữ project.json)
+du-an/*/tham-chieu/**/*
+du-an/*/storyboard/*
+du-an/*/video/*
+du-an/*/xuat/*
+du-an/*/tmp-khung/
+!du-an/*/**/.gitkeep
+*.tmp
+__pycache__/
