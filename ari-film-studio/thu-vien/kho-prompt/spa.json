@@ -1,0 +1,24 @@
+{
+  "nganh": "Spa & Làm đẹp",
+  "mo_ta": "Spa, massage, chăm sóc da. Nhấn cảm giác thư giãn, sang trọng, sạch sẽ.",
+  "prompts": [
+    {"id": "spa-da-nong", "ten": "Liệu trình đá nóng", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Slow push-in, close-up of smooth black basalt stones being placed along a relaxed woman's back in {{tên spa}}, gentle steam rising, candlelight flicker, warm amber and cream palette, soft focus background with orchids, luxurious and serene. Audio: water trickling, soft singing bowl.",
+     "ghi_chu": ""},
+    {"id": "spa-cham-soc-da", "ten": "Chăm sóc da mặt", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Kling"],
+     "prompt": "Top-down close-up of a therapist's gloved hands applying {{sản phẩm/mặt nạ}} with a soft brush onto a client's face, clean white towels, dewy glowing skin texture, bright soft daylight, clinical yet gentle, beauty commercial look. Audio: calm ambient music.",
+     "ghi_chu": ""},
+    {"id": "spa-khong-gian", "ten": "Không gian spa sang trọng", "loai": "video", "ti_le": "16:9", "cong_cu": ["Veo 3.1", "Higgsfield DoP"],
+     "prompt": "Slow lateral dolly through a luxury spa lobby with stone walls, a reflecting pool, floating candles and tropical plants, soft volumetric light, {{màu chủ đạo}} tones, quiet and exclusive atmosphere, architectural digest style. Audio: gentle water, distant chimes.",
+     "ghi_chu": ""},
+    {"id": "spa-san-pham-tinh-dau", "ten": "Sản phẩm tinh dầu", "loai": "anh", "ti_le": "1:1", "cong_cu": ["ChatGPT ảnh", "Nano Banana"],
+     "prompt": "Product still life of {{tên sản phẩm}} amber glass bottle on a wet stone slab, eucalyptus sprigs and a drop of oil sliding down the glass, soft side light, shallow depth of field, premium spa brand photography, no text.",
+     "ghi_chu": "Có ảnh sản phẩm thật thì dùng chế độ sửa ảnh để giữ đúng nhãn."},
+    {"id": "spa-truoc-sau", "ten": "Trước / sau (làn da)", "loai": "video", "ti_le": "9:16", "cong_cu": ["Seedance 2.5", "Kling"],
+     "prompt": "Split-screen style wipe transition from a close-up of dull tired skin to the same face with radiant hydrated skin after treatment, identical framing and lighting, natural and believable result, soft beauty lighting. Audio: soft swoosh on the wipe.",
+     "ghi_chu": "Kết quả phải thật, không phóng đại — tránh vi phạm quảng cáo."},
+    {"id": "spa-nhac", "ten": "Nhạc thư giãn spa", "loai": "nhac", "ti_le": "", "cong_cu": ["ElevenLabs Music"],
+     "prompt": "Ambient spa music, 60 BPM, warm pads, soft harp arpeggios, distant water textures, no drums, peaceful and luxurious.",
+     "ghi_chu": ""}
+  ]
+}

@@ -10,7 +10,11 @@ Xưởng phim AI tạo sinh chạy trên máy của bạn. Một bộ phim vài 
 Mở `mo-studio.bat` (hoặc `python studio.py`) → trình duyệt mở canvas.
 
 - **📋 Mẫu workflow:** thư viện template dạng lưới, lọc theo ngành (Yoga, Spa, Cà phê, Bán hàng online, Nail/Salon, Phim ngắn, Kỹ thuật nối cảnh), rê chuột để xem **video minh hoạ**. Bấm vào mẫu → trang chi tiết: video lớn, các bước, công cụ, và **form Điền thông tin** (ảnh, prompt…) → **🎬 Tạo video từ mẫu này** tạo dự án đã điền sẵn. **✎ Sửa mẫu** để chỉnh node, tải video minh hoạ / ảnh bìa (hoặc lấy phim đã xuất của một dự án); **💾 Lưu làm mẫu** biến workflow đang làm thành mẫu mới.
-- **Node:** kéo từ bảng bên trái. Nối dây từ chấm bên phải (đầu ra) sang chấm bên trái (đầu vào) — chỉ nối được đúng kiểu (chữ, ảnh, video, âm thanh, 3D). Nhấc đầu dây ra khỏi đầu vào để cắt; bấm dây + Delete (hoặc ✂) để xoá; Ctrl+Z hoàn tác; Ctrl+D nhân bản.
+- **💡 Kho prompt:** prompt mẫu theo ngành (Yoga, Spa, Cà phê, Bán hàng online, Nail/Salon, Thời trang, Dùng chung) cho video, ảnh, nhạc, giọng, hiệu ứng. Ô `{{…}}` điền nhanh, rồi **Chèn vào node** đang chọn, **Tạo node mới**, hoặc **Chép**. Ở node bấm **⭐ Lưu vào kho** để giữ prompt hay của bạn (mục «Của tôi»). Thêm prompt: sửa `thu-vien/kho-prompt/*.json`.
+- **🎥 Máy quay** (trong bảng chi tiết node tạo ảnh/video): bấm chọn cỡ cảnh, góc máy, chuyển động, ống kính, độ sâu, ánh sáng, màu phim, tốc độ → app ghép thành câu tiếng Anh thêm vào prompt. Danh sách ở `thu-vien/may-quay.json`.
+- **🕘 Các bản trước:** mỗi lần chạy lại một node, bản cũ được giữ (tối đa 12) — bấm **↩ Dùng** để lấy lại bản cũ mà không phải trả tiền tạo lại.
+- **💬 Hỏi từng câu** (trang chi tiết mẫu): trợ lý hỏi từng thông tin một kiểu trò chuyện thay cho form — hợp với khách không rành công nghệ.
+- **Node:** kéo từ bảng bên trái. **Thả dây ra chỗ trống** hoặc **chuột phải** trên canvas → menu gợi ý node hợp kiểu, tự nối dây. **Ctrl+C / Ctrl+V** chép–dán node (dán được sang dự án khác). Nối dây từ chấm bên phải (đầu ra) sang chấm bên trái (đầu vào) — chỉ nối được đúng kiểu (chữ, ảnh, video, âm thanh, 3D). Nhấc đầu dây ra khỏi đầu vào để cắt; bấm dây + Delete (hoặc ✂) để xoá; Ctrl+Z hoàn tác; Ctrl+D nhân bản.
 - **Mỗi node bạn chọn nhà cung cấp + model:**
   - ⚡ **API** (app chạy ngay bằng API key của bạn): OpenAI (ChatGPT ảnh), Google Nano Banana / Veo 3.1 / Gemini Omni Flash, ElevenLabs (giọng, nhạc, hiệu ứng), Tripo3D, Higgsfield API.
   - 💻 **Trên máy**: trích khung hình (nối cảnh), cắt video, dựng phim, xuất.

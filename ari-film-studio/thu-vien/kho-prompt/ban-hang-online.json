@@ -1,0 +1,24 @@
+{
+  "nganh": "Bán hàng online",
+  "mo_ta": "TVC sản phẩm, video TikTok Shop, UGC. Nên có ảnh sản phẩm thật làm tham chiếu để giữ đúng nhãn.",
+  "prompts": [
+    {"id": "ban-hang-hero", "ten": "Cảnh hero sản phẩm xoay", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5", "Kling"],
+     "prompt": "Product hero shot: {{tên sản phẩm}} slowly rotating on a glossy pedestal, dramatic rim light tracing its edges, floating particles, {{màu chủ đạo}} gradient background, premium commercial look, camera slowly pushing in. Audio: subtle whoosh, deep hit at the end.",
+     "ghi_chu": "Dùng chế độ ảnh → video với ảnh sản phẩm thật."},
+    {"id": "ban-hang-ugc", "ten": "UGC review cầm tay", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Higgsfield UGC"],
+     "prompt": "Handheld selfie-style video of a friendly young Vietnamese woman in her bedroom holding up {{tên sản phẩm}} to the camera, showing it from both sides and smiling, natural window light, authentic TikTok creator vibe. She says in Vietnamese: \"{{câu thoại ngắn}}\". Audio: room tone.",
+     "ghi_chu": "Thoại tiếng Việt trên Veo có thể sai dấu — cân nhắc lồng tiếng ElevenLabs sau."},
+    {"id": "ban-hang-mo-hop", "ten": "Mở hộp (unboxing)", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Top-down close-up of hands opening a {{màu hộp}} gift box, lifting tissue paper to reveal {{tên sản phẩm}}, satisfying tactile detail, soft daylight on a white desk, ASMR feel. Audio: paper rustling, soft click.",
+     "ghi_chu": ""},
+    {"id": "ban-hang-lifestyle", "ten": "Sản phẩm trong đời sống", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Kling"],
+     "prompt": "Medium shot of a {{khách hàng mục tiêu}} using {{tên sản phẩm}} naturally in {{bối cảnh}}, warm lifestyle lighting, candid moment, shallow depth of field, aspirational yet relatable. Audio: upbeat light acoustic music.",
+     "ghi_chu": ""},
+    {"id": "ban-hang-anh-nen-trang", "ten": "Ảnh nền trắng sàn TMĐT", "loai": "anh", "ti_le": "1:1", "cong_cu": ["ChatGPT ảnh", "Nano Banana"],
+     "prompt": "E-commerce packshot of {{tên sản phẩm}} centered on a pure white background, soft even lighting with a subtle natural shadow, ultra sharp, true-to-life colors, no text, no props.",
+     "ghi_chu": "Dùng chế độ sửa ảnh từ ảnh chụp thật để không sai sản phẩm."},
+    {"id": "ban-hang-voice-cta", "ten": "Lời kêu gọi mua hàng (giọng)", "loai": "giong", "ti_le": "", "cong_cu": ["ElevenLabs v3"],
+     "prompt": "[hào hứng] {{tên sản phẩm}} đang giảm {{mức giảm}} chỉ trong hôm nay! [ngừng ngắn] Bấm vào giỏ hàng ngay kẻo hết nhé!",
+     "ghi_chu": "ElevenLabs v3 hiểu thẻ cảm xúc trong ngoặc vuông; dùng model v3 / flash_v2_5 cho tiếng Việt."}
+  ]
+}

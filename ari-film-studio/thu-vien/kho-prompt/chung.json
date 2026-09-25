@@ -1,0 +1,21 @@
+{
+  "nganh": "Dùng chung",
+  "mo_ta": "Mẫu câu dùng cho mọi ngành: chuyển cảnh, B-roll, logo, phụ đề, nhạc.",
+  "prompts": [
+    {"id": "chung-chuyen-canh-match", "ten": "Chuyển cảnh match-cut", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Start frame and end frame provided. Seamless match-cut transition: the camera whip-pans following {{vật/chuyển động}}, motion blur hides the cut, landing exactly on the end frame composition. Keep subject identity and lighting consistent.",
+     "ghi_chu": "Dùng với chế độ khung đầu + khung cuối."},
+    {"id": "chung-logo-ket", "ten": "Cảnh kết có chỗ đặt logo", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Kling"],
+     "prompt": "Slow pull-back from {{chi tiết cuối}} into a clean {{màu chủ đạo}} composition with calm empty space in the center for a logo, soft light fading gently, ending still for 2 seconds. No text.",
+     "ghi_chu": "Chèn logo ở bước dựng/hậu kỳ — không để AI vẽ logo."},
+    {"id": "chung-broll-tay", "ten": "B-roll bàn tay chạm", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Close-up of a hand gently brushing across {{chất liệu/bề mặt}}, slow motion, soft side light revealing texture, shallow depth of field, tactile and sensory.",
+     "ghi_chu": ""},
+    {"id": "chung-giong-ke-chuyen", "ten": "Giọng kể chuyện ấm", "loai": "giong", "ti_le": "", "cong_cu": ["ElevenLabs v3"],
+     "prompt": "[nhẹ nhàng] Có những ngày, {{câu mở đầu}}. [ngừng] Và rồi, {{bước ngoặt}}.",
+     "ghi_chu": "Giọng dẫn cảm xúc cho phim ngắn thương hiệu."},
+    {"id": "chung-hieu-ung-whoosh", "ten": "Hiệu ứng chuyển cảnh", "loai": "hieu-ung", "ti_le": "", "cong_cu": ["ElevenLabs SFX"],
+     "prompt": "Short cinematic whoosh transition, airy and smooth, ending with a soft low boom, 1.5 seconds.",
+     "ghi_chu": ""}
+  ]
+}

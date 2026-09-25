@@ -1,0 +1,71 @@
+{
+  "_ghi_chu": "Bộ chọn máy quay: mỗi lựa chọn là một mảnh prompt tiếng Anh. Canvas ghép các mảnh đã chọn rồi chèn vào prompt của node. Thêm lựa chọn: sửa file này.",
+  "nhom": [
+    {"id": "co_canh", "ten": "Cỡ cảnh", "mot": true, "lua_chon": [
+      {"ten": "Toàn cảnh rộng", "gia_tri": "extreme wide shot"},
+      {"ten": "Toàn cảnh", "gia_tri": "wide shot"},
+      {"ten": "Trung cảnh", "gia_tri": "medium shot"},
+      {"ten": "Cận trung", "gia_tri": "medium close-up"},
+      {"ten": "Cận cảnh", "gia_tri": "close-up"},
+      {"ten": "Đặc tả", "gia_tri": "extreme close-up, macro detail"}]},
+    {"id": "goc_may", "ten": "Góc máy", "mot": true, "lua_chon": [
+      {"ten": "Ngang tầm mắt", "gia_tri": "eye-level angle"},
+      {"ten": "Góc thấp (hùng vĩ)", "gia_tri": "low angle"},
+      {"ten": "Góc cao", "gia_tri": "high angle"},
+      {"ten": "Từ trên xuống", "gia_tri": "top-down overhead shot"},
+      {"ten": "Qua vai", "gia_tri": "over-the-shoulder shot"},
+      {"ten": "Góc nghiêng (Dutch)", "gia_tri": "dutch angle"},
+      {"ten": "Flycam", "gia_tri": "aerial drone shot"},
+      {"ten": "Góc nhìn nhân vật (POV)", "gia_tri": "first-person POV shot"}]},
+    {"id": "chuyen_dong", "ten": "Chuyển động máy", "mot": true, "lua_chon": [
+      {"ten": "Máy đứng yên", "gia_tri": "static locked-off camera"},
+      {"ten": "Đẩy vào chậm", "gia_tri": "slow dolly-in"},
+      {"ten": "Kéo ra", "gia_tri": "slow dolly-out pull-back"},
+      {"ten": "Lia ngang", "gia_tri": "smooth pan"},
+      {"ten": "Đi theo nhân vật", "gia_tri": "tracking shot following the subject"},
+      {"ten": "Xoay quanh", "gia_tri": "slow 180-degree orbit around the subject"},
+      {"ten": "Cầm tay", "gia_tri": "handheld camera with subtle natural shake"},
+      {"ten": "Gimbal lướt", "gia_tri": "smooth gimbal glide"},
+      {"ten": "Cẩu lên", "gia_tri": "crane up reveal"},
+      {"ten": "Lia nhanh (whip pan)", "gia_tri": "fast whip pan"},
+      {"ten": "Zoom kiểu Hitchcock", "gia_tri": "dolly zoom (vertigo effect)"}]},
+    {"id": "ong_kinh", "ten": "Ống kính", "mot": true, "lua_chon": [
+      {"ten": "Góc siêu rộng 14mm", "gia_tri": "14mm ultra-wide lens"},
+      {"ten": "Góc rộng 24mm", "gia_tri": "24mm wide lens"},
+      {"ten": "35mm (kể chuyện)", "gia_tri": "35mm lens"},
+      {"ten": "50mm (tự nhiên)", "gia_tri": "50mm lens"},
+      {"ten": "85mm (chân dung)", "gia_tri": "85mm portrait lens"},
+      {"ten": "Tele 135mm", "gia_tri": "135mm telephoto lens, compressed background"},
+      {"ten": "Macro", "gia_tri": "100mm macro lens"},
+      {"ten": "Anamorphic", "gia_tri": "anamorphic lens, oval bokeh, horizontal lens flares"}]},
+    {"id": "do_sau", "ten": "Độ sâu trường ảnh", "mot": true, "lua_chon": [
+      {"ten": "Xoá phông mạnh", "gia_tri": "very shallow depth of field, creamy bokeh"},
+      {"ten": "Xoá phông vừa", "gia_tri": "shallow depth of field"},
+      {"ten": "Nét sâu", "gia_tri": "deep focus, everything sharp"},
+      {"ten": "Chuyển nét", "gia_tri": "rack focus from foreground to background"}]},
+    {"id": "anh_sang", "ten": "Ánh sáng", "mot": false, "lua_chon": [
+      {"ten": "Nắng vàng chiều", "gia_tri": "warm golden-hour sunlight"},
+      {"ten": "Ánh sáng cửa sổ mềm", "gia_tri": "soft window light"},
+      {"ten": "Ngược sáng viền tóc", "gia_tri": "backlit rim light"},
+      {"ten": "Tương phản mạnh", "gia_tri": "high-contrast chiaroscuro lighting"},
+      {"ten": "Studio sạch", "gia_tri": "clean soft studio lighting"},
+      {"ten": "Tia nắng qua khói", "gia_tri": "volumetric light rays through haze"},
+      {"ten": "Neon đêm", "gia_tri": "neon night lighting, colorful reflections"},
+      {"ten": "Nến / ấm", "gia_tri": "warm candlelight glow"},
+      {"ten": "Trời âm u", "gia_tri": "overcast diffused light"}]},
+    {"id": "mau_phim", "ten": "Màu & chất phim", "mot": false, "lua_chon": [
+      {"ten": "Điện ảnh", "gia_tri": "cinematic color grading"},
+      {"ten": "Phim nhựa 35mm", "gia_tri": "35mm film grain, Kodak Portra tones"},
+      {"ten": "Be / trung tính (quiet luxury)", "gia_tri": "muted beige and stone palette, quiet luxury"},
+      {"ten": "Pastel tươi", "gia_tri": "soft pastel palette"},
+      {"ten": "Teal & cam", "gia_tri": "teal and orange grade"},
+      {"ten": "Đen trắng", "gia_tri": "black and white"},
+      {"ten": "Quảng cáo sáng bóng", "gia_tri": "glossy high-end commercial look"},
+      {"ten": "Mạng xã hội chân thật", "gia_tri": "authentic smartphone UGC look"}]},
+    {"id": "toc_do", "ten": "Tốc độ", "mot": true, "lua_chon": [
+      {"ten": "Bình thường", "gia_tri": "real-time speed"},
+      {"ten": "Chậm (slow-mo)", "gia_tri": "slow motion"},
+      {"ten": "Siêu chậm", "gia_tri": "ultra slow motion 120fps"},
+      {"ten": "Tua nhanh (timelapse)", "gia_tri": "timelapse"}]}
+  ]
+}

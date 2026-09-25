@@ -18,6 +18,7 @@
   <button class="btn" id="tplExit">Thoát sửa mẫu</button>
   <span class="grow"></span>
   <button class="btn" id="tplBtn">📋 Mẫu workflow</button>
+  <button class="btn" id="promptBtn" title="Prompt mẫu theo ngành — chèn vào node đang chọn">💡 Kho prompt</button>
   <button class="btn" id="saveTpl">💾 Lưu làm mẫu</button>
   <button class="btn" id="fitBtn" title="Xem toàn bộ">⤢</button>
   <button class="btn" id="settingsBtn">⚙ Cài đặt</button>
@@ -29,7 +30,7 @@
   <aside class="palette" id="palette">
     <input type="search" id="paletteSearch" placeholder="Tìm node…">
     <div id="paletteList"></div>
-    <p class="hint">Bấm hoặc kéo node vào canvas. Kéo từ chấm tròn bên phải (đầu ra) sang chấm bên trái (đầu vào) để nối. Kéo đầu dây ra khỏi đầu vào để cắt. Bấm vào dây rồi nhấn Delete (hoặc ✂) để xoá.</p>
+    <p class="hint">Bấm hoặc kéo node vào canvas. Kéo từ chấm tròn bên phải (đầu ra) sang chấm bên trái (đầu vào) để nối. Kéo đầu dây ra khỏi đầu vào để cắt. Bấm vào dây rồi nhấn Delete (hoặc ✂) để xoá. Thả dây ra chỗ trống hoặc bấm chuột phải để thêm node. Ctrl+C / Ctrl+V: chép–dán node.</p>
   </aside>
 
   <main class="stage" id="stage">
@@ -46,5 +47,6 @@
 
 <dialog id="dlg"></dialog>
 <script src="canvas.js"></script>
+<script src="canvas-cong-cu.js"></script>
 </body>
 </html>

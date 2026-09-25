@@ -34,7 +34,9 @@ ROOT = Path(__file__).resolve().parent.parent
 PROJECTS = ROOT / "du-an"
 sys.path.insert(0, str(Path(__file__).parent))
 
-RUNTIME = ("trang_thai", "loi", "chi_tiet", "ket_qua", "luc_chay", "cau_hinh_luc_chay")
+RUNTIME = ("trang_thai", "loi", "chi_tiet", "ket_qua", "luc_chay", "cau_hinh_luc_chay", "lich_su")
+NO_HISTORY = {"prompt", "anh", "video-vao", "am-thanh-vao", "nhan-vat", "ghi-chu", "duyet"}  # node đầu vào: không lưu lịch sử
+HISTORY_MAX = 12
 _locks: dict = {}
 _running: dict = {}
 
@@ -232,12 +234,58 @@ class Ctx:
         set_fields(self.pid, self.node["id"], chi_tiet=msg)
 
 
+def archive_result(pid: str, n: dict, new=None):
+    """Đưa kết quả cũ vào n["lich_su"] trước khi bị thay; file trong wf/<node>/ được chuyển sang wf/<node>/lich-su/
+    để lần chạy sau (ghi đè anh.png, video.mp4…) không làm mất bản cũ."""
+    old = n.get("ket_qua") or {}
+    if not old or old == new or n.get("type") in NO_HISTORY:
+        return
+    folder = PROJECTS / pid
+    node_dir = (folder / "wf" / n["id"]).resolve()
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    kept = {}
+    for port, v in old.items():
+        v = dict(v)
+        if v.get("kieu") != "text" and v.get("gia_tri"):
+            src = (folder / v["gia_tri"]).resolve()
+            if src.parent == node_dir and src.is_file():
+                dest = node_dir / "lich-su" / f"{stamp}-{src.name}"
+                i = 1
+                while dest.exists():
+                    i += 1
+                    dest = node_dir / "lich-su" / f"{stamp}-{i}-{src.name}"
+                dest.parent.mkdir(exist_ok=True)
+                shutil.move(str(src), dest)
+                v["gia_tri"] = dest.relative_to(folder.resolve()).as_posix()
+        kept[port] = v
+    entry = {"ket_qua": kept, "luc_chay": n.get("luc_chay", ""), "cau_hinh": n.get("cau_hinh_luc_chay", "")}
+    n["lich_su"] = ([entry] + (n.get("lich_su") or []))[:HISTORY_MAX]
+
+
 def set_fields(pid: str, nid: str, **fields):
     def fn(wf):
         for n in wf.get("nodes", []):
             if n["id"] == nid:
+                if "ket_qua" in fields:
+                    archive_result(pid, n, fields["ket_qua"])
                 n.update(fields)
     update(pid, fn)
+
+
+def use_history(pid: str, nid: str, idx: int) -> bool:
+    """Dùng lại một bản trong lịch sử: đổi chỗ với kết quả hiện tại (bản hiện tại vào lịch sử)."""
+    ok = []
+
+    def fn(wf):
+        for n in wf.get("nodes", []):
+            if n["id"] == nid and 0 <= idx < len(n.get("lich_su") or []):
+                entry = n["lich_su"].pop(idx)
+                archive_result(pid, n)  # bản hiện tại vào lịch sử (file chuyển sang lich-su/ để lần chạy sau không ghi đè)
+                n.update(ket_qua=entry["ket_qua"], trang_thai="xong", loi="", chi_tiet="Dùng lại bản " + (entry.get("luc_chay") or "cũ"),
+                         luc_chay=entry.get("luc_chay", ""), cau_hinh_luc_chay=entry.get("cau_hinh", ""))
+                ok.append(True)
+    update(pid, fn)
+    return bool(ok)
 
 
 def config_sig(node) -> str:
@@ -326,11 +374,13 @@ def execute_node(pid: str, nid: str, reg=None):
     if kind in ("claude", "thu_cong"):
         status = "cho_claude" if kind == "claude" else "cho_nguoi_dung"
         work_packet(ctx, status)
+        set_fields(pid, nid, ket_qua={})  # bản cũ vào lịch sử
         msg = ("Chờ Claude Code: gõ /chay-workflow trong Claude Code" if kind == "claude"
                else "Làm theo gói việc rồi kéo thả file kết quả vào node")
         set_fields(pid, nid, trang_thai=status, loi="", chi_tiet=msg, luc_chay=now())
         return
-    set_fields(pid, nid, trang_thai="dang_chay", loi="", chi_tiet="Đang chạy…", luc_chay=now())
+    set_fields(pid, nid, trang_thai="dang_chay", loi="", chi_tiet="Đang chạy…", luc_chay=now(),
+               **({} if kind == "dau_vao" else {"ket_qua": {}}))  # bản cũ vào lịch sử trước khi file bị ghi đè
     try:
         if kind == "dau_vao":
             result = run_input_node(ctx)

@@ -1,0 +1,24 @@
+{
+  "nganh": "Cà phê & Đồ uống",
+  "mo_ta": "Quán cà phê, trà sữa, đồ uống. Nhấn chuyển động chất lỏng, hơi nóng, không khí quán.",
+  "prompts": [
+    {"id": "cafe-rot-sua", "ten": "Rót sữa vào cà phê (slow-mo)", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Macro slow motion of cold milk pouring into a glass of {{tên đồ uống}} over ice, swirling marble patterns forming, condensation droplets on the glass, backlit by warm window light, dark moody background, commercial beverage cinematography. Audio: ice clinking, gentle pour.",
+     "ghi_chu": ""},
+    {"id": "cafe-pha-che", "ten": "Barista pha chế", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Kling"],
+     "prompt": "Handheld close-up of a barista's hands tamping espresso and pulling a rich crema shot, then latte art forming a heart, steam rising, {{tên quán}} counter with warm tungsten lights, cozy craft-coffee vibe. Audio: espresso machine hiss, milk steaming, café chatter.",
+     "ghi_chu": ""},
+    {"id": "cafe-khong-gian", "ten": "Không khí quán buổi sáng", "loai": "video", "ti_le": "16:9", "cong_cu": ["Veo 3.1", "Higgsfield DoP"],
+     "prompt": "Slow dolly through {{mô tả quán}} in the morning, sunlight through tall windows, customers reading and laptops open, plants and wooden tables, dust in the light beams, relaxed Saigon café atmosphere, film grain. Audio: soft lo-fi jazz, cups clinking.",
+     "ghi_chu": ""},
+    {"id": "cafe-menu-anh", "ten": "Ảnh món cho menu", "loai": "anh", "ti_le": "1:1", "cong_cu": ["ChatGPT ảnh", "Nano Banana"],
+     "prompt": "Clean overhead food photograph of {{tên đồ uống}} on a {{màu nền}} surface with coffee beans and a linen napkin, soft diffused daylight, crisp detail, menu-ready, no text.",
+     "ghi_chu": ""},
+    {"id": "cafe-mua-mua", "ten": "Cà phê ngày mưa", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Static shot through a rain-streaked café window, a steaming cup of {{tên đồ uống}} in the foreground in sharp focus, blurred street lights and motorbikes outside, cozy melancholic mood, teal and amber palette. Audio: rain on glass, soft piano.",
+     "ghi_chu": "Hợp đăng ngày mưa — đánh vào cảm xúc."},
+    {"id": "cafe-nhac", "ten": "Nhạc lo-fi quán", "loai": "nhac", "ti_le": "", "cong_cu": ["ElevenLabs Music"],
+     "prompt": "Lo-fi hip hop, 80 BPM, dusty vinyl crackle, mellow Rhodes chords, soft boom-bap drums, warm and cozy coffee-shop mood, no vocals.",
+     "ghi_chu": ""}
+  ]
+}

@@ -21,7 +21,7 @@ const fill = (el, ...kids) => el.replaceChildren(...clean(kids));
 const add = (el, ...kids) => el.append(...clean(kids));
 const svg = (tag, attrs = {}) => { const el = document.createElementNS("http://www.w3.org/2000/svg", tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); return el; };
 
-const RUNTIME = ["trang_thai", "loi", "chi_tiet", "ket_qua", "luc_chay", "cau_hinh_luc_chay"];
+const RUNTIME = ["trang_thai", "loi", "chi_tiet", "ket_qua", "luc_chay", "cau_hinh_luc_chay", "lich_su"];
 const TT = { chua_chay: "Chưa chạy", dang_chay: "Đang chạy…", xong: "Xong", loi: "Lỗi", cho_claude: "Chờ Claude Code", cho_nguoi_dung: "Chờ bạn làm tay", cho_duyet: "Chờ bạn duyệt" };
 const GROUP_COLOR = { "Đầu vào": "#8a8a8a", "AI vai trò": "#7b61d9", "Tạo sinh": "#e0613a", "Âm thanh": "#2f9e66", "Chỉnh sửa & hậu kỳ": "#3a86ff", "Dựng & xuất": "#b0643c", "Điều khiển": "#c9a227" };
 
@@ -299,6 +299,7 @@ function finishWire(e) {
   }
   if (w.lifted) return changed(); // thả ra ngoài = cắt dây
   render();
+  if (!t?.closest(".node")) openNodeMenu(e.clientX, e.clientY, w); // thả ra chỗ trống → chọn node để nối (canvas-cong-cu.js)
 }
 function createsCycle(from, to) {
   const seen = new Set([to]), stack = [to];
@@ -416,6 +417,7 @@ function renderInspector() {
       h("option", { value: "" }, "— Chọn —"), t.nha_cung_cap.map(p => h("option", { value: p, selected: n.provider === p }, S.reg.nha_cung_cap[p]?.ten || p)))) : null,
     (t.nha_cung_cap || []).length ? field("Model", modelInput(n, (t.model || {})[n.provider] || [])) : null,
     t.tham_so.filter(p => !(p.key === "noi_dung" && ["prompt", "ghi-chu"].includes(n.type))).map(p => field(p.ten, paramControl(n, p))),
+    n.type !== "ghi-chu" ? promptTools(n) : null,
     field("Ghi chú cho AI / cho mình", h("textarea", { rows: 2, oninput: e => { n.ghi_chu = e.target.value; changed(false); } }, n.ghi_chu || "")),
     h("div", { class: "row" },
       (t.nha_cung_cap || []).length ? h("button", { class: "btn primary", onclick: () => runNode(n.id, "node") }, "▶ Chạy lại node") : null,
@@ -430,7 +432,8 @@ function renderInspector() {
       n.trang_thai === "cho_claude" ? "Node này do Claude Code thực hiện. Mở Claude Code trong thư mục ari-film-studio và gõ:\n/chay-workflow " + S.pid
         : "Làm theo gói việc (bấm để xem), rồi thả file kết quả vào node.", h("br"),
       h("a", { href: fileUrl(`wf/${n.id}/goi-viec.md`), target: "_blank" }, "📄 Xem gói việc")) : null,
-    preview(n, true));
+    preview(n, true),
+    S.tpl ? null : historyPanel(n));
 }
 
 function renderMeta(box) {
@@ -607,6 +610,7 @@ async function openTemplateDetail(id) {
     return field(f.ten + (f.goi_y ? " — " + f.goi_y : ""), h("div", { class: "row" },
       h("input", { type: "file", accept, onchange: e => { files[key] = e.target.files[0]; info.textContent = files[key]?.name || ""; } }), info));
   });
+  const formBox = h("div", { class: "tside" }, form);
   fill(dlg,
     h("div", { class: "row" }, h("button", { class: "btn small", onclick: openTemplates }, "← Thư viện"), h("h3", { style: { flex: 1, margin: 0 } }, tpl.ten), h("button", { class: "btn", onclick: () => dlg.close() }, "✕")),
     h("div", { class: "tdetail" },
@@ -617,9 +621,10 @@ async function openTemplateDetail(id) {
           h("span", { class: "chipk" }, `${tpl.nodes.length} node`)),
         h("div", { class: "muted" }, "Công cụ: " + (tools.join(", ") || "—")),
         h("details", {}, h("summary", {}, `Các bước (${steps.length})`), h("ol", {}, steps.map(n => h("li", {}, (n.ten || T(n.type).ten) + (n.provider ? ` — ${S.reg.nha_cung_cap[n.provider]?.ten || n.provider}` : ""))))),
-        h("h4", {}, "Điền thông tin"),
+        h("div", { class: "row" }, h("h4", { style: { flex: 1 } }, "Điền thông tin"),
+          fields.length ? h("button", { class: "btn small", onclick: e => { e.target.remove(); fill(formBox, chatFill(tpl, fields, values, files, () => {})); } }, "💬 Hỏi từng câu") : null),
         field("Tên dự án", nameInp),
-        form,
+        formBox,
         h("label", { class: "check" }, runNow, "Chạy luôn sau khi tạo (các bước trả phí vẫn hỏi lại)"),
         h("div", { class: "row" },
           h("button", { class: "btn primary", onclick: () => createFromTemplate(tpl, id, nameInp.value, fields, values, files, runNow.checked) }, "🎬 Tạo video từ mẫu này"),

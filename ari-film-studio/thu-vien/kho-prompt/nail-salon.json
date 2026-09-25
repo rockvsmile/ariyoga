@@ -1,0 +1,24 @@
+{
+  "nganh": "Nail & Salon tóc",
+  "mo_ta": "Tiệm nail, salon tóc. Nhấn chi tiết cận, trước/sau, độ bóng.",
+  "prompts": [
+    {"id": "nail-can-mong", "ten": "Cận bộ móng mới", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Macro slow orbit around a hand with freshly done {{kiểu móng}} nails, glossy gel reflecting soft ring light, tiny sparkles catching the light, hand turning gracefully, pastel background, beauty commercial look. Audio: soft sparkle chime.",
+     "ghi_chu": ""},
+    {"id": "nail-qua-trinh", "ten": "Quá trình làm móng", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Kling"],
+     "prompt": "Close-up of a nail technician carefully painting {{màu sơn}} gel polish with a fine brush, then curing under a UV lamp glow, clean salon table, satisfying precise detail, bright soft light. Audio: gentle brush strokes, soft pop music.",
+     "ghi_chu": ""},
+    {"id": "salon-bay-toc", "ten": "Tóc bay sau khi làm", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Slow motion of a woman turning her head so her freshly styled {{kiểu tóc}} hair flips and flows, shiny healthy strands catching a backlight, salon mirror bokeh behind, confident smile, hair commercial cinematography. Audio: whoosh, upbeat music hit.",
+     "ghi_chu": ""},
+    {"id": "salon-truoc-sau", "ten": "Trước / sau đổi kiểu tóc", "loai": "video", "ti_le": "9:16", "cong_cu": ["Seedance 2.5", "Kling"],
+     "prompt": "Same woman, same framing: begins with messy dull hair looking unsure, a quick spin transition, then reveals glossy {{kiểu tóc}} hair and a big smile, consistent lighting and background. Audio: record-scratch then upbeat drop.",
+     "ghi_chu": "Dùng khung đầu + khung cuối (ảnh trước và sau thật) để giữ đúng người."},
+    {"id": "nail-anh-bang-mau", "ten": "Ảnh bảng mẫu móng", "loai": "anh", "ti_le": "4:5", "cong_cu": ["ChatGPT ảnh", "Nano Banana"],
+     "prompt": "Flat lay of six hands in a neat grid, each showing a different {{chủ đề}} nail design, coordinated pastel background, soft even light, trendy Pinterest aesthetic, no text.",
+     "ghi_chu": ""},
+    {"id": "salon-khong-gian", "ten": "Không gian tiệm", "loai": "video", "ti_le": "16:9", "cong_cu": ["Veo 3.1", "Higgsfield DoP"],
+     "prompt": "Smooth gimbal shot gliding through {{tên tiệm}}, a chic salon with pink velvet chairs, gold mirrors, neon sign glow and shelves of polish bottles, customers relaxing, bright inviting atmosphere. Audio: upbeat chill pop.",
+     "ghi_chu": ""}
+  ]
+}

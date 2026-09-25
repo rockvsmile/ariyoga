@@ -34,6 +34,8 @@ import providers  # noqa: E402
 import workflow  # noqa: E402
 
 TEMPLATES = LIBRARY / "mau-workflow"
+PROMPTS = LIBRARY / "kho-prompt"
+MY_PROMPTS = PROMPTS / "cua-toi.json"  # prompt người dùng tự lưu
 MAX_UPLOAD = 1024 * 1024 * 1024  # 1 GB
 
 
@@ -155,6 +157,15 @@ class Handler(SimpleHTTPRequestHandler):
                             "so_node": len(d.get("nodes", [])), "video_minh_hoa": d.get("video_minh_hoa", ""),
                             "anh_bia": d.get("anh_bia", ""), "cap_nhat": d.get("cap_nhat", "")})
             return self.send_json(out)
+        if path == "/api/kho-prompt":
+            out = []
+            for p in sorted(PROMPTS.glob("*.json"), key=lambda p: (p.name == "chung.json", p.name != "cua-toi.json", p.name)):
+                try:
+                    d = read_json(p)
+                except json.JSONDecodeError:
+                    continue
+                out.append({"id": p.stem, "nganh": d.get("nganh", p.stem), "mo_ta": d.get("mo_ta", ""), "prompts": d.get("prompts", [])})
+            return self.send_json(out)
         m = re.fullmatch(r"/api/mau-workflow/([^/]+)", path)
         if m:
             f = TEMPLATES / (safe_name(m.group(1)) + ".json")
@@ -262,6 +273,22 @@ class Handler(SimpleHTTPRequestHandler):
             meta = {**data.get("meta", {}), "mau": tpl.stem, "ten_mau": data.get("ten", "")}
             workflow.save_from_ui(pid, {"phien_ban": 1, "nodes": data["nodes"], "edges": data["edges"], "meta": meta})
             return self.send_json({"ok": True})
+        if path == "/api/kho-prompt":  # lưu / xoá prompt của tôi
+            body = self.read_body()
+            data = read_json(MY_PROMPTS) if MY_PROMPTS.is_file() else {"nganh": "Của tôi", "mo_ta": "Prompt bạn tự lưu từ canvas.", "prompts": []}
+            if body.get("xoa"):
+                data["prompts"] = [x for x in data["prompts"] if x.get("id") != body["xoa"]]
+            else:
+                text = (body.get("prompt") or "").strip()
+                if not text:
+                    return self.send_json({"loi": "Prompt trống"}, HTTPStatus.BAD_REQUEST)
+                item = {"id": "toi-" + datetime.now().strftime("%Y%m%d%H%M%S"), "ten": (body.get("ten") or text[:40]).strip(),
+                        "loai": body.get("loai") or "video", "ti_le": body.get("ti_le") or "", "cong_cu": body.get("cong_cu") or [],
+                        "prompt": text, "ghi_chu": body.get("ghi_chu") or ""}
+                data["prompts"].insert(0, item)
+            PROMPTS.mkdir(exist_ok=True)
+            write_json(MY_PROMPTS, data)
+            return self.send_json({"ok": True})
         if path == "/api/mau-workflow":
             body = self.read_body()
             ten = (body.get("ten") or "").strip()
@@ -366,6 +393,9 @@ class Handler(SimpleHTTPRequestHandler):
                             n.update(trang_thai="xong", loi="", chi_tiet="", luc_chay=workflow.now())
                 workflow.update(pid, fn)
             return self.send_json({"duong_dan": rel})
+        if act == "dung_lich_su":
+            ok = workflow.use_history(pid, nid, int(body.get("idx", -1)))
+            return self.send_json({"ok": ok}, HTTPStatus.OK if ok else HTTPStatus.BAD_REQUEST)
         fields = {"duyet": {"trang_thai": "xong", "chi_tiet": "Đã duyệt"},
                   "dat_lai": {"trang_thai": "chua_chay", "ket_qua": {}, "loi": "", "chi_tiet": ""},
                   "tu_choi": {"trang_thai": "loi", "loi": body.get("ly_do") or "Bị từ chối khi duyệt"}}.get(act)

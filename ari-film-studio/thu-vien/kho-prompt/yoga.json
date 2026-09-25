@@ -1,0 +1,24 @@
+{
+  "nganh": "Yoga & Wellness",
+  "mo_ta": "Inside Flow, yoga thư giãn, lớp học, không gian studio. Prompt tiếng Anh cho model; ô {{…}} là chỗ điền.",
+  "prompts": [
+    {"id": "yoga-inside-flow-nhac", "ten": "Inside Flow theo nhịp nhạc", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5", "Kling"],
+     "prompt": "Medium-wide shot, slow orbit around a {{mô tả học viên}} performing a fluid Inside Flow yoga sequence, each movement landing exactly on the beat, transitions from warrior into a flowing low lunge with arms sweeping like waves, inside {{bối cảnh studio}}. Warm golden-hour light through sheer curtains, soft haze, shallow depth of field, 35mm cinematic look, graceful and emotional. Audio: soft emotive pop music, breath sounds, bare feet on wood.",
+     "ghi_chu": "Inside Flow = chuyển động khớp nhạc, nên nêu rõ 'landing on the beat'."},
+    {"id": "yoga-slow-motion-chi-tiet", "ten": "Cận chi tiết chậm (tay, chân, hơi thở)", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Extreme close-up, slow motion 60fps, of a yoga practitioner's hands gliding through the air and fingertips touching the mat, then a close-up of steady breathing, fine dust particles floating in a sunbeam, {{màu chủ đạo}} palette, macro lens, calm meditative mood. Audio: gentle ambient pad, soft inhale and exhale.",
+     "ghi_chu": "Dùng làm B-roll chèn giữa các đoạn tập."},
+    {"id": "yoga-mo-dau-hook", "ten": "Hook 3 giây mở đầu Reels", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5", "Kling"],
+     "prompt": "Fast dolly-in from a wide shot to a close-up of a {{mô tả học viên}} snapping into a dramatic backbend exactly on a bass drop, fabric of the outfit rippling, hair flowing, high-contrast rim light, energetic yet elegant, vertical social-media framing with the subject centered. Audio: strong beat drop, whoosh.",
+     "ghi_chu": "3 giây đầu quyết định người xem có lướt qua không."},
+    {"id": "yoga-khong-gian-studio", "ten": "Giới thiệu không gian studio", "loai": "video", "ti_le": "16:9", "cong_cu": ["Veo 3.1", "Higgsfield DoP"],
+     "prompt": "Smooth gimbal walkthrough entering {{tên studio}}, a bright minimalist yoga studio with light wood floors, rolled mats, green plants and linen curtains moving in a breeze, morning sunlight casting long window shadows, a few students quietly preparing, calm welcoming atmosphere, architectural cinematography. Audio: birdsong outside, soft acoustic guitar.",
+     "ghi_chu": "Hợp cho video giới thiệu phòng tập / Google Maps."},
+    {"id": "yoga-anh-poster-lop", "ten": "Ảnh poster lớp học", "loai": "anh", "ti_le": "4:5", "cong_cu": ["ChatGPT ảnh", "Nano Banana"],
+     "prompt": "Editorial poster photograph of a {{mô tả học viên}} in a graceful Inside Flow pose, clean {{màu chủ đạo}} background with generous negative space at the top for a headline, soft studio lighting, magazine-quality, no text in the image.",
+     "ghi_chu": "Chừa khoảng trống để tự chèn chữ bằng Canva — AI viết chữ tiếng Việt hay sai."},
+    {"id": "yoga-nhac-inside-flow", "ten": "Nhạc nền Inside Flow", "loai": "nhac", "ti_le": "", "cong_cu": ["ElevenLabs Music"],
+     "prompt": "Emotional modern pop ballad, 92 BPM, female vocal humming without lyrics, soft piano intro building to a warm cinematic chorus with light drums at 0:20, uplifting and heartfelt, suitable for a flowing yoga choreography.",
+     "ghi_chu": "Inside Flow cần nhạc có cao trào rõ để chuyển động bắt nhịp."}
+  ]
+}

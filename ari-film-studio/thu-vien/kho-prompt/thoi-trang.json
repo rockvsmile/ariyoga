@@ -1,0 +1,18 @@
+{
+  "nganh": "Thời trang & Trang sức",
+  "mo_ta": "TVC thời trang, trang sức, túi xách — xem thêm skill tvc-thoi-trang và phong cách Quiet Luxury.",
+  "prompts": [
+    {"id": "tt-quiet-luxury", "ten": "Quiet luxury — kiến trúc", "loai": "video", "ti_le": "9:16", "cong_cu": ["Seedance 2.5", "Veo 3.1"],
+     "prompt": "Slow tracking shot of a model in {{trang phục}} walking through a minimalist concrete and travertine architecture, hard afternoon sun casting geometric shadows, muted beige and stone palette, restrained elegant movement, 50mm, quiet luxury campaign aesthetic. Audio: footsteps echo, minimal piano.",
+     "ghi_chu": "Theo hồ sơ phong-cach/01-quiet-luxury-kien-truc."},
+    {"id": "tt-trang-suc-macro", "ten": "Macro trang sức lấp lánh", "loai": "video", "ti_le": "9:16", "cong_cu": ["Veo 3.1", "Seedance 2.5"],
+     "prompt": "Extreme macro of {{tên trang sức}} on skin, light beams sweeping across facets creating sharp sparkles and caustics, slow rack focus, black velvet background, high-end jewelry commercial. Audio: crystalline shimmer.",
+     "ghi_chu": ""},
+    {"id": "tt-tui-xach", "ten": "Túi xách chuyển động", "loai": "video", "ti_le": "9:16", "cong_cu": ["Seedance 2.5", "Kling"],
+     "prompt": "Low angle, a hand swings {{tên túi}} into frame in slow motion, leather texture and gold hardware catching light, clean seamless {{màu nền}} backdrop, editorial campaign look. Audio: leather creak, soft bass hit.",
+     "ghi_chu": ""},
+    {"id": "tt-lookbook-anh", "ten": "Ảnh lookbook", "loai": "anh", "ti_le": "4:5", "cong_cu": ["ChatGPT ảnh", "Nano Banana"],
+     "prompt": "Full-body editorial lookbook photo of a model wearing {{trang phục}}, standing against a {{màu nền}} seamless backdrop, soft key light and subtle shadow, natural pose, fashion magazine quality, no text.",
+     "ghi_chu": "Có ảnh sản phẩm thật → dùng làm tham chiếu (Element / Ingredients)."}
+  ]
+}
