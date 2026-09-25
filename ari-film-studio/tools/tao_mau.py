@@ -202,23 +202,6 @@ def mau_khoi_dau():
     t.e("dp", "video", "dy", "any").e("dy", "any", "xu", "video")
     m.append(t)
 
-    # 8. Vật phẩm game 3D (Ari Legacy)
-    t = Mau("game-vat-pham-legacy-3d", "Game — Vật phẩm Legacy: ảnh thật → 3D + video giới thiệu",
-            "Ảnh vật phẩm thật → ChatGPT vẽ lại theo phong cách game → Tripo3D dựng mô hình .glb cho website → Veo làm video giới thiệu vật phẩm cực hiếm + nhạc.",
-            "Game / Ari Legacy", ky_nang=[], ti_le="16:9", thoi_luong=15)
-    t.n("th", "anh", 0, 0, "Ảnh vật phẩm thật")
-    t.n("st", "anh", 0, 1, "Ảnh phong cách game (mẫu nhân vật chung)")
-    t.n("ga", "tao-anh", 1, 0.5, "Vẽ lại theo phong cách game", "openai", "gpt-image-2.5-sunburst",
-        prompt="Redesign the item from the first image as a legendary game item in the art style of the second image, centered, clean background, gold and pearl rim light, 'LEGACY' rarity glow", ti_le="1:1")
-    t.n("m3", "tao-3d", 2, 0, "Mô hình 3D (.glb)", "tripo", "v3.1-20260211")
-    t.n("vd", "tao-video", 2, 1.2, "Video giới thiệu", "google-veo", "veo-3.1-generate-preview", che_do="khung-dau",
-        prompt="Dark stage, the legendary item slowly rotates in a beam of golden light, particles, epic reveal, cinematic", thoi_luong=8, ti_le="16:9")
-    t.n("nh", "nhac", 2, 2.4, "Nhạc hùng tráng", "elevenlabs", mo_ta="Epic short orchestral reveal sting, magical", thoi_luong=10)
-    t.n("dp", "dung-phim", 3, 1.5, "Dựng", "ffmpeg", chuyen_canh="den", do_phan_giai="1920x1080")
-    t.n("xu", "xuat", 4, 1.5, "Xuất", "ffmpeg", ten_file="legacy-item")
-    t.e("th", "image", "ga", "tham_chieu").e("st", "image", "ga", "tham_chieu").e("ga", "image", "m3", "image").e("ga", "image", "vd", "khung_dau")
-    t.e("vd", "video", "dp", "video").e("nh", "audio", "dp", "nhac").e("dp", "video", "xu", "video")
-    m.append(t)
     return m
 
 

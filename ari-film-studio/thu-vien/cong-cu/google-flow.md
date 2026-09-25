@@ -20,7 +20,7 @@
 ```
 # Flow — clip K02 (shot S03, S04) · 8s · 16:9 · Veo 3.1 Quality
 Chế độ: Ingredients to Video
-Nguyên liệu (tải lên theo thứ tự): 1) tham-chieu/nhan-vat/lan.jpg  2) tham-chieu/trang-phuc/bo-legacy.jpg  3) tham-chieu/boi-canh/phong-tap.jpg
+Nguyên liệu (tải lên theo thứ tự): 1) tham-chieu/nhan-vat/lan.jpg  2) tham-chieu/trang-phuc/bo-tap.jpg  3) tham-chieu/boi-canh/phong-tap.jpg
 Camera: slow dolly in, eye level
 Prompt (dán nguyên văn):
 <prompt tiếng Anh>

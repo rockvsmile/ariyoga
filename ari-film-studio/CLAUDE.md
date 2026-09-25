@@ -54,7 +54,7 @@ Luôn đọc lại project.json ngay trước khi sửa — người dùng có t
 8. **Sổ bài học.** Mọi agent đọc mục "Quy tắc đã rút ra" trong `thu-vien/bai-hoc.md`.
 
 ## Cách giao việc cho agent
-Gọi agent kèm: id dự án, khung cần làm, và những gì người dùng vừa nói trong chat. Ví dụ: *"Dự án `tvc-ari-legacy`, khung 5. Người dùng muốn cảnh 3 có mưa. Đọc project.json, viết kịch bản, ghi vào khung 5."* Agent tự đọc thư viện và file dự án.
+Gọi agent kèm: id dự án, khung cần làm, và những gì người dùng vừa nói trong chat. Ví dụ: *"Dự án `yoga-reels-thang-10`, khung 5. Người dùng muốn cảnh 3 có mưa. Đọc project.json, viết kịch bản, ghi vào khung 5."* Agent tự đọc thư viện và file dự án.
 
 Trường nào thiếu trong project.json cũ → coi như giá trị mặc định trong `tools/tao_du_an.py`.
 
