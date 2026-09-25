@@ -113,3 +113,20 @@ body.tpl-mode #runAll, body.tpl-mode #projectSelect, body.tpl-mode #newProject {
 body.tpl-mode .stage { box-shadow: inset 0 0 0 3px var(--accent); }
 .check { display: flex; gap: 7px; align-items: flex-start; font-size: 12px; }
 .check input { margin-top: 3px; flex: 0 0 auto; }
+
+dialog.wide { max-width: 1100px; width: 94vw; max-height: 92vh; }
+.tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.tcard { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; cursor: pointer; background: var(--surface-2); display: flex; flex-direction: column; }
+.tcard:hover { border-color: var(--accent); }
+.tmedia { background: #111; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.tmedia video, .tmedia img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tmedia.r9x16 { aspect-ratio: 9 / 13; } .tmedia.r16x9, .tmedia.r21x9 { aspect-ratio: 16 / 9; } .tmedia.r1x1, .tmedia.r4x5 { aspect-ratio: 1; }
+.tmedia.big { max-height: 70vh; } .tmedia.big video { object-fit: contain; }
+.tmedia.small { aspect-ratio: 16 / 9; border-radius: 8px; }
+.noimg { color: #bbb; font-size: 34px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.noimg small { font-size: 11px; }
+.tinfo { padding: 8px 10px; display: flex; flex-direction: column; gap: 5px; font-size: 12px; }
+.tdetail { display: grid; grid-template-columns: minmax(220px, 360px) 1fr; gap: 16px; margin-top: 10px; }
+.tside { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.tside h4 { margin: 8px 0 0; }
+@media (max-width: 760px) { .tdetail { grid-template-columns: 1fr; } }

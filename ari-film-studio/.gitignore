@@ -13,3 +13,5 @@ cai-dat/
 # Kết quả tạo sinh của workflow (ảnh, video, âm thanh) — nặng, giữ trên máy
 du-an/*/wf/
 *.lock
+# Video/ảnh minh hoạ của mẫu (nặng) — giữ trên máy; khi đưa app lên mạng sẽ lưu trên kho file của server
+thu-vien/mau-workflow/media/

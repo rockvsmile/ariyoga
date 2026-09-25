@@ -9,7 +9,7 @@ Xưởng phim AI tạo sinh chạy trên máy của bạn. Một bộ phim vài 
 ## Canvas Workflow (cách làm chính)
 Mở `mo-studio.bat` (hoặc `python studio.py`) → trình duyệt mở canvas.
 
-- **📋 Mẫu workflow:** thư viện template theo ngành (Yoga, Spa, Cà phê, Bán hàng online, Nail/Salon, Phim ngắn, Game 3D, Kỹ thuật nối cảnh). Chọn **Dùng cho dự án** để bắt đầu, **✎ Sửa mẫu** để chỉnh mẫu, **💾 Lưu làm mẫu** để biến workflow đang làm thành mẫu mới.
+- **📋 Mẫu workflow:** thư viện template dạng lưới, lọc theo ngành (Yoga, Spa, Cà phê, Bán hàng online, Nail/Salon, Phim ngắn, Kỹ thuật nối cảnh), rê chuột để xem **video minh hoạ**. Bấm vào mẫu → trang chi tiết: video lớn, các bước, công cụ, và **form Điền thông tin** (ảnh, prompt…) → **🎬 Tạo video từ mẫu này** tạo dự án đã điền sẵn. **✎ Sửa mẫu** để chỉnh node, tải video minh hoạ / ảnh bìa (hoặc lấy phim đã xuất của một dự án); **💾 Lưu làm mẫu** biến workflow đang làm thành mẫu mới.
 - **Node:** kéo từ bảng bên trái. Nối dây từ chấm bên phải (đầu ra) sang chấm bên trái (đầu vào) — chỉ nối được đúng kiểu (chữ, ảnh, video, âm thanh, 3D). Nhấc đầu dây ra khỏi đầu vào để cắt; bấm dây + Delete (hoặc ✂) để xoá; Ctrl+Z hoàn tác; Ctrl+D nhân bản.
 - **Mỗi node bạn chọn nhà cung cấp + model:**
   - ⚡ **API** (app chạy ngay bằng API key của bạn): OpenAI (ChatGPT ảnh), Google Nano Banana / Veo 3.1 / Gemini Omni Flash, ElevenLabs (giọng, nhạc, hiệu ứng), Tripo3D, Higgsfield API.

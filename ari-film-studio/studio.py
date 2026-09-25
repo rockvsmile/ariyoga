@@ -13,6 +13,7 @@ import json
 import mimetypes
 import os
 import re
+import shutil
 import sys
 import webbrowser
 from datetime import datetime
@@ -151,7 +152,8 @@ class Handler(SimpleHTTPRequestHandler):
             for p in sorted(TEMPLATES.glob("*.json")):
                 d = read_json(p)
                 out.append({"id": p.stem, "ten": d.get("ten", p.stem), "mo_ta": d.get("mo_ta", ""), "meta": d.get("meta", {}),
-                            "so_node": len(d.get("nodes", []))})
+                            "so_node": len(d.get("nodes", [])), "video_minh_hoa": d.get("video_minh_hoa", ""),
+                            "anh_bia": d.get("anh_bia", ""), "cap_nhat": d.get("cap_nhat", "")})
             return self.send_json(out)
         m = re.fullmatch(r"/api/mau-workflow/([^/]+)", path)
         if m:
@@ -180,6 +182,19 @@ class Handler(SimpleHTTPRequestHandler):
             if base not in target.parents:
                 return self.send_error(HTTPStatus.FORBIDDEN)
             return self.send_file(target)
+        m = re.fullmatch(r"/mau-media/([^/]+)/([^/]+)", path)
+        if m:
+            base = (TEMPLATES / "media").resolve()
+            target = (base / safe_name(m.group(1)) / m.group(2)).resolve()
+            if base not in target.parents:
+                return self.send_error(HTTPStatus.FORBIDDEN)
+            return self.send_file(target)
+        m = re.fullmatch(r"/api/xuat/([^/]+)", path)
+        if m:  # phim đã xuất của dự án — để chọn làm video minh hoạ cho mẫu
+            folder = PROJECTS / safe_name(m.group(1))
+            vids = sorted([p for p in (folder / "xuat").glob("*.mp4")] + [p for p in (folder / "wf").glob("*/*.mp4")],
+                          key=lambda p: p.stat().st_mtime, reverse=True)
+            return self.send_json([p.relative_to(folder).as_posix() for p in vids[:30]])
         if path.startswith("/thu-vien/"):
             target = (ROOT / path.lstrip("/")).resolve()
             if LIBRARY.resolve() not in target.parents:
@@ -210,6 +225,33 @@ class Handler(SimpleHTTPRequestHandler):
         m = re.fullmatch(r"/api/wf-node/([^/]+)/([^/]+)", path)
         if m:
             return self.node_action(safe_name(m.group(1)), m.group(2), self.read_body())
+        m = re.fullmatch(r"/api/mau-workflow/([^/]+)/media", path)
+        if m:
+            tid = safe_name(m.group(1))
+            f = TEMPLATES / (tid + ".json")
+            if not f.is_file():
+                return self.send_json({"loi": "Không có mẫu"}, HTTPStatus.NOT_FOUND)
+            body = self.read_body()
+            loai = "video_minh_hoa" if body.get("loai") == "video" else "anh_bia"
+            dest_dir = TEMPLATES / "media" / tid
+            dest_dir.mkdir(parents=True, exist_ok=True)
+            if body.get("tu_du_an"):  # lấy phim đã xuất của một dự án
+                src = (PROJECTS / safe_name(body["tu_du_an"]) / body.get("file", "")).resolve()
+                if (PROJECTS.resolve() not in src.parents) or not src.is_file():
+                    return self.send_json({"loi": "Không thấy file"}, HTTPStatus.BAD_REQUEST)
+                dest = dest_dir / ("minh-hoa" + src.suffix.lower() if loai == "video_minh_hoa" else "bia" + src.suffix.lower())
+                shutil.copy2(src, dest)
+            else:
+                name = Path(body.get("ten_file") or "file.bin")
+                raw = base64.b64decode((body.get("du_lieu") or "").split(",", 1)[-1])
+                if len(raw) > MAX_UPLOAD:
+                    return self.send_json({"loi": "File quá lớn"}, HTTPStatus.BAD_REQUEST)
+                dest = dest_dir / (("minh-hoa" if loai == "video_minh_hoa" else "bia") + name.suffix.lower())
+                dest.write_bytes(raw)
+            d = read_json(f)
+            d[loai] = f"{tid}/{dest.name}"
+            write_json(f, d)
+            return self.send_json({"ok": True, loai: d[loai]})
         m = re.fullmatch(r"/api/workflow/([^/]+)/tu-mau", path)
         if m:
             pid = safe_name(m.group(1))
@@ -348,7 +390,9 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_json({"loi": "Không có mẫu"}, HTTPStatus.NOT_FOUND)
             body = self.read_body()
             nodes = [{k: v for k, v in n.items() if k not in workflow.RUNTIME} for n in body.get("nodes", [])]
-            write_json(f, {"ten": body.get("ten") or read_json(f).get("ten"), "mo_ta": body.get("mo_ta", ""),
+            old = read_json(f)
+            write_json(f, {"ten": body.get("ten") or old.get("ten"), "mo_ta": body.get("mo_ta", ""),
+                           "video_minh_hoa": old.get("video_minh_hoa", ""), "anh_bia": old.get("anh_bia", ""),
                            "meta": body.get("meta", {}), "nodes": nodes, "edges": body.get("edges", [])})
             return self.send_json({"ok": True})
         if path == "/api/cai-dat/khoa":

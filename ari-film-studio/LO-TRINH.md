@@ -7,6 +7,7 @@
 - Trợ lý chính trong Claude Code: `/thiet-ke-mau`, `/chay-workflow`, `/hoc-hoi`.
 
 ## Tiếp theo (đề xuất)
+0. **Phiên bản cho nhiều người dùng (web app):** đưa studio lên máy chủ — tài khoản người dùng, gói credit / thanh toán, API key đặt ở server (người dùng không cần key riêng), hàng đợi chạy node, kho lưu video/ảnh (S3/R2), thư viện mẫu dùng chung có video minh hoạ, phân quyền mẫu miễn phí / trả phí. Nền tảng gợi ý: giữ bộ máy workflow Python hiện tại làm backend (FastAPI), canvas hiện tại làm frontend; mẫu và node giữ nguyên định dạng JSON nên chuyển lên dễ.
 1. **Chạy thử thật với API key** của bạn cho từng nhà cung cấp, sửa theo phản hồi thực tế (mục cần kiểm chứng: định dạng thời lượng Omni, tên trường từng model Higgsfield API).
 2. **Cửa sổ quản lý skill**: bật/tắt, thêm, xem skill/phong cách/thể loại/agent; gắn nhanh vào template.
 3. **Nhóm node theo cảnh** (khung "Cảnh 1, Cảnh 2" kéo cả cụm), nhân bản cả cụm cảnh.

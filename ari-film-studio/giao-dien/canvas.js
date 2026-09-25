@@ -456,7 +456,34 @@ function renderMeta(box) {
       skills.map(s => h("label", { class: "check" }, h("input", { type: "checkbox", checked: cur.has(s.value), onchange: e => {
         const k = new Set(m.ky_nang || []); e.target.checked ? k.add(s.value) : k.delete(s.value); set("ky_nang", [...k]); } }), s.label))),
     h("p", { class: "muted" }, "Các node AI (Đạo Diễn, Biên Kịch, Viết prompt, Kiểm Định…) đọc thông tin này để làm đúng ngành và phong cách. Bấm vào một node để xem chi tiết node."),
+    S.tpl ? templateMediaEditor() : null,
     S.tpl ? h("div", { class: "row" }, h("button", { class: "btn primary", onclick: async () => { await save(); exitTemplate(); } }, "💾 Lưu & thoát"), h("button", { class: "btn", onclick: exitTemplate }, "Thoát")) : null);
+}
+function templateMediaEditor() {
+  const box = h("div", { class: "field" }, h("span", {}, "Video minh hoạ & ảnh bìa (hiện trong thư viện mẫu)"));
+  const cur = h("div", { class: "tmedia small" });
+  const refresh = async () => { const t = (await api(`/api/mau-workflow/${encodeURIComponent(S.tpl.id)}`)).body || {}; fill(cur, mediaBox(t, true)); };
+  const up = loai => h("input", { type: "file", accept: loai === "video" ? "video/*" : "image/*", onchange: async e => {
+    const f = e.target.files[0]; if (!f) return; setSave("Đang tải lên…");
+    const data = await new Promise(res => { const rd = new FileReader(); rd.onload = () => res(rd.result); rd.readAsDataURL(f); });
+    const r = await post(`/api/mau-workflow/${encodeURIComponent(S.tpl.id)}/media`, { loai, ten_file: f.name, du_lieu: data });
+    setSave(r.ok ? "Đã cập nhật minh hoạ" : "Lỗi tải lên"); refresh(); } });
+  const projSel = h("select", {}, h("option", { value: "" }, "— Lấy phim đã xuất từ dự án —"));
+  const fileSel = h("select", { class: "hidden" });
+  api("/api/projects").then(r => (r.body || []).forEach(p => projSel.append(h("option", { value: p.id }, p.ten))));
+  projSel.addEventListener("change", async () => {
+    const vids = (await api(`/api/xuat/${encodeURIComponent(projSel.value)}`)).body || [];
+    fill(fileSel, h("option", { value: "" }, vids.length ? "— Chọn video —" : "(dự án chưa có video)"), vids.map(v => h("option", { value: v }, v)));
+    fileSel.classList.remove("hidden");
+  });
+  fileSel.addEventListener("change", async () => {
+    if (!fileSel.value) return;
+    const r = await post(`/api/mau-workflow/${encodeURIComponent(S.tpl.id)}/media`, { loai: "video", tu_du_an: projSel.value, file: fileSel.value });
+    setSave(r.ok ? "Đã đặt video minh hoạ" : (r.body?.loi || "Lỗi")); refresh();
+  });
+  add(box, cur, h("div", { class: "row" }, h("span", { class: "muted" }, "Video:"), up("video")), h("div", { class: "row" }, h("span", { class: "muted" }, "Ảnh bìa:"), up("anh")), projSel, fileSel);
+  refresh();
+  return box;
 }
 
 // ---------------------------------------------------------------- chạy
@@ -523,30 +550,107 @@ $("#newProject").addEventListener("click", async () => {
   await loadProjects(r.body.id); openTemplates();
 });
 const dlg = $("#dlg");
+const mediaUrl = rel => rel ? "/mau-media/" + rel.split("/").map(encodeURIComponent).join("/") : "";
+const INPUT_TYPES = ["prompt", "anh", "video-vao", "am-thanh-vao", "nhan-vat"];
+// Ô nhập của mẫu = các node đầu vào (xếp trên → dưới, trái → phải); người dùng điền form thay vì sửa node
+function templateFields(tpl) {
+  const out = [];
+  for (const n of [...tpl.nodes].filter(n => INPUT_TYPES.includes(n.type)).sort((a, b) => a.y - b.y || a.x - b.x)) {
+    const label = n.ten || T(n.type).ten;
+    if (n.type === "prompt") out.push({ node: n.id, param: "noi_dung", loai: "textarea", ten: label, mac_dinh: n.params?.noi_dung || "", goi_y: n.ghi_chu });
+    else if (n.type === "nhan-vat") {
+      out.push({ node: n.id, param: "file", loai: "image", ten: label + " — ảnh", goi_y: n.ghi_chu });
+      out.push({ node: n.id, param: "mo_ta", loai: "textarea", ten: label + " — mô tả", mac_dinh: n.params?.mo_ta || "" });
+    } else out.push({ node: n.id, param: "file", loai: { anh: "image", "video-vao": "video", "am-thanh-vao": "audio" }[n.type], ten: label, goi_y: n.ghi_chu });
+  }
+  return out;
+}
+function mediaBox(m, big) {
+  if (m.video_minh_hoa) return h("video", { src: mediaUrl(m.video_minh_hoa) + (big ? "" : "#t=0.5"), poster: m.anh_bia ? mediaUrl(m.anh_bia) : null, muted: !big, controls: big, loop: !big, playsinline: true, preload: "metadata",
+    onmouseenter: e => !big && e.target.play().catch(() => {}), onmouseleave: e => { if (!big) { e.target.pause(); e.target.currentTime = 0.5; } } });
+  if (m.anh_bia) return h("img", { src: mediaUrl(m.anh_bia), alt: "" });
+  return h("div", { class: "noimg" }, "🎬", h("small", {}, "Chưa có video minh hoạ"));
+}
 async function openTemplates() {
   const list = (await api("/api/mau-workflow")).body || [];
   const nganh = [...new Set(list.map(m => m.meta?.nganh || "Khác"))].sort();
   let filter = "", q = "";
-  const listBox = h("div");
-  const draw = () => fill(listBox, list.filter(m => (!filter || (m.meta?.nganh || "Khác") === filter) && (!q || (m.ten + " " + m.mo_ta).toLowerCase().includes(q)))
-    .map(m => h("div", { class: "tpl" },
-      h("div", { class: "row" }, h("b", { style: { flex: 1 } }, m.ten), h("span", { class: "chipk" }, m.meta?.nganh || "Khác"), h("span", { class: "chipk" }, `${m.so_node} node`)),
-      h("div", { class: "muted" }, m.mo_ta),
-      h("div", { class: "row", style: { marginTop: "6px" } },
-        h("button", { class: "btn small primary", onclick: async () => {
-          if (!S.pid || S.tpl) return alert("Chọn một dự án (không ở chế độ sửa mẫu) để dùng mẫu");
-          if (S.wf.nodes.length && !confirm("Thay workflow hiện tại của dự án bằng mẫu «" + m.ten + "»?")) return;
-          await post(`/api/workflow/${encodeURIComponent(S.pid)}/tu-mau`, { mau: m.id }); dlg.close(); await openProject(S.pid); fit(); drawEdges();
-        } }, "Dùng cho dự án"),
-        h("button", { class: "btn small", onclick: () => { dlg.close(); editTemplate(m.id); } }, "✎ Sửa mẫu")))));
-  fill(dlg, h("h3", {}, "📋 Thư viện mẫu workflow"),
-    h("input", { type: "search", placeholder: "Tìm mẫu…", oninput: e => { q = e.target.value.toLowerCase(); draw(); } }),
-    h("div", { class: "row", style: { margin: "8px 0" } }, h("button", { class: "btn small", onclick: () => { filter = ""; draw(); } }, "Tất cả"),
+  const grid = h("div", { class: "tgrid" });
+  const draw = () => fill(grid, list.filter(m => (!filter || (m.meta?.nganh || "Khác") === filter) && (!q || (m.ten + " " + m.mo_ta + " " + (m.meta?.nganh || "")).toLowerCase().includes(q)))
+    .map(m => h("div", { class: "tcard", onclick: () => openTemplateDetail(m.id) },
+      h("div", { class: "tmedia r" + String(m.meta?.ti_le || "9:16").replace(":", "x") }, mediaBox(m, false)),
+      h("div", { class: "tinfo" }, h("b", {}, m.ten),
+        h("div", { class: "row" }, h("span", { class: "chipk" }, m.meta?.nganh || "Khác"), m.meta?.ti_le ? h("span", { class: "chipk" }, m.meta.ti_le) : null,
+          m.meta?.thoi_luong ? h("span", { class: "chipk" }, m.meta.thoi_luong + "s") : null)))));
+  dlg.classList.add("wide");
+  fill(dlg, h("div", { class: "row" }, h("h3", { style: { flex: 1, margin: 0 } }, "📋 Thư viện mẫu"), h("button", { class: "btn", onclick: () => dlg.close() }, "✕")),
+    h("input", { type: "search", placeholder: "Tìm mẫu theo tên, ngành…", style: { margin: "10px 0 6px" }, oninput: e => { q = e.target.value.toLowerCase(); draw(); } }),
+    h("div", { class: "row", style: { marginBottom: "10px" } }, h("button", { class: "btn small", onclick: () => { filter = ""; draw(); } }, "Tất cả"),
       nganh.map(g => h("button", { class: "btn small", onclick: () => { filter = g; draw(); } }, g))),
-    listBox,
-    h("p", { class: "muted" }, "Mẫu mới: dựng workflow trong một dự án rồi bấm 💾 Lưu làm mẫu — hoặc nhờ trợ lý trong Claude Code: /thiet-ke-mau."),
-    h("div", { class: "row" }, h("button", { class: "btn", onclick: () => dlg.close() }, "Đóng")));
-  draw(); dlg.showModal();
+    grid,
+    h("p", { class: "muted" }, "Mẫu mới: dựng workflow trong một dự án rồi bấm 💾 Lưu làm mẫu — hoặc nhờ trợ lý trong Claude Code: /thiet-ke-mau. Video minh hoạ: ✎ Sửa mẫu → tải video lên."));
+  draw(); if (!dlg.open) dlg.showModal();
+}
+async function openTemplateDetail(id) {
+  const tpl = (await api(`/api/mau-workflow/${encodeURIComponent(id)}`)).body;
+  if (!tpl) return;
+  const meta = tpl.meta || {}, fields = templateFields(tpl), values = {}, files = {};
+  const tools = [...new Set(tpl.nodes.map(n => S.reg.nha_cung_cap[n.provider]?.ten).filter(Boolean))];
+  const steps = tpl.nodes.filter(n => !INPUT_TYPES.includes(n.type) && n.type !== "ghi-chu").sort((a, b) => a.x - b.x || a.y - b.y);
+  const nameInp = h("input", { type: "text", value: `${tpl.ten} — ${new Date().toLocaleDateString("vi-VN")}` });
+  const runNow = h("input", { type: "checkbox" });
+  const form = fields.map((f, i) => {
+    const key = f.node + "." + f.param;
+    if (f.loai === "textarea") { values[key] = f.mac_dinh || ""; return field(f.ten, h("textarea", { rows: 3, placeholder: f.goi_y || "", oninput: e => { values[key] = e.target.value; } }, f.mac_dinh || "")); }
+    const accept = { image: "image/*", video: "video/*", audio: "audio/*" }[f.loai];
+    const info = h("span", { class: "muted" }, "Chưa chọn file");
+    return field(f.ten + (f.goi_y ? " — " + f.goi_y : ""), h("div", { class: "row" },
+      h("input", { type: "file", accept, onchange: e => { files[key] = e.target.files[0]; info.textContent = files[key]?.name || ""; } }), info));
+  });
+  fill(dlg,
+    h("div", { class: "row" }, h("button", { class: "btn small", onclick: openTemplates }, "← Thư viện"), h("h3", { style: { flex: 1, margin: 0 } }, tpl.ten), h("button", { class: "btn", onclick: () => dlg.close() }, "✕")),
+    h("div", { class: "tdetail" },
+      h("div", { class: "tmedia big r" + String(meta.ti_le || "9:16").replace(":", "x") }, mediaBox(tpl, true)),
+      h("div", { class: "tside" },
+        h("p", {}, tpl.mo_ta),
+        h("div", { class: "row" }, h("span", { class: "chipk" }, meta.nganh || "Khác"), meta.ti_le ? h("span", { class: "chipk" }, meta.ti_le) : null, meta.thoi_luong ? h("span", { class: "chipk" }, meta.thoi_luong + "s") : null,
+          h("span", { class: "chipk" }, `${tpl.nodes.length} node`)),
+        h("div", { class: "muted" }, "Công cụ: " + (tools.join(", ") || "—")),
+        h("details", {}, h("summary", {}, `Các bước (${steps.length})`), h("ol", {}, steps.map(n => h("li", {}, (n.ten || T(n.type).ten) + (n.provider ? ` — ${S.reg.nha_cung_cap[n.provider]?.ten || n.provider}` : ""))))),
+        h("h4", {}, "Điền thông tin"),
+        field("Tên dự án", nameInp),
+        form,
+        h("label", { class: "check" }, runNow, "Chạy luôn sau khi tạo (các bước trả phí vẫn hỏi lại)"),
+        h("div", { class: "row" },
+          h("button", { class: "btn primary", onclick: () => createFromTemplate(tpl, id, nameInp.value, fields, values, files, runNow.checked) }, "🎬 Tạo video từ mẫu này"),
+          S.pid && !S.tpl ? h("button", { class: "btn", onclick: () => createFromTemplate(tpl, id, null, fields, values, files, runNow.checked) }, "Áp vào dự án đang mở") : null,
+          h("button", { class: "btn", onclick: () => { dlg.close(); dlg.classList.remove("wide"); editTemplate(id); } }, "✎ Sửa mẫu")))));
+}
+async function createFromTemplate(tpl, id, projectName, fields, values, files, runNow) {
+  if (projectName !== null) {
+    if (!projectName.trim()) return alert("Nhập tên dự án");
+    const r = await post("/api/projects", { ten: projectName.trim() });
+    if (!r.ok) return alert(r.body?.loi || "Không tạo được dự án");
+    await loadProjects(r.body.id);
+  } else if (S.wf.nodes.length && !confirm("Thay workflow hiện tại của dự án bằng mẫu «" + tpl.ten + "»?")) return;
+  setSave("Đang áp mẫu…");
+  await post(`/api/workflow/${encodeURIComponent(S.pid)}/tu-mau`, { mau: id });
+  await openProject(S.pid);
+  for (const f of fields) {
+    const key = f.node + "." + f.param, n = node(f.node);
+    if (!n) continue;
+    if (f.loai === "textarea") { n.params = { ...(n.params || {}), [f.param]: values[key] ?? "" }; continue; }
+    const file = files[key];
+    if (!file) continue;
+    setSave("Đang tải " + file.name + "…");
+    const data = await new Promise(res => { const rd = new FileReader(); rd.onload = () => res(rd.result); rd.readAsDataURL(file); });
+    const r = await post(`/api/wf-node/${encodeURIComponent(S.pid)}/${encodeURIComponent(n.id)}`, { action: "tai_file", ten_file: file.name, du_lieu: data });
+    if (r.ok) n.params = { ...(n.params || {}), file: r.body.duong_dan };
+  }
+  await save();
+  dlg.close(); dlg.classList.remove("wide");
+  fit(); render();
+  if (runNow) runAll();
 }
 $("#tplBtn").addEventListener("click", openTemplates);
 $("#tplExit").addEventListener("click", exitTemplate);
