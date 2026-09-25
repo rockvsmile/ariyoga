@@ -1,0 +1,1188 @@
+{
+ "_ghi_chu": "Danh mục node của canvas Workflow. Mỗi node: cổng vào/ra có kiểu (text, image, video, audio, model3d), tham số, và danh sách nhà cung cấp. chay: api = app gọi thẳng bằng API key của bạn; claude = chuyển cho Claude Code (MCP hoặc agent AI); local = chạy trên máy (ffmpeg); thu_cong = bạn làm trên app khác rồi thả file vào node. Model để trống = dùng mặc định của nhà cung cấp; ô model luôn gõ tự do được khi hãng ra model mới. Thêm node/nhà cung cấp: sửa file này (Thủ Thư làm được qua /hoc-hoi).",
+ "kieu_cong": {
+  "text": {
+   "ten": "Chữ",
+   "mau": "#8a8a8a"
+  },
+  "image": {
+   "ten": "Ảnh",
+   "mau": "#3a86ff"
+  },
+  "video": {
+   "ten": "Video",
+   "mau": "#e0613a"
+  },
+  "audio": {
+   "ten": "Âm thanh",
+   "mau": "#2f9e66"
+  },
+  "model3d": {
+   "ten": "3D",
+   "mau": "#9b5de5"
+  },
+  "any": {
+   "ten": "Bất kỳ",
+   "mau": "#c9a227"
+  }
+ },
+ "nhom": [
+  "Đầu vào",
+  "AI vai trò",
+  "Tạo sinh",
+  "Âm thanh",
+  "Chỉnh sửa & hậu kỳ",
+  "Dựng & xuất",
+  "Điều khiển"
+ ],
+ "nha_cung_cap": {
+  "openai": {
+   "ten": "OpenAI (ChatGPT ảnh)",
+   "chay": "api",
+   "khoa": "openai"
+  },
+  "google-image": {
+   "ten": "Google — Nano Banana",
+   "chay": "api",
+   "khoa": "google"
+  },
+  "google-veo": {
+   "ten": "Google — Veo 3.1",
+   "chay": "api",
+   "khoa": "google"
+  },
+  "google-omni": {
+   "ten": "Google — Gemini Omni Flash",
+   "chay": "api",
+   "khoa": "google"
+  },
+  "higgsfield": {
+   "ten": "Higgsfield (API key)",
+   "chay": "api",
+   "khoa": "higgsfield"
+  },
+  "higgsfield-mcp": {
+   "ten": "Higgsfield (qua Claude/MCP)",
+   "chay": "claude"
+  },
+  "elevenlabs": {
+   "ten": "ElevenLabs",
+   "chay": "api",
+   "khoa": "elevenlabs"
+  },
+  "tripo": {
+   "ten": "Tripo3D",
+   "chay": "api",
+   "khoa": "tripo"
+  },
+  "claude": {
+   "ten": "Claude (agent AI)",
+   "chay": "claude"
+  },
+  "ffmpeg": {
+   "ten": "Trên máy (ffmpeg)",
+   "chay": "local"
+  },
+  "flow": {
+   "ten": "Google Flow (làm tay)",
+   "chay": "thu_cong"
+  },
+  "chatgpt-app": {
+   "ten": "ChatGPT app (làm tay)",
+   "chay": "thu_cong"
+  },
+  "dreamina": {
+   "ten": "Dreamina (làm tay)",
+   "chay": "thu_cong"
+  },
+  "app-may": {
+   "ten": "App trên máy tôi (làm tay)",
+   "chay": "thu_cong"
+  },
+  "tu-lam": {
+   "ten": "Tôi tự làm / tải file",
+   "chay": "thu_cong"
+  }
+ },
+ "node": [
+  {
+   "id": "prompt",
+   "ten": "Prompt / Chữ",
+   "nhom": "Đầu vào",
+   "vao": [],
+   "ra": [
+    {
+     "id": "text",
+     "ten": "Chữ",
+     "kieu": "text"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "noi_dung",
+     "ten": "Nội dung",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": []
+  },
+  {
+   "id": "anh",
+   "ten": "Ảnh",
+   "nhom": "Đầu vào",
+   "vao": [],
+   "ra": [
+    {
+     "id": "image",
+     "ten": "Ảnh",
+     "kieu": "image"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "file",
+     "ten": "File ảnh",
+     "loai": "file",
+     "kieu": "image"
+    }
+   ],
+   "nha_cung_cap": []
+  },
+  {
+   "id": "video-vao",
+   "ten": "Video có sẵn",
+   "nhom": "Đầu vào",
+   "vao": [],
+   "ra": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "file",
+     "ten": "File video",
+     "loai": "file",
+     "kieu": "video"
+    }
+   ],
+   "nha_cung_cap": []
+  },
+  {
+   "id": "am-thanh-vao",
+   "ten": "Âm thanh có sẵn",
+   "nhom": "Đầu vào",
+   "vao": [],
+   "ra": [
+    {
+     "id": "audio",
+     "ten": "Âm thanh",
+     "kieu": "audio"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "file",
+     "ten": "File âm thanh",
+     "loai": "file",
+     "kieu": "audio"
+    }
+   ],
+   "nha_cung_cap": []
+  },
+  {
+   "id": "nhan-vat",
+   "ten": "Nhân vật / Sản phẩm",
+   "nhom": "Đầu vào",
+   "vao": [],
+   "ra": [
+    {
+     "id": "image",
+     "ten": "Ảnh",
+     "kieu": "image"
+    },
+    {
+     "id": "text",
+     "ten": "Mô tả",
+     "kieu": "text"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "file",
+     "ten": "Ảnh chuẩn",
+     "loai": "file",
+     "kieu": "image"
+    },
+    {
+     "key": "mo_ta",
+     "ten": "Mô tả chi tiết",
+     "loai": "textarea"
+    },
+    {
+     "key": "element_id",
+     "ten": "Higgsfield element_id",
+     "loai": "text"
+    },
+    {
+     "key": "soul_id",
+     "ten": "Higgsfield soul_id",
+     "loai": "text"
+    }
+   ],
+   "nha_cung_cap": []
+  },
+  {
+   "id": "dao-dien",
+   "ten": "Đạo Diễn",
+   "nhom": "AI vai trò",
+   "vao": [
+    {
+     "id": "text",
+     "ten": "Ý tưởng",
+     "kieu": "text",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "text",
+     "ten": "Tầm nhìn",
+     "kieu": "text"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "yeu_cau",
+     "ten": "Yêu cầu thêm",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": [
+    "claude"
+   ],
+   "agent": "dao-dien"
+  },
+  {
+   "id": "bien-kich",
+   "ten": "Biên Kịch",
+   "nhom": "AI vai trò",
+   "vao": [
+    {
+     "id": "text",
+     "ten": "Ý tưởng / tầm nhìn",
+     "kieu": "text",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "text",
+     "ten": "Kịch bản",
+     "kieu": "text"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "thoi_luong",
+     "ten": "Thời lượng (giây)",
+     "loai": "number"
+    },
+    {
+     "key": "yeu_cau",
+     "ten": "Yêu cầu thêm",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": [
+    "claude"
+   ],
+   "agent": "bien-kich"
+  },
+  {
+   "id": "quay-phim",
+   "ten": "Quay Phim",
+   "nhom": "AI vai trò",
+   "vao": [
+    {
+     "id": "text",
+     "ten": "Kịch bản",
+     "kieu": "text",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "text",
+     "ten": "Shot list",
+     "kieu": "text"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "yeu_cau",
+     "ten": "Yêu cầu thêm",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": [
+    "claude"
+   ],
+   "agent": "quay-phim"
+  },
+  {
+   "id": "viet-prompt",
+   "ten": "Viết prompt (AI)",
+   "nhom": "AI vai trò",
+   "vao": [
+    {
+     "id": "text",
+     "ten": "Mô tả / shot",
+     "kieu": "text",
+     "nhieu": true
+    },
+    {
+     "id": "image",
+     "ten": "Ảnh tham khảo",
+     "kieu": "image",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "text",
+     "ten": "Prompt",
+     "kieu": "text"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "cho_cong_cu",
+     "ten": "Viết cho công cụ",
+     "loai": "text",
+     "goi_y": [
+      "Veo 3.1",
+      "Gemini Omni Flash",
+      "Seedance 2.5",
+      "Kling 3.0",
+      "GPT Image",
+      "Nano Banana"
+     ]
+    },
+    {
+     "key": "phong_cach",
+     "ten": "Phong cách (thư viện)",
+     "loai": "text"
+    },
+    {
+     "key": "yeu_cau",
+     "ten": "Yêu cầu thêm",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": [
+    "claude"
+   ],
+   "agent": "ky-thuat-vien-ai"
+  },
+  {
+   "id": "kiem-dinh",
+   "ten": "Kiểm Định",
+   "nhom": "AI vai trò",
+   "vao": [
+    {
+     "id": "any",
+     "ten": "Cần kiểm tra",
+     "kieu": "any",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "text",
+     "ten": "Báo cáo",
+     "kieu": "text"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "tieu_chi",
+     "ten": "Tiêu chí",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": [
+    "claude"
+   ],
+   "agent": "kiem-dinh"
+  },
+  {
+   "id": "tao-anh",
+   "ten": "Tạo ảnh",
+   "nhom": "Tạo sinh",
+   "vao": [
+    {
+     "id": "prompt",
+     "ten": "Prompt",
+     "kieu": "text",
+     "nhieu": true
+    },
+    {
+     "id": "tham_chieu",
+     "ten": "Ảnh tham chiếu",
+     "kieu": "image",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "image",
+     "ten": "Ảnh",
+     "kieu": "image"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "prompt",
+     "ten": "Prompt",
+     "loai": "textarea"
+    },
+    {
+     "key": "ti_le",
+     "ten": "Tỉ lệ",
+     "loai": "select",
+     "lua_chon": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4",
+      "21:9"
+     ]
+    },
+    {
+     "key": "chat_luong",
+     "ten": "Chất lượng",
+     "loai": "select",
+     "lua_chon": [
+      "",
+      "low",
+      "medium",
+      "high"
+     ]
+    }
+   ],
+   "nha_cung_cap": [
+    "openai",
+    "google-image",
+    "higgsfield",
+    "higgsfield-mcp",
+    "chatgpt-app",
+    "flow",
+    "tu-lam"
+   ],
+   "model": {
+    "openai": [
+     "gpt-image-2.5-flare",
+     "gpt-image-2.5-sunburst",
+     "gpt-image-2"
+    ],
+    "google-image": [
+     "gemini-3.1-flash-image",
+     "gemini-3-pro-image-preview",
+     "gemini-3.1-flash-lite-image",
+     "gemini-2.5-flash-image"
+    ],
+    "higgsfield": [
+     "higgsfield-ai/soul/v2/standard",
+     "bytedance/seedream/v4/text-to-image"
+    ],
+    "higgsfield-mcp": [
+     "gpt_image_2_5",
+     "nano_banana_pro",
+     "nano_banana_2",
+     "cinematic_studio_2_5",
+     "soul_2",
+     "seedream_v4_5"
+    ]
+   }
+  },
+  {
+   "id": "tao-video",
+   "ten": "Tạo video",
+   "nhom": "Tạo sinh",
+   "vao": [
+    {
+     "id": "prompt",
+     "ten": "Prompt",
+     "kieu": "text",
+     "nhieu": true
+    },
+    {
+     "id": "khung_dau",
+     "ten": "Khung đầu",
+     "kieu": "image"
+    },
+    {
+     "id": "khung_cuoi",
+     "ten": "Khung cuối",
+     "kieu": "image"
+    },
+    {
+     "id": "tham_chieu",
+     "ten": "Ảnh tham chiếu",
+     "kieu": "image",
+     "nhieu": true
+    },
+    {
+     "id": "video_goc",
+     "ten": "Video nối dài",
+     "kieu": "video"
+    }
+   ],
+   "ra": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "prompt",
+     "ten": "Prompt",
+     "loai": "textarea"
+    },
+    {
+     "key": "che_do",
+     "ten": "Chế độ",
+     "loai": "select",
+     "lua_chon": [
+      "tu-dong",
+      "chu",
+      "khung-dau",
+      "dau-cuoi",
+      "tham-chieu",
+      "noi-dai"
+     ],
+     "mo_ta": {
+      "tu-dong": "Tự nhận theo cổng đã nối",
+      "chu": "Chỉ prompt",
+      "khung-dau": "Từ ảnh khung đầu",
+      "dau-cuoi": "Khung đầu + khung cuối",
+      "tham-chieu": "Từ ảnh tham chiếu",
+      "noi-dai": "Nối dài video"
+     }
+    },
+    {
+     "key": "thoi_luong",
+     "ten": "Giây",
+     "loai": "number"
+    },
+    {
+     "key": "ti_le",
+     "ten": "Tỉ lệ",
+     "loai": "select",
+     "lua_chon": [
+      "16:9",
+      "9:16",
+      "1:1"
+     ]
+    },
+    {
+     "key": "do_phan_giai",
+     "ten": "Độ phân giải",
+     "loai": "select",
+     "lua_chon": [
+      "",
+      "720p",
+      "1080p",
+      "4k"
+     ]
+    },
+    {
+     "key": "am_thanh",
+     "ten": "Có âm thanh",
+     "loai": "bool"
+    },
+    {
+     "key": "prompt_am",
+     "ten": "Tránh (negative)",
+     "loai": "text"
+    }
+   ],
+   "nha_cung_cap": [
+    "google-veo",
+    "google-omni",
+    "higgsfield",
+    "higgsfield-mcp",
+    "flow",
+    "dreamina",
+    "tu-lam"
+   ],
+   "model": {
+    "google-veo": [
+     "veo-3.1-generate-preview",
+     "veo-3.1-fast-generate-preview",
+     "veo-3.1-lite-generate-preview"
+    ],
+    "google-omni": [
+     "gemini-omni-1.1-flash"
+    ],
+    "higgsfield": [
+     "bytedance/seedance-2.5",
+     "bytedance/seedance-2.0",
+     "kling-video/v3.0/std",
+     "higgsfield/cinema-studio/4.0"
+    ],
+    "higgsfield-mcp": [
+     "cinematic_studio_3_0",
+     "cinematic_studio_video_v2",
+     "seedance_2_5",
+     "seedance_2_0",
+     "kling3_0",
+     "kling3_0_turbo",
+     "gemini_omni_flash_1_1",
+     "veo3_1",
+     "veo3_1_lite",
+     "wan3_0",
+     "minimax_h3",
+     "flux_3_video"
+    ],
+    "flow": [
+     "Veo 3.1 Quality",
+     "Veo 3.1 Fast",
+     "Gemini Omni Flash"
+    ],
+    "dreamina": [
+     "Seedance 2.5"
+    ]
+   }
+  },
+  {
+   "id": "tao-3d",
+   "ten": "Tạo 3D",
+   "nhom": "Tạo sinh",
+   "vao": [
+    {
+     "id": "prompt",
+     "ten": "Prompt",
+     "kieu": "text",
+     "nhieu": true
+    },
+    {
+     "id": "image",
+     "ten": "Ảnh",
+     "kieu": "image"
+    }
+   ],
+   "ra": [
+    {
+     "id": "model3d",
+     "ten": "Mô hình 3D (.glb)",
+     "kieu": "model3d"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "prompt",
+     "ten": "Prompt",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": [
+    "tripo",
+    "higgsfield-mcp",
+    "tu-lam"
+   ],
+   "model": {
+    "tripo": [
+     "v3.1-20260211",
+     "P2-20260801",
+     "v3.0-20250812"
+    ]
+   }
+  },
+  {
+   "id": "giong-doc",
+   "ten": "Giọng đọc / Lồng tiếng",
+   "nhom": "Âm thanh",
+   "vao": [
+    {
+     "id": "text",
+     "ten": "Lời",
+     "kieu": "text",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "audio",
+     "ten": "Âm thanh",
+     "kieu": "audio"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "loi",
+     "ten": "Lời đọc",
+     "loai": "textarea"
+    },
+    {
+     "key": "giong",
+     "ten": "Giọng (voice_id / tên)",
+     "loai": "text"
+    },
+    {
+     "key": "app",
+     "ten": "Tên app (nếu làm trên máy)",
+     "loai": "text"
+    },
+    {
+     "key": "ngon_ngu",
+     "ten": "Ngôn ngữ (mã ISO, mặc định vi)",
+     "loai": "text"
+    }
+   ],
+   "nha_cung_cap": [
+    "elevenlabs",
+    "higgsfield-mcp",
+    "app-may",
+    "tu-lam"
+   ],
+   "model": {
+    "elevenlabs": [
+     "eleven_v3",
+     "eleven_flash_v2_5",
+     "eleven_turbo_v2_5"
+    ],
+    "higgsfield-mcp": [
+     "seed_audio"
+    ]
+   }
+  },
+  {
+   "id": "nhac",
+   "ten": "Nhạc nền",
+   "nhom": "Âm thanh",
+   "vao": [
+    {
+     "id": "text",
+     "ten": "Mô tả",
+     "kieu": "text",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "audio",
+     "ten": "Nhạc",
+     "kieu": "audio"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "mo_ta",
+     "ten": "Mô tả nhạc",
+     "loai": "textarea"
+    },
+    {
+     "key": "thoi_luong",
+     "ten": "Giây",
+     "loai": "number"
+    }
+   ],
+   "nha_cung_cap": [
+    "elevenlabs",
+    "app-may",
+    "tu-lam"
+   ],
+   "model": {
+    "elevenlabs": [
+     "music_v2_5",
+     "music_v2",
+     "music_v1"
+    ]
+   }
+  },
+  {
+   "id": "hieu-ung-am",
+   "ten": "Hiệu ứng âm thanh",
+   "nhom": "Âm thanh",
+   "vao": [
+    {
+     "id": "text",
+     "ten": "Mô tả",
+     "kieu": "text",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "audio",
+     "ten": "SFX",
+     "kieu": "audio"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "mo_ta",
+     "ten": "Mô tả tiếng động",
+     "loai": "textarea"
+    },
+    {
+     "key": "thoi_luong",
+     "ten": "Giây",
+     "loai": "number"
+    }
+   ],
+   "nha_cung_cap": [
+    "elevenlabs",
+    "tu-lam"
+   ],
+   "model": {
+    "elevenlabs": [
+     "eleven_text_to_sound_v2"
+    ]
+   }
+  },
+  {
+   "id": "sua-video",
+   "ten": "Sửa video",
+   "nhom": "Chỉnh sửa & hậu kỳ",
+   "vao": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    },
+    {
+     "id": "prompt",
+     "ten": "Yêu cầu sửa",
+     "kieu": "text",
+     "nhieu": true
+    },
+    {
+     "id": "tham_chieu",
+     "ten": "Ảnh tham chiếu",
+     "kieu": "image",
+     "nhieu": true
+    }
+   ],
+   "ra": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "yeu_cau",
+     "ten": "Yêu cầu sửa",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": [
+    "google-omni",
+    "higgsfield-mcp",
+    "flow",
+    "tu-lam"
+   ],
+   "model": {
+    "google-omni": [
+     "gemini-omni-1.1-flash"
+    ],
+    "higgsfield-mcp": [
+     "gemini_omni_flash_1_1",
+     "kling_video_edit",
+     "seedance_2_5",
+     "hf_mult_replace_object",
+     "hf_mult_motion_control"
+    ]
+   }
+  },
+  {
+   "id": "trich-khung",
+   "ten": "Trích khung hình",
+   "nhom": "Chỉnh sửa & hậu kỳ",
+   "vao": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "ra": [
+    {
+     "id": "image",
+     "ten": "Ảnh",
+     "kieu": "image"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "vi_tri",
+     "ten": "Vị trí",
+     "loai": "select",
+     "lua_chon": [
+      "cuoi",
+      "dau",
+      "giay"
+     ]
+    },
+    {
+     "key": "giay",
+     "ten": "Giây (nếu chọn giây)",
+     "loai": "number"
+    }
+   ],
+   "nha_cung_cap": [
+    "ffmpeg"
+   ]
+  },
+  {
+   "id": "cat-video",
+   "ten": "Cắt video",
+   "nhom": "Chỉnh sửa & hậu kỳ",
+   "vao": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "ra": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "tu",
+     "ten": "Từ giây",
+     "loai": "number"
+    },
+    {
+     "key": "den",
+     "ten": "Đến giây",
+     "loai": "number"
+    }
+   ],
+   "nha_cung_cap": [
+    "ffmpeg"
+   ]
+  },
+  {
+   "id": "khop-moi",
+   "ten": "Khớp môi",
+   "nhom": "Chỉnh sửa & hậu kỳ",
+   "vao": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    },
+    {
+     "id": "audio",
+     "ten": "Giọng",
+     "kieu": "audio"
+    }
+   ],
+   "ra": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "tham_so": [],
+   "nha_cung_cap": [
+    "higgsfield-mcp",
+    "tu-lam"
+   ],
+   "model": {
+    "higgsfield-mcp": [
+     "sync_so"
+    ]
+   }
+  },
+  {
+   "id": "hau-ky",
+   "ten": "Hậu kỳ (upscale, tỉ lệ, phụ đề, chữ)",
+   "nhom": "Chỉnh sửa & hậu kỳ",
+   "vao": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "ra": [
+    {
+     "id": "video",
+     "ten": "Video",
+     "kieu": "video"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "viec",
+     "ten": "Việc",
+     "loai": "select",
+     "lua_chon": [
+      "upscale",
+      "doi-ti-le",
+      "phu-de",
+      "chu-tieu-de",
+      "chong-nhay"
+     ]
+    },
+    {
+     "key": "gia_tri",
+     "ten": "Giá trị (4k, 9:16, nội dung chữ…)",
+     "loai": "text"
+    }
+   ],
+   "nha_cung_cap": [
+    "higgsfield-mcp",
+    "tu-lam"
+   ]
+  },
+  {
+   "id": "dung-phim",
+   "ten": "Dựng phim (timeline)",
+   "nhom": "Dựng & xuất",
+   "vao": [
+    {
+     "id": "video",
+     "ten": "Các đoạn (trái → phải)",
+     "kieu": "video",
+     "nhieu": true
+    },
+    {
+     "id": "audio",
+     "ten": "Giọng / SFX",
+     "kieu": "audio",
+     "nhieu": true
+    },
+    {
+     "id": "nhac",
+     "ten": "Nhạc nền",
+     "kieu": "audio"
+    }
+   ],
+   "ra": [
+    {
+     "id": "video",
+     "ten": "Phim",
+     "kieu": "video"
+    }
+   ],
+   "tham_so": [
+    {
+     "key": "chuyen_canh",
+     "ten": "Chuyển cảnh",
+     "loai": "select",
+     "lua_chon": [
+      "cat",
+      "mo",
+      "den"
+     ]
+    },
+    {
+     "key": "do_dai_chuyen",
+     "ten": "Độ dài chuyển (s)",
+     "loai": "number"
+    },
+    {
+     "key": "do_phan_giai",
+     "ten": "Độ phân giải",
+     "loai": "text"
+    },
+    {
+     "key": "am_luong_nhac",
+     "ten": "Âm lượng nhạc (0–1)",
+     "loai": "number"
+    },
+    {
+     "key": "am_luong_goc",
+     "ten": "Âm lượng tiếng gốc clip (0–1)",
+     "loai": "number"
+    },
+    {
+     "key": "bat_dau_am_thanh",
+     "ten": "Giây bắt đầu các track giọng (vd 0, 5.5, 12)",
+     "loai": "text"
+    }
+   ],
+   "nha_cung_cap": [
+    "ffmpeg",
+    "tu-lam"
+   ]
+  },
+  {
+   "id": "xuat",
+   "ten": "Xuất phim",
+   "nhom": "Dựng & xuất",
+   "vao": [
+    {
+     "id": "video",
+     "ten": "Phim",
+     "kieu": "video"
+    }
+   ],
+   "ra": [],
+   "tham_so": [
+    {
+     "key": "ten_file",
+     "ten": "Tên file",
+     "loai": "text"
+    }
+   ],
+   "nha_cung_cap": [
+    "ffmpeg"
+   ]
+  },
+  {
+   "id": "duyet",
+   "ten": "Duyệt (chờ tôi xem)",
+   "nhom": "Điều khiển",
+   "vao": [
+    {
+     "id": "any",
+     "ten": "Vào",
+     "kieu": "any"
+    }
+   ],
+   "ra": [
+    {
+     "id": "any",
+     "ten": "Ra",
+     "kieu": "any"
+    }
+   ],
+   "tham_so": [],
+   "nha_cung_cap": []
+  },
+  {
+   "id": "ghi-chu",
+   "ten": "Ghi chú / Nhãn cảnh",
+   "nhom": "Điều khiển",
+   "vao": [],
+   "ra": [],
+   "tham_so": [
+    {
+     "key": "noi_dung",
+     "ten": "Nội dung",
+     "loai": "textarea"
+    }
+   ],
+   "nha_cung_cap": []
+  }
+ ]
+}

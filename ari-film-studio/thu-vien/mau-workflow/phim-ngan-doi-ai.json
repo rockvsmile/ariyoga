@@ -1,0 +1,431 @@
+{
+ "ten": "Phim ngắn — Đội AI (Đạo diễn → Biên kịch → Quay phim)",
+ "mo_ta": "Ý tưởng qua Đạo Diễn, Biên Kịch, Quay Phim, Kiểm Định (Claude) → Viết prompt từng cảnh → video → giọng dẫn → dựng. Nhân bản cụm 'cảnh' để thêm cảnh.",
+ "meta": {
+  "nganh": "Chung",
+  "the_loai": "phim-ngan-tu-su",
+  "phong_cach": "",
+  "ky_nang": [
+   "cinematic-techniques"
+  ],
+  "ti_le": "16:9",
+  "thoi_luong": 90
+ },
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "prompt",
+   "x": 0,
+   "y": 0,
+   "ten": "Ý tưởng",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Câu chuyện về…"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n2",
+   "type": "dao-dien",
+   "x": 290,
+   "y": 0,
+   "ten": "Đạo Diễn",
+   "provider": "claude",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n3",
+   "type": "bien-kich",
+   "x": 580,
+   "y": 0,
+   "ten": "Biên Kịch",
+   "provider": "claude",
+   "model": "",
+   "params": {
+    "thoi_luong": 90
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n4",
+   "type": "quay-phim",
+   "x": 870,
+   "y": 0,
+   "ten": "Quay Phim",
+   "provider": "claude",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n5",
+   "type": "kiem-dinh",
+   "x": 1160,
+   "y": 0,
+   "ten": "Kiểm Định kịch bản",
+   "provider": "claude",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n6",
+   "type": "nhan-vat",
+   "x": 580,
+   "y": 300.0,
+   "ten": "Nhân vật chính",
+   "provider": "",
+   "model": "",
+   "params": {
+    "mo_ta": "(ảnh + mô tả)"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n7",
+   "type": "viet-prompt",
+   "x": 1160,
+   "y": 300.0,
+   "ten": "Prompt cảnh 1",
+   "provider": "claude",
+   "model": "",
+   "params": {
+    "cho_cong_cu": "Veo 3.1",
+    "yeu_cau": "Chỉ cảnh 1 trong shot list"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n8",
+   "type": "viet-prompt",
+   "x": 1160,
+   "y": 600.0,
+   "ten": "Prompt cảnh 2",
+   "provider": "claude",
+   "model": "",
+   "params": {
+    "cho_cong_cu": "Veo 3.1",
+    "yeu_cau": "Chỉ cảnh 2 trong shot list"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n9",
+   "type": "tao-video",
+   "x": 1450,
+   "y": 300.0,
+   "ten": "Cảnh 1",
+   "provider": "google-veo",
+   "model": "veo-3.1-generate-preview",
+   "params": {
+    "che_do": "tham-chieu",
+    "thoi_luong": 8,
+    "ti_le": "16:9"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n10",
+   "type": "tao-video",
+   "x": 1450,
+   "y": 600.0,
+   "ten": "Cảnh 2",
+   "provider": "google-veo",
+   "model": "veo-3.1-generate-preview",
+   "params": {
+    "che_do": "tham-chieu",
+    "thoi_luong": 8,
+    "ti_le": "16:9"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n11",
+   "type": "giong-doc",
+   "x": 1450,
+   "y": 900.0,
+   "ten": "Giọng dẫn",
+   "provider": "elevenlabs",
+   "model": "eleven_v3",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n12",
+   "type": "dung-phim",
+   "x": 1740,
+   "y": 500,
+   "ten": "Dựng",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "chuyen_canh": "mo",
+    "do_phan_giai": "1920x1080"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n13",
+   "type": "duyet",
+   "x": 2030,
+   "y": 500,
+   "ten": "Duyệt",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n14",
+   "type": "xuat",
+   "x": 2320,
+   "y": 500,
+   "ten": "Xuất",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "ten_file": "phim-ngan"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "tu": {
+    "node": "n1",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n2",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e2",
+   "tu": {
+    "node": "n2",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n3",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e3",
+   "tu": {
+    "node": "n1",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n3",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e4",
+   "tu": {
+    "node": "n3",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e5",
+   "tu": {
+    "node": "n4",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e6",
+   "tu": {
+    "node": "n3",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e7",
+   "tu": {
+    "node": "n4",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e8",
+   "tu": {
+    "node": "n4",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e9",
+   "tu": {
+    "node": "n6",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e10",
+   "tu": {
+    "node": "n6",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e11",
+   "tu": {
+    "node": "n7",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e12",
+   "tu": {
+    "node": "n8",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n10",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e13",
+   "tu": {
+    "node": "n6",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e14",
+   "tu": {
+    "node": "n6",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n10",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e15",
+   "tu": {
+    "node": "n3",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e16",
+   "tu": {
+    "node": "n9",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n12",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e17",
+   "tu": {
+    "node": "n10",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n12",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e18",
+   "tu": {
+    "node": "n11",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n12",
+    "cong": "audio"
+   }
+  },
+  {
+   "id": "e19",
+   "tu": {
+    "node": "n12",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n13",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e20",
+   "tu": {
+    "node": "n13",
+    "cong": "any"
+   },
+   "den": {
+    "node": "n14",
+    "cong": "video"
+   }
+  }
+ ]
+}

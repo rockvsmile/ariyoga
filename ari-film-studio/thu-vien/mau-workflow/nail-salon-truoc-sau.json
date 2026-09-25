@@ -1,0 +1,309 @@
+{
+ "ten": "Nail / Salon — Trước & sau 15s",
+ "mo_ta": "Ảnh 'trước' thật → ChatGPT sửa thành 'sau' theo mẫu → Veo tạo chuyển động biến đổi từ trước sang sau → cận chi tiết lấp lánh → chữ giá & đặt lịch.",
+ "meta": {
+  "nganh": "Nail / Salon",
+  "the_loai": "nail-salon",
+  "phong_cach": "",
+  "ky_nang": [
+   "cinematic-techniques"
+  ],
+  "ti_le": "9:16",
+  "thoi_luong": 15
+ },
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "anh",
+   "x": 0,
+   "y": 0,
+   "ten": "Ảnh TRƯỚC (thật)",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n2",
+   "type": "anh",
+   "x": 0,
+   "y": 250,
+   "ten": "Ảnh mẫu thiết kế",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n3",
+   "type": "tao-anh",
+   "x": 290,
+   "y": 125.0,
+   "ten": "Ảnh SAU (ChatGPT sửa ảnh)",
+   "provider": "openai",
+   "model": "gpt-image-2.5-sunburst",
+   "params": {
+    "prompt": "Apply the nail design from the second image onto the hands in the first image. Keep the same hands, skin tone, lighting and framing.",
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n4",
+   "type": "tao-video",
+   "x": 580,
+   "y": 125.0,
+   "ten": "Biến đổi trước → sau",
+   "provider": "google-veo",
+   "model": "veo-3.1-generate-preview",
+   "params": {
+    "che_do": "dau-cuoi",
+    "prompt": "Magical sparkle transition sweeping across the hands, revealing the finished design, slow motion, beauty lighting",
+    "thoi_luong": 8,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n5",
+   "type": "tao-video",
+   "x": 580,
+   "y": 425.0,
+   "ten": "Cận chi tiết",
+   "provider": "google-omni",
+   "model": "gemini-omni-1.1-flash",
+   "params": {
+    "che_do": "khung-dau",
+    "prompt": "Macro slider shot across the nails, glitter catching the light, hand slowly rotating",
+    "thoi_luong": 5,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n6",
+   "type": "nhac",
+   "x": 580,
+   "y": 750,
+   "ten": "Nhạc trending",
+   "provider": "tu-lam",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n7",
+   "type": "hieu-ung-am",
+   "x": 580,
+   "y": 1000,
+   "ten": "SFX lấp lánh",
+   "provider": "elevenlabs",
+   "model": "",
+   "params": {
+    "mo_ta": "Magical sparkle shimmer, soft ting",
+    "thoi_luong": 2
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n8",
+   "type": "dung-phim",
+   "x": 870,
+   "y": 375.0,
+   "ten": "Dựng",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "chuyen_canh": "cat",
+    "do_phan_giai": "1080x1920",
+    "bat_dau_am_thanh": "3"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n9",
+   "type": "hau-ky",
+   "x": 1160,
+   "y": 375.0,
+   "ten": "Chữ giá & đặt lịch",
+   "provider": "higgsfield-mcp",
+   "model": "",
+   "params": {
+    "viec": "chu-tieu-de",
+    "gia_tri": "Tên mẫu · giá · đặt lịch"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n10",
+   "type": "kiem-dinh",
+   "x": 1160,
+   "y": 750,
+   "ten": "Soi bàn tay",
+   "provider": "claude",
+   "model": "",
+   "params": {
+    "tieu_chi": "Đủ 5 ngón, móng không méo, da tự nhiên"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n11",
+   "type": "xuat",
+   "x": 1450,
+   "y": 375.0,
+   "ten": "Xuất",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "ten_file": "nail-truoc-sau"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n3",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e2",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n3",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e3",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "khung_dau"
+   }
+  },
+  {
+   "id": "e4",
+   "tu": {
+    "node": "n3",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "khung_cuoi"
+   }
+  },
+  {
+   "id": "e5",
+   "tu": {
+    "node": "n3",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "khung_dau"
+   }
+  },
+  {
+   "id": "e6",
+   "tu": {
+    "node": "n4",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e7",
+   "tu": {
+    "node": "n5",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e8",
+   "tu": {
+    "node": "n7",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "audio"
+   }
+  },
+  {
+   "id": "e9",
+   "tu": {
+    "node": "n6",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "nhac"
+   }
+  },
+  {
+   "id": "e10",
+   "tu": {
+    "node": "n8",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e11",
+   "tu": {
+    "node": "n8",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n10",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e12",
+   "tu": {
+    "node": "n9",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  }
+ ]
+}

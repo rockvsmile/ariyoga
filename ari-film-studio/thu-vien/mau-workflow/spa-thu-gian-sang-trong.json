@@ -1,0 +1,371 @@
+{
+ "ten": "Spa — Thư giãn sang trọng 30s",
+ "mo_ta": "Không gian spa → cận tay kỹ thuật viên & sản phẩm → khách thư giãn → kết quả, giọng nữ nhẹ + nhạc thiền. Phong cách quiet luxury ấm.",
+ "meta": {
+  "nganh": "Spa",
+  "the_loai": "spa-lam-dep",
+  "phong_cach": "01-quiet-luxury-kien-truc",
+  "ky_nang": [
+   "cinematic-techniques",
+   "tvc-thoi-trang"
+  ],
+  "ti_le": "9:16",
+  "thoi_luong": 30
+ },
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "anh",
+   "x": 0,
+   "y": 0,
+   "ten": "Ảnh sản phẩm / liệu trình",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n2",
+   "type": "anh",
+   "x": 0,
+   "y": 250,
+   "ten": "Ảnh không gian spa",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n3",
+   "type": "prompt",
+   "x": 0,
+   "y": 500,
+   "ten": "Ý tưởng",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Video 30s giới thiệu liệu trình chăm sóc da thư giãn…"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n4",
+   "type": "viet-prompt",
+   "x": 290,
+   "y": 500,
+   "ten": "Viết prompt 3 shot",
+   "provider": "claude",
+   "model": "",
+   "params": {
+    "cho_cong_cu": "Veo 3.1",
+    "phong_cach": "01-quiet-luxury-kien-truc"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n5",
+   "type": "tao-anh",
+   "x": 290,
+   "y": 0,
+   "ten": "Khung mở (Nano Banana)",
+   "provider": "google-image",
+   "model": "gemini-3-pro-image-preview",
+   "params": {
+    "prompt": "Warm candlelit spa room, steam, towels, stones, natural skin texture, soft top light",
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n6",
+   "type": "tao-video",
+   "x": 580,
+   "y": 0,
+   "ten": "Shot không gian",
+   "provider": "google-veo",
+   "model": "veo-3.1-generate-preview",
+   "params": {
+    "che_do": "khung-dau",
+    "thoi_luong": 8,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n7",
+   "type": "tao-video",
+   "x": 580,
+   "y": 250,
+   "ten": "Shot tay & sản phẩm",
+   "provider": "google-veo",
+   "model": "veo-3.1-generate-preview",
+   "params": {
+    "che_do": "tham-chieu",
+    "thoi_luong": 8,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n8",
+   "type": "tao-video",
+   "x": 580,
+   "y": 500,
+   "ten": "Shot khách thư giãn",
+   "provider": "google-omni",
+   "model": "gemini-omni-1.1-flash",
+   "params": {
+    "thoi_luong": 8,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n9",
+   "type": "giong-doc",
+   "x": 580,
+   "y": 750,
+   "ten": "Giọng nữ nhẹ",
+   "provider": "elevenlabs",
+   "model": "eleven_v3",
+   "params": {
+    "loi": "Dành cho bạn một khoảng lặng…"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n10",
+   "type": "nhac",
+   "x": 580,
+   "y": 1000,
+   "ten": "Nhạc thiền",
+   "provider": "elevenlabs",
+   "model": "",
+   "params": {
+    "mo_ta": "Ambient spa music, soft piano, water, wind chimes, slow",
+    "thoi_luong": 30
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n11",
+   "type": "dung-phim",
+   "x": 870,
+   "y": 500,
+   "ten": "Dựng",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "chuyen_canh": "mo",
+    "do_dai_chuyen": 0.8,
+    "do_phan_giai": "1080x1920",
+    "am_luong_nhac": 0.5
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n12",
+   "type": "duyet",
+   "x": 1160,
+   "y": 500,
+   "ten": "Duyệt",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n13",
+   "type": "xuat",
+   "x": 1450,
+   "y": 500,
+   "ten": "Xuất",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "ten_file": "spa-reels"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "tu": {
+    "node": "n3",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e2",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "image"
+   }
+  },
+  {
+   "id": "e3",
+   "tu": {
+    "node": "n4",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e4",
+   "tu": {
+    "node": "n5",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "khung_dau"
+   }
+  },
+  {
+   "id": "e5",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e6",
+   "tu": {
+    "node": "n4",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e7",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e8",
+   "tu": {
+    "node": "n4",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e9",
+   "tu": {
+    "node": "n6",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e10",
+   "tu": {
+    "node": "n7",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e11",
+   "tu": {
+    "node": "n8",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e12",
+   "tu": {
+    "node": "n9",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "audio"
+   }
+  },
+  {
+   "id": "e13",
+   "tu": {
+    "node": "n10",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "nhac"
+   }
+  },
+  {
+   "id": "e14",
+   "tu": {
+    "node": "n11",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n12",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e15",
+   "tu": {
+    "node": "n12",
+    "cong": "any"
+   },
+   "den": {
+    "node": "n13",
+    "cong": "video"
+   }
+  }
+ ]
+}

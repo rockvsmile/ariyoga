@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ari Film Studio — Workflow</title>
+<link rel="stylesheet" href="canvas.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand">🎬 Ari Film Studio</div>
+  <select id="projectSelect" aria-label="Dự án"></select>
+  <button class="btn" id="newProject">+ Dự án</button>
+  <span class="sep"></span>
+  <button class="btn run" id="runAll" title="Chạy mọi node đủ đầu vào">▶ Chạy tất cả</button>
+  <span id="runState" class="muted"></span>
+  <span id="tplBanner" class="tpl-banner"></span>
+  <button class="btn" id="tplExit">Thoát sửa mẫu</button>
+  <span class="grow"></span>
+  <button class="btn" id="tplBtn">📋 Mẫu workflow</button>
+  <button class="btn" id="saveTpl">💾 Lưu làm mẫu</button>
+  <button class="btn" id="fitBtn" title="Xem toàn bộ">⤢</button>
+  <button class="btn" id="settingsBtn">⚙ Cài đặt</button>
+  <a class="btn" href="/ho-so.html" title="Hồ sơ phim: ý tưởng, tham chiếu, kịch bản, shot list (9 khung)">🗂 Hồ sơ phim</a>
+  <span id="saveState" class="muted"></span>
+</header>
+
+<div class="layout">
+  <aside class="palette" id="palette">
+    <input type="search" id="paletteSearch" placeholder="Tìm node…">
+    <div id="paletteList"></div>
+    <p class="hint">Bấm hoặc kéo node vào canvas. Kéo từ chấm tròn bên phải (đầu ra) sang chấm bên trái (đầu vào) để nối. Kéo đầu dây ra khỏi đầu vào để cắt. Bấm vào dây rồi nhấn Delete (hoặc ✂) để xoá.</p>
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="world" id="world">
+      <svg class="edges" id="edges"></svg>
+      <div id="nodes"></div>
+    </div>
+    <div class="empty" id="empty">Chọn hoặc tạo dự án ở góc trên, rồi thêm node từ bảng bên trái — hoặc mở 📋 Mẫu workflow.</div>
+    <div class="zoom muted" id="zoomLabel">100%</div>
+  </main>
+
+  <aside class="inspector hidden" id="inspector"></aside>
+</div>
+
+<dialog id="dlg"></dialog>
+<script src="canvas.js"></script>
+</body>
+</html>

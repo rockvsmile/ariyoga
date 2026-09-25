@@ -1,0 +1,464 @@
+{
+ "ten": "Yoga — Inside Flow Reels 30s",
+ "mo_ta": "Cô giáo (Nhân vật) + phòng tập → 3 shot flow mượt theo nhạc, giọng dẫn nhẹ, phụ đề. Chuyển động máy trôi, ánh giờ vàng.",
+ "meta": {
+  "nganh": "Yoga",
+  "the_loai": "video-yoga-wellness",
+  "phong_cach": "",
+  "ky_nang": [
+   "cinematic-techniques"
+  ],
+  "ti_le": "9:16",
+  "thoi_luong": 30
+ },
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "nhan-vat",
+   "x": 0,
+   "y": 0,
+   "ten": "Cô giáo / học viên",
+   "provider": "",
+   "model": "",
+   "params": {
+    "mo_ta": "(tải ảnh chuẩn + mô tả khuôn mặt, tóc, trang phục tập)"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n2",
+   "type": "anh",
+   "x": 0,
+   "y": 250,
+   "ten": "Ảnh phòng tập",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n3",
+   "type": "prompt",
+   "x": 290,
+   "y": 0,
+   "ten": "Shot 1 — hơi thở mở đầu",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Static wide shot, golden hour window light, she sits in easy pose breathing slowly, dust motes, warm amber grade, 9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n4",
+   "type": "prompt",
+   "x": 290,
+   "y": 250,
+   "ten": "Shot 2 — dòng chảy",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Steadicam slow orbit, she flows from downward dog into warrior II in one continuous smooth movement, anatomically correct pose, soft rim light"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n5",
+   "type": "prompt",
+   "x": 290,
+   "y": 500,
+   "ten": "Shot 3 — cao trào",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Low angle, slow push in, she opens arms in a heart-opening pose, sun flare behind, peaceful confident smile"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n6",
+   "type": "tao-video",
+   "x": 580,
+   "y": 0,
+   "ten": "Shot 1",
+   "provider": "higgsfield-mcp",
+   "model": "seedance_2_0",
+   "params": {
+    "che_do": "tham-chieu",
+    "thoi_luong": 8,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n7",
+   "type": "tao-video",
+   "x": 580,
+   "y": 250,
+   "ten": "Shot 2",
+   "provider": "higgsfield-mcp",
+   "model": "seedance_2_0",
+   "params": {
+    "che_do": "tham-chieu",
+    "thoi_luong": 8,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n8",
+   "type": "tao-video",
+   "x": 580,
+   "y": 500,
+   "ten": "Shot 3",
+   "provider": "higgsfield-mcp",
+   "model": "seedance_2_0",
+   "params": {
+    "che_do": "tham-chieu",
+    "thoi_luong": 8,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n9",
+   "type": "giong-doc",
+   "x": 580,
+   "y": 750,
+   "ten": "Giọng dẫn",
+   "provider": "elevenlabs",
+   "model": "eleven_v3",
+   "params": {
+    "loi": "Hít vào… và để cơ thể tự chảy theo hơi thở. Inside Flow cùng Ari Yoga."
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n10",
+   "type": "nhac",
+   "x": 580,
+   "y": 1000,
+   "ten": "Nhạc",
+   "provider": "tu-lam",
+   "model": "",
+   "params": {
+    "mo_ta": "Nhạc Inside Flow của lớp (file có bản quyền)"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n11",
+   "type": "dung-phim",
+   "x": 870,
+   "y": 375.0,
+   "ten": "Dựng",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "chuyen_canh": "mo",
+    "do_dai_chuyen": 0.6,
+    "do_phan_giai": "1080x1920",
+    "bat_dau_am_thanh": "2"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n12",
+   "type": "hau-ky",
+   "x": 1160,
+   "y": 375.0,
+   "ten": "Phụ đề",
+   "provider": "higgsfield-mcp",
+   "model": "",
+   "params": {
+    "viec": "phu-de"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n13",
+   "type": "kiem-dinh",
+   "x": 1160,
+   "y": 750,
+   "ten": "Soi tư thế",
+   "provider": "claude",
+   "model": "",
+   "params": {
+    "tieu_chi": "Tư thế yoga đúng giải phẫu, không thừa/thiếu ngón, gương mặt nhất quán"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n14",
+   "type": "duyet",
+   "x": 1450,
+   "y": 375.0,
+   "ten": "Duyệt",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n15",
+   "type": "xuat",
+   "x": 1740,
+   "y": 375.0,
+   "ten": "Xuất",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "ten_file": "yoga-reels"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e2",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e3",
+   "tu": {
+    "node": "n3",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e4",
+   "tu": {
+    "node": "n1",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e5",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e6",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e7",
+   "tu": {
+    "node": "n4",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e8",
+   "tu": {
+    "node": "n1",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e9",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e10",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e11",
+   "tu": {
+    "node": "n5",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e12",
+   "tu": {
+    "node": "n1",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e13",
+   "tu": {
+    "node": "n6",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e14",
+   "tu": {
+    "node": "n7",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e15",
+   "tu": {
+    "node": "n8",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e16",
+   "tu": {
+    "node": "n9",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "audio"
+   }
+  },
+  {
+   "id": "e17",
+   "tu": {
+    "node": "n10",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "nhac"
+   }
+  },
+  {
+   "id": "e18",
+   "tu": {
+    "node": "n11",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n12",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e19",
+   "tu": {
+    "node": "n11",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n13",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e20",
+   "tu": {
+    "node": "n12",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n14",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e21",
+   "tu": {
+    "node": "n14",
+    "cong": "any"
+   },
+   "den": {
+    "node": "n15",
+    "cong": "video"
+   }
+  }
+ ]
+}

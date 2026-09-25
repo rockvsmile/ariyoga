@@ -1,0 +1,205 @@
+{
+ "ten": "Game — Vật phẩm Legacy: ảnh thật → 3D + video giới thiệu",
+ "mo_ta": "Ảnh vật phẩm thật → ChatGPT vẽ lại theo phong cách game → Tripo3D dựng mô hình .glb cho website → Veo làm video giới thiệu vật phẩm cực hiếm + nhạc.",
+ "meta": {
+  "nganh": "Game / Ari Legacy",
+  "the_loai": "",
+  "phong_cach": "",
+  "ky_nang": [],
+  "ti_le": "16:9",
+  "thoi_luong": 15
+ },
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "anh",
+   "x": 0,
+   "y": 0,
+   "ten": "Ảnh vật phẩm thật",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n2",
+   "type": "anh",
+   "x": 0,
+   "y": 250,
+   "ten": "Ảnh phong cách game (mẫu nhân vật chung)",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n3",
+   "type": "tao-anh",
+   "x": 290,
+   "y": 125.0,
+   "ten": "Vẽ lại theo phong cách game",
+   "provider": "openai",
+   "model": "gpt-image-2.5-sunburst",
+   "params": {
+    "prompt": "Redesign the item from the first image as a legendary game item in the art style of the second image, centered, clean background, gold and pearl rim light, 'LEGACY' rarity glow",
+    "ti_le": "1:1"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n4",
+   "type": "tao-3d",
+   "x": 580,
+   "y": 0,
+   "ten": "Mô hình 3D (.glb)",
+   "provider": "tripo",
+   "model": "v3.1-20260211",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n5",
+   "type": "tao-video",
+   "x": 580,
+   "y": 300.0,
+   "ten": "Video giới thiệu",
+   "provider": "google-veo",
+   "model": "veo-3.1-generate-preview",
+   "params": {
+    "che_do": "khung-dau",
+    "prompt": "Dark stage, the legendary item slowly rotates in a beam of golden light, particles, epic reveal, cinematic",
+    "thoi_luong": 8,
+    "ti_le": "16:9"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n6",
+   "type": "nhac",
+   "x": 580,
+   "y": 600.0,
+   "ten": "Nhạc hùng tráng",
+   "provider": "elevenlabs",
+   "model": "",
+   "params": {
+    "mo_ta": "Epic short orchestral reveal sting, magical",
+    "thoi_luong": 10
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n7",
+   "type": "dung-phim",
+   "x": 870,
+   "y": 375.0,
+   "ten": "Dựng",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "chuyen_canh": "den",
+    "do_phan_giai": "1920x1080"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n8",
+   "type": "xuat",
+   "x": 1160,
+   "y": 375.0,
+   "ten": "Xuất",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "ten_file": "legacy-item"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n3",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e2",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n3",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e3",
+   "tu": {
+    "node": "n3",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "image"
+   }
+  },
+  {
+   "id": "e4",
+   "tu": {
+    "node": "n3",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "khung_dau"
+   }
+  },
+  {
+   "id": "e5",
+   "tu": {
+    "node": "n5",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e6",
+   "tu": {
+    "node": "n6",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "nhac"
+   }
+  },
+  {
+   "id": "e7",
+   "tu": {
+    "node": "n7",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n8",
+    "cong": "video"
+   }
+  }
+ ]
+}

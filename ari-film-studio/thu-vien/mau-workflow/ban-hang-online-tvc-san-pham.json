@@ -1,0 +1,393 @@
+{
+ "ten": "Bán hàng online — TVC sản phẩm 30s",
+ "mo_ta": "Ảnh sản phẩm + người mẫu → AI viết prompt Seedance nhiều shot → một clip 15s qua Higgsfield + cận sản phẩm; giọng đọc bán hàng, nhạc trending, chữ lợi ích & giá ở hậu kỳ.",
+ "meta": {
+  "nganh": "Bán hàng online",
+  "the_loai": "ban-hang-online",
+  "phong_cach": "",
+  "ky_nang": [
+   "tvc-thoi-trang",
+   "cinematic-techniques"
+  ],
+  "ti_le": "9:16",
+  "thoi_luong": 30
+ },
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "nhan-vat",
+   "x": 0,
+   "y": 0,
+   "ten": "Sản phẩm",
+   "provider": "",
+   "model": "",
+   "params": {
+    "mo_ta": "(ảnh sản phẩm nền trơn + mô tả: chất liệu, màu, kích thước)"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n2",
+   "type": "nhan-vat",
+   "x": 0,
+   "y": 250,
+   "ten": "Người mẫu",
+   "provider": "",
+   "model": "",
+   "params": {
+    "mo_ta": "(ảnh người mẫu + mô tả)"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n3",
+   "type": "prompt",
+   "x": 0,
+   "y": 500,
+   "ten": "Brief bán hàng",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Sản phẩm…, 3 lợi ích…, ưu đãi…, đối tượng…"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n4",
+   "type": "viet-prompt",
+   "x": 290,
+   "y": 250,
+   "ten": "Viết prompt đa shot",
+   "provider": "claude",
+   "model": "",
+   "params": {
+    "cho_cong_cu": "Seedance 2.5"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n5",
+   "type": "tao-video",
+   "x": 580,
+   "y": 125.0,
+   "ten": "Clip chính 15s",
+   "provider": "higgsfield-mcp",
+   "model": "seedance_2_5",
+   "params": {
+    "che_do": "tham-chieu",
+    "thoi_luong": 15,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n6",
+   "type": "tao-video",
+   "x": 580,
+   "y": 425.0,
+   "ten": "Cận sản phẩm 360°",
+   "provider": "higgsfield",
+   "model": "bytedance/seedance-2.5",
+   "params": {
+    "che_do": "tham-chieu",
+    "prompt": "Slow 360 orbit around the product on a clean pastel background, crisp details",
+    "thoi_luong": 5,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n7",
+   "type": "kiem-dinh",
+   "x": 870,
+   "y": 0,
+   "ten": "Soi sản phẩm",
+   "provider": "claude",
+   "model": "",
+   "params": {
+    "tieu_chi": "Sản phẩm giống ảnh thật (màu, logo, hình dạng), không nhân bản sản phẩm"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n8",
+   "type": "giong-doc",
+   "x": 580,
+   "y": 750,
+   "ten": "Giọng bán hàng",
+   "provider": "elevenlabs",
+   "model": "eleven_flash_v2_5",
+   "params": {
+    "loi": "Bạn đã thử…? …"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n9",
+   "type": "nhac",
+   "x": 580,
+   "y": 1000,
+   "ten": "Nhạc trending",
+   "provider": "tu-lam",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n10",
+   "type": "dung-phim",
+   "x": 870,
+   "y": 500,
+   "ten": "Dựng",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "chuyen_canh": "cat",
+    "do_phan_giai": "1080x1920",
+    "am_luong_goc": 0.3,
+    "am_luong_nhac": 0.4
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n11",
+   "type": "hau-ky",
+   "x": 1160,
+   "y": 500,
+   "ten": "Chữ lợi ích + giá",
+   "provider": "higgsfield-mcp",
+   "model": "",
+   "params": {
+    "viec": "chu-tieu-de",
+    "gia_tri": "3 lợi ích · giá · ưu đãi"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n12",
+   "type": "duyet",
+   "x": 1450,
+   "y": 500,
+   "ten": "Duyệt",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n13",
+   "type": "xuat",
+   "x": 1740,
+   "y": 500,
+   "ten": "Xuất",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "ten_file": "tvc-san-pham"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "image"
+   }
+  },
+  {
+   "id": "e2",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "image"
+   }
+  },
+  {
+   "id": "e3",
+   "tu": {
+    "node": "n1",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e4",
+   "tu": {
+    "node": "n2",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e5",
+   "tu": {
+    "node": "n3",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "text"
+   }
+  },
+  {
+   "id": "e6",
+   "tu": {
+    "node": "n4",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e7",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e8",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e9",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e10",
+   "tu": {
+    "node": "n5",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e11",
+   "tu": {
+    "node": "n5",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n10",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e12",
+   "tu": {
+    "node": "n6",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n10",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e13",
+   "tu": {
+    "node": "n8",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n10",
+    "cong": "audio"
+   }
+  },
+  {
+   "id": "e14",
+   "tu": {
+    "node": "n9",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n10",
+    "cong": "nhac"
+   }
+  },
+  {
+   "id": "e15",
+   "tu": {
+    "node": "n10",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e16",
+   "tu": {
+    "node": "n11",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n12",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e17",
+   "tu": {
+    "node": "n12",
+    "cong": "any"
+   },
+   "den": {
+    "node": "n13",
+    "cong": "video"
+   }
+  }
+ ]
+}

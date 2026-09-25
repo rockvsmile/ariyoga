@@ -8,3 +8,8 @@ du-an/*/tmp-khung/
 !du-an/*/**/.gitkeep
 *.tmp
 __pycache__/
+# API key chỉ nằm trên máy — không bao giờ đưa lên git
+cai-dat/
+# Kết quả tạo sinh của workflow (ảnh, video, âm thanh) — nặng, giữ trên máy
+du-an/*/wf/
+*.lock

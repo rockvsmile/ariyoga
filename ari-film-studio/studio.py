@@ -29,6 +29,11 @@ PORT = int(os.environ.get("STUDIO_PORT", "8765"))
 
 sys.path.insert(0, str(ROOT / "tools"))
 from tao_du_an import bang_ket_noi_rong, create_project, safe_name  # noqa: E402
+import providers  # noqa: E402
+import workflow  # noqa: E402
+
+TEMPLATES = LIBRARY / "mau-workflow"
+MAX_UPLOAD = 1024 * 1024 * 1024  # 1 GB
 
 
 def read_json(path: Path):
@@ -137,6 +142,33 @@ class Handler(SimpleHTTPRequestHandler):
             for k, v in bang_ket_noi_rong().items():  # dự án cũ / mảnh ghép mới thêm
                 data.setdefault("bang_ket_noi", {}).setdefault(k, v)
             return self.send_json(data, headers={"X-Version": version_of(f)})
+        if path == "/api/node-types":
+            return self.send_json(workflow.registry() | {"_by_id": None})
+        if path == "/api/cai-dat/khoa":
+            return self.send_json(providers.masked_keys())
+        if path == "/api/mau-workflow":
+            out = []
+            for p in sorted(TEMPLATES.glob("*.json")):
+                d = read_json(p)
+                out.append({"id": p.stem, "ten": d.get("ten", p.stem), "mo_ta": d.get("mo_ta", ""), "meta": d.get("meta", {}),
+                            "so_node": len(d.get("nodes", []))})
+            return self.send_json(out)
+        m = re.fullmatch(r"/api/mau-workflow/([^/]+)", path)
+        if m:
+            f = TEMPLATES / (safe_name(m.group(1)) + ".json")
+            return self.send_json(read_json(f)) if f.is_file() else self.send_json({"loi": "Không có mẫu"}, HTTPStatus.NOT_FOUND)
+        m = re.fullmatch(r"/api/workflow/([^/]+)", path)
+        if m:
+            pid = safe_name(m.group(1))
+            if not (PROJECTS / pid).is_dir():
+                return self.send_json({"loi": "Không tìm thấy dự án"}, HTTPStatus.NOT_FOUND)
+            f = workflow.wf_path(pid)
+            return self.send_json(workflow.load(pid), headers={"X-Version": version_of(f) if f.is_file() else "0"})
+        m = re.fullmatch(r"/api/wf-state/([^/]+)", path)
+        if m:
+            pid = safe_name(m.group(1))
+            f = workflow.wf_path(pid)
+            return self.send_json({"version": version_of(f) if f.is_file() else "0", "dang_chay": workflow.is_running(pid)})
         m = re.fullmatch(r"/api/version/([^/]+)", path)
         if m:
             f = project_file(m.group(1))
@@ -153,6 +185,8 @@ class Handler(SimpleHTTPRequestHandler):
             if LIBRARY.resolve() not in target.parents:
                 return self.send_error(HTTPStatus.FORBIDDEN)
             return self.send_file(target)
+        if path in ("/", "/index.html"):
+            return self.send_file(UI / "canvas.html")
         return super().do_GET()
 
     def do_POST(self):
@@ -167,6 +201,39 @@ class Handler(SimpleHTTPRequestHandler):
             except FileExistsError:
                 return self.send_json({"loi": "Dự án đã tồn tại"}, HTTPStatus.CONFLICT)
             return self.send_json({"id": pid})
+        m = re.fullmatch(r"/api/wf-run/([^/]+)", path)
+        if m:
+            pid = safe_name(m.group(1))
+            body = self.read_body()
+            ok = workflow.run_async(pid, body.get("mode") or "tat_ca", body.get("node"))
+            return self.send_json({"ok": ok, "loi": "" if ok else "Workflow đang chạy — chờ xong rồi chạy tiếp"})
+        m = re.fullmatch(r"/api/wf-node/([^/]+)/([^/]+)", path)
+        if m:
+            return self.node_action(safe_name(m.group(1)), m.group(2), self.read_body())
+        m = re.fullmatch(r"/api/workflow/([^/]+)/tu-mau", path)
+        if m:
+            pid = safe_name(m.group(1))
+            tpl = TEMPLATES / (safe_name(self.read_body().get("mau", "")) + ".json")
+            if not tpl.is_file():
+                return self.send_json({"loi": "Không có mẫu này"}, HTTPStatus.NOT_FOUND)
+            data = read_json(tpl)
+            meta = {**data.get("meta", {}), "mau": tpl.stem, "ten_mau": data.get("ten", "")}
+            workflow.save_from_ui(pid, {"phien_ban": 1, "nodes": data["nodes"], "edges": data["edges"], "meta": meta})
+            return self.send_json({"ok": True})
+        if path == "/api/mau-workflow":
+            body = self.read_body()
+            ten = (body.get("ten") or "").strip()
+            src = safe_name(body.get("tu_du_an", ""))
+            if not ten or not workflow.wf_path(src).is_file():
+                return self.send_json({"loi": "Cần tên mẫu và dự án nguồn"}, HTTPStatus.BAD_REQUEST)
+            wf = workflow.load(src)
+            nodes = [{k: v for k, v in n.items() if k not in workflow.RUNTIME} for n in wf["nodes"]]
+            for n in nodes:  # mẫu không mang theo file riêng của dự án
+                n["params"] = {k: ("" if k == "file" else v) for k, v in (n.get("params") or {}).items()}
+            TEMPLATES.mkdir(exist_ok=True)
+            meta = {k: v for k, v in {**wf.get("meta", {}), **(body.get("meta") or {})}.items() if k not in ("mau", "ten_mau")}
+            write_json(TEMPLATES / (safe_name(ten) + ".json"), {"ten": ten, "mo_ta": body.get("mo_ta", ""), "meta": meta, "nodes": nodes, "edges": wf["edges"]})
+            return self.send_json({"ok": True})
         m = re.fullmatch(r"/api/quet/([^/]+)", path)
         if m:
             return self.scan_files(m.group(1))
@@ -233,8 +300,60 @@ class Handler(SimpleHTTPRequestHandler):
             write_json(f, d)
         return self.send_json({"tim_thay": found}, headers={"X-Version": version_of(f)})
 
+    def node_action(self, pid: str, nid: str, body: dict):
+        act = body.get("action")
+        folder = PROJECTS / pid
+        if act in ("tai_file", "ket_qua"):
+            name = Path(body.get("ten_file") or "file.bin")
+            fname = safe_name(name.stem) + name.suffix.lower()
+            dest_dir = folder / "wf" / re.sub(r"[^\w-]", "", nid)
+            dest_dir.mkdir(parents=True, exist_ok=True)
+            dest = dest_dir / fname
+            raw = base64.b64decode((body.get("du_lieu") or "").split(",", 1)[-1])
+            if len(raw) > MAX_UPLOAD:
+                return self.send_json({"loi": "File quá lớn"}, HTTPStatus.BAD_REQUEST)
+            dest.write_bytes(raw)
+            rel = dest.relative_to(folder).as_posix()
+            if act == "ket_qua":
+                cong, kieu = body.get("cong"), body.get("kieu")
+
+                def fn(wf):
+                    for n in wf["nodes"]:
+                        if n["id"] == nid:
+                            n.setdefault("ket_qua", {})[cong] = {"kieu": kieu, "gia_tri": rel}
+                            n.update(trang_thai="xong", loi="", chi_tiet="", luc_chay=workflow.now())
+                workflow.update(pid, fn)
+            return self.send_json({"duong_dan": rel})
+        fields = {"duyet": {"trang_thai": "xong", "chi_tiet": "Đã duyệt"},
+                  "dat_lai": {"trang_thai": "chua_chay", "ket_qua": {}, "loi": "", "chi_tiet": ""},
+                  "tu_choi": {"trang_thai": "loi", "loi": body.get("ly_do") or "Bị từ chối khi duyệt"}}.get(act)
+        if not fields:
+            return self.send_json({"loi": "Hành động không hợp lệ"}, HTTPStatus.BAD_REQUEST)
+        workflow.set_fields(pid, nid, **fields)
+        return self.send_json({"ok": True})
+
     def do_PUT(self):
         path = unquote(urlparse(self.path).path)
+        m = re.fullmatch(r"/api/workflow/([^/]+)", path)
+        if m:
+            pid = safe_name(m.group(1))
+            if not (PROJECTS / pid).is_dir():
+                return self.send_json({"loi": "Không tìm thấy dự án"}, HTTPStatus.NOT_FOUND)
+            workflow.save_from_ui(pid, self.read_body())
+            return self.send_json({"ok": True}, headers={"X-Version": version_of(workflow.wf_path(pid))})
+        m = re.fullmatch(r"/api/mau-workflow/([^/]+)", path)
+        if m:
+            f = TEMPLATES / (safe_name(m.group(1)) + ".json")
+            if not f.is_file():
+                return self.send_json({"loi": "Không có mẫu"}, HTTPStatus.NOT_FOUND)
+            body = self.read_body()
+            nodes = [{k: v for k, v in n.items() if k not in workflow.RUNTIME} for n in body.get("nodes", [])]
+            write_json(f, {"ten": body.get("ten") or read_json(f).get("ten"), "mo_ta": body.get("mo_ta", ""),
+                           "meta": body.get("meta", {}), "nodes": nodes, "edges": body.get("edges", [])})
+            return self.send_json({"ok": True})
+        if path == "/api/cai-dat/khoa":
+            providers.save_keys(self.read_body())
+            return self.send_json(providers.masked_keys())
         m = re.fullmatch(r"/api/project/([^/]+)", path)
         if not m:
             return self.send_error(HTTPStatus.NOT_FOUND)

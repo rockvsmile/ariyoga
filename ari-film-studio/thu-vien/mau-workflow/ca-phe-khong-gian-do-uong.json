@@ -1,0 +1,303 @@
+{
+ "ten": "Coffee shop — Đồ uống & không gian 15s",
+ "mo_ta": "Ảnh ly signature → packshot Nano Banana → 3 shot: rót/latte art (vật lý chất lỏng tốt: Veo), không gian nắng sáng, hero shot; tiếng rót ASMR + lo-fi.",
+ "meta": {
+  "nganh": "Cà phê",
+  "the_loai": "ca-phe",
+  "phong_cach": "",
+  "ky_nang": [
+   "cinematic-techniques"
+  ],
+  "ti_le": "9:16",
+  "thoi_luong": 15
+ },
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "anh",
+   "x": 0,
+   "y": 0,
+   "ten": "Ảnh ly signature thật",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n2",
+   "type": "anh",
+   "x": 0,
+   "y": 250,
+   "ten": "Ảnh không gian quán",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n3",
+   "type": "tao-anh",
+   "x": 290,
+   "y": 0,
+   "ten": "Packshot",
+   "provider": "google-image",
+   "model": "gemini-3.1-flash-image",
+   "params": {
+    "prompt": "Hero packshot of this exact drink on a wooden table, morning side light, steam, shallow depth of field",
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n4",
+   "type": "tao-video",
+   "x": 580,
+   "y": 0,
+   "ten": "Rót sữa / latte art",
+   "provider": "google-veo",
+   "model": "veo-3.1-generate-preview",
+   "params": {
+    "prompt": "Top-down macro slow motion, milk pouring into espresso forming latte art, realistic fluid physics",
+    "thoi_luong": 6,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n5",
+   "type": "tao-video",
+   "x": 580,
+   "y": 250,
+   "ten": "Không gian quán",
+   "provider": "higgsfield-mcp",
+   "model": "kling3_0",
+   "params": {
+    "che_do": "tham-chieu",
+    "prompt": "Slow dolly through the cafe, sunlight through windows, plants, customers chatting softly",
+    "thoi_luong": 5,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n6",
+   "type": "tao-video",
+   "x": 580,
+   "y": 500,
+   "ten": "Hero shot ly",
+   "provider": "google-veo",
+   "model": "veo-3.1-fast-generate-preview",
+   "params": {
+    "che_do": "khung-dau",
+    "prompt": "Slow push in on the drink, condensation drops, warm light, cozy mood",
+    "thoi_luong": 4,
+    "ti_le": "9:16"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n7",
+   "type": "hieu-ung-am",
+   "x": 580,
+   "y": 750,
+   "ten": "Tiếng rót, cốc chạm",
+   "provider": "elevenlabs",
+   "model": "",
+   "params": {
+    "mo_ta": "Coffee pouring, cup clink, espresso machine hiss, cafe ambience",
+    "thoi_luong": 6
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n8",
+   "type": "nhac",
+   "x": 580,
+   "y": 1000,
+   "ten": "Lo-fi",
+   "provider": "elevenlabs",
+   "model": "",
+   "params": {
+    "mo_ta": "Warm lo-fi acoustic cafe music",
+    "thoi_luong": 15
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n9",
+   "type": "dung-phim",
+   "x": 870,
+   "y": 375.0,
+   "ten": "Dựng",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "chuyen_canh": "cat",
+    "do_phan_giai": "1080x1920",
+    "bat_dau_am_thanh": "0"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n10",
+   "type": "hau-ky",
+   "x": 1160,
+   "y": 375.0,
+   "ten": "Chữ tên quán, giờ mở cửa",
+   "provider": "higgsfield-mcp",
+   "model": "",
+   "params": {
+    "viec": "chu-tieu-de",
+    "gia_tri": "Tên quán · địa chỉ · giờ mở cửa"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n11",
+   "type": "xuat",
+   "x": 1450,
+   "y": 375.0,
+   "ten": "Xuất",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "ten_file": "cafe-reels"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n3",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e2",
+   "tu": {
+    "node": "n1",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e3",
+   "tu": {
+    "node": "n2",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "tham_chieu"
+   }
+  },
+  {
+   "id": "e4",
+   "tu": {
+    "node": "n3",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "khung_dau"
+   }
+  },
+  {
+   "id": "e5",
+   "tu": {
+    "node": "n4",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e6",
+   "tu": {
+    "node": "n5",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e7",
+   "tu": {
+    "node": "n6",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e8",
+   "tu": {
+    "node": "n7",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "audio"
+   }
+  },
+  {
+   "id": "e9",
+   "tu": {
+    "node": "n8",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "nhac"
+   }
+  },
+  {
+   "id": "e10",
+   "tu": {
+    "node": "n9",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n10",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e11",
+   "tu": {
+    "node": "n10",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  }
+ ]
+}

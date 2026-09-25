@@ -1,0 +1,347 @@
+{
+ "ten": "Kỹ thuật — Nối cảnh bằng khung đầu & khung cuối",
+ "mo_ta": "Ảnh mở cảnh bằng ChatGPT, ảnh kết cảnh bằng Nano Banana → Veo 3.1 tạo chuyển động giữa hai ảnh → trích khung cuối làm khung đầu cho cảnh sau (Kling qua Higgsfield). Dùng làm khung xương cho mọi phim nhiều cảnh.",
+ "meta": {
+  "nganh": "Chung",
+  "the_loai": "",
+  "phong_cach": "",
+  "ky_nang": [
+   "cinematic-techniques"
+  ],
+  "ti_le": "16:9",
+  "thoi_luong": 20
+ },
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "prompt",
+   "x": 0,
+   "y": 0,
+   "ten": "Prompt ảnh mở cảnh",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Mô tả khung hình mở đầu cảnh 1…"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n2",
+   "type": "prompt",
+   "x": 0,
+   "y": 250,
+   "ten": "Prompt ảnh kết cảnh",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Mô tả khung hình kết thúc cảnh 1…"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n3",
+   "type": "prompt",
+   "x": 0,
+   "y": 500,
+   "ten": "Prompt chuyển động cảnh 1",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Máy quay và hành động giữa hai khung…"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n4",
+   "type": "tao-anh",
+   "x": 290,
+   "y": 0,
+   "ten": "Khung đầu (ChatGPT)",
+   "provider": "openai",
+   "model": "gpt-image-2.5-flare",
+   "params": {
+    "ti_le": "16:9"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n5",
+   "type": "tao-anh",
+   "x": 290,
+   "y": 250,
+   "ten": "Khung cuối (Nano Banana)",
+   "provider": "google-image",
+   "model": "gemini-3.1-flash-image",
+   "params": {
+    "ti_le": "16:9"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n6",
+   "type": "tao-video",
+   "x": 580,
+   "y": 125.0,
+   "ten": "Cảnh 1 — Veo đầu/cuối",
+   "provider": "google-veo",
+   "model": "veo-3.1-generate-preview",
+   "params": {
+    "che_do": "dau-cuoi",
+    "thoi_luong": 8,
+    "ti_le": "16:9"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n7",
+   "type": "trich-khung",
+   "x": 870,
+   "y": 0,
+   "ten": "Khung cuối cảnh 1",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "vi_tri": "cuoi"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n8",
+   "type": "prompt",
+   "x": 870,
+   "y": 300.0,
+   "ten": "Prompt cảnh 2",
+   "provider": "",
+   "model": "",
+   "params": {
+    "noi_dung": "Cảnh 2 tiếp nối từ khung cuối cảnh 1…"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n9",
+   "type": "tao-video",
+   "x": 1160,
+   "y": 125.0,
+   "ten": "Cảnh 2 — nối tiếp",
+   "provider": "higgsfield-mcp",
+   "model": "kling3_0",
+   "params": {
+    "che_do": "khung-dau",
+    "thoi_luong": 5,
+    "ti_le": "16:9"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n10",
+   "type": "nhac",
+   "x": 1160,
+   "y": 500,
+   "ten": "Nhạc nền",
+   "provider": "elevenlabs",
+   "model": "",
+   "params": {
+    "mo_ta": "Nhạc điện ảnh nhẹ nhàng, dâng dần",
+    "thoi_luong": 20
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n11",
+   "type": "dung-phim",
+   "x": 1450,
+   "y": 250,
+   "ten": "Dựng",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "chuyen_canh": "cat",
+    "do_phan_giai": "1920x1080"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n12",
+   "type": "duyet",
+   "x": 1740,
+   "y": 250,
+   "ten": "Duyệt bản dựng",
+   "provider": "",
+   "model": "",
+   "params": {},
+   "khoa": false,
+   "ghi_chu": ""
+  },
+  {
+   "id": "n13",
+   "type": "xuat",
+   "x": 2030,
+   "y": 250,
+   "ten": "Xuất",
+   "provider": "ffmpeg",
+   "model": "",
+   "params": {
+    "ten_file": "phim-noi-canh"
+   },
+   "khoa": false,
+   "ghi_chu": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "tu": {
+    "node": "n1",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n4",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e2",
+   "tu": {
+    "node": "n2",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n5",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e3",
+   "tu": {
+    "node": "n4",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "khung_dau"
+   }
+  },
+  {
+   "id": "e4",
+   "tu": {
+    "node": "n5",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "khung_cuoi"
+   }
+  },
+  {
+   "id": "e5",
+   "tu": {
+    "node": "n3",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n6",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e6",
+   "tu": {
+    "node": "n6",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n7",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e7",
+   "tu": {
+    "node": "n7",
+    "cong": "image"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "khung_dau"
+   }
+  },
+  {
+   "id": "e8",
+   "tu": {
+    "node": "n8",
+    "cong": "text"
+   },
+   "den": {
+    "node": "n9",
+    "cong": "prompt"
+   }
+  },
+  {
+   "id": "e9",
+   "tu": {
+    "node": "n6",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e10",
+   "tu": {
+    "node": "n9",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "video"
+   }
+  },
+  {
+   "id": "e11",
+   "tu": {
+    "node": "n10",
+    "cong": "audio"
+   },
+   "den": {
+    "node": "n11",
+    "cong": "nhac"
+   }
+  },
+  {
+   "id": "e12",
+   "tu": {
+    "node": "n11",
+    "cong": "video"
+   },
+   "den": {
+    "node": "n12",
+    "cong": "any"
+   }
+  },
+  {
+   "id": "e13",
+   "tu": {
+    "node": "n12",
+    "cong": "any"
+   },
+   "den": {
+    "node": "n13",
+    "cong": "video"
+   }
+  }
+ ]
+}

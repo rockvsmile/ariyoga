@@ -6,7 +6,34 @@ Xưởng phim AI tạo sinh chạy trên máy của bạn. Một bộ phim vài 
 Ý tưởng → Phong cách → Tham chiếu → Ép cảnh → Kịch bản → Storyboard & Máy quay → Sản xuất video → Dựng phim → Kiểm định
 ```
 
-## Bảng kết nối — bạn chọn từng mảnh ghép
+## Canvas Workflow (cách làm chính)
+Mở `mo-studio.bat` (hoặc `python studio.py`) → trình duyệt mở canvas.
+
+- **📋 Mẫu workflow:** thư viện template theo ngành (Yoga, Spa, Cà phê, Bán hàng online, Nail/Salon, Phim ngắn, Game 3D, Kỹ thuật nối cảnh). Chọn **Dùng cho dự án** để bắt đầu, **✎ Sửa mẫu** để chỉnh mẫu, **💾 Lưu làm mẫu** để biến workflow đang làm thành mẫu mới.
+- **Node:** kéo từ bảng bên trái. Nối dây từ chấm bên phải (đầu ra) sang chấm bên trái (đầu vào) — chỉ nối được đúng kiểu (chữ, ảnh, video, âm thanh, 3D). Nhấc đầu dây ra khỏi đầu vào để cắt; bấm dây + Delete (hoặc ✂) để xoá; Ctrl+Z hoàn tác; Ctrl+D nhân bản.
+- **Mỗi node bạn chọn nhà cung cấp + model:**
+  - ⚡ **API** (app chạy ngay bằng API key của bạn): OpenAI (ChatGPT ảnh), Google Nano Banana / Veo 3.1 / Gemini Omni Flash, ElevenLabs (giọng, nhạc, hiệu ứng), Tripo3D, Higgsfield API.
+  - 💻 **Trên máy**: trích khung hình (nối cảnh), cắt video, dựng phim, xuất.
+  - 🤖 **Claude Code**: node AI vai trò (Đạo Diễn, Biên Kịch, Quay Phim, Viết prompt, Kiểm Định) và Higgsfield qua MCP → gõ `/chay-workflow <dự án>` trong Claude Code.
+  - ✋ **Làm tay**: Google Flow, ChatGPT app, Dreamina, app giọng trên máy → node tự soạn gói việc, bạn làm xong thì thả file vào node.
+- **▶ trên node**: chạy node đó và những gì nó cần. **▶ Chạy tất cả**: chạy mọi node đủ đầu vào. Trước khi gọi API trả phí, app luôn hỏi lại.
+- **Duyệt**: node Duyệt dừng quy trình để bạn xem, bấm ✓ để đi tiếp.
+- **⚙ Cài đặt**: nhập API key (lưu ở `cai-dat/khoa-api.json` trên máy bạn, không lên GitHub).
+- Bấm vào chỗ trống → **Thông tin workflow**: ngành, thể loại, phong cách, skill — các node AI dùng để làm đúng phong cách của khách.
+- **Trợ lý chính (Claude Code):** `/thiet-ke-mau` — kể nhu cầu khách, Claude dựng/sửa template; `/hoc-hoi` — học phong cách mới từ video mẫu, thêm công cụ.
+
+### Cần chuẩn bị
+| Thứ | Để làm gì |
+|---|---|
+| Python 3.10+ và `pip install imageio-ffmpeg` | Chạy studio, dựng phim trên máy |
+| OpenAI API key (platform.openai.com) | Vẽ ảnh bằng ChatGPT (GPT Image) |
+| Tripo3D API key (bản v3) | Tạo mô hình 3D |
+| Google Gemini API key (aistudio.google.com) | Nano Banana, Veo 3.1, Gemini Omni Flash |
+| ElevenLabs API key | Giọng tiếng Việt (`eleven_v3`, `eleven_flash_v2_5`), nhạc, hiệu ứng |
+| Higgsfield Key ID + Secret (cloud.higgsfield.ai) | Higgsfield API; hoặc dùng Higgsfield qua MCP trong Claude Code không cần key |
+| Claude Code (Claude desktop app → Code) | Node AI vai trò, Higgsfield MCP, trợ lý thiết kế mẫu |
+
+## Hồ sơ phim & Bảng kết nối (bổ trợ, trang 🗂 Hồ sơ phim)
 | Mảnh ghép | Lựa chọn |
 |---|---|
 | Đạo diễn · Kịch bản · Quay phim | Tôi tự làm / AI làm nháp để tôi duyệt |
