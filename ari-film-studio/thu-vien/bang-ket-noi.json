@@ -1,0 +1,379 @@
+{
+  "_ghi_chu": "Các mảnh ghép của một bộ phim và các lựa chọn cho từng mảnh. NGƯỜI DÙNG chọn trên Bảng kết nối — AI chỉ làm theo. kieu: tu_dong = Claude gọi trực tiếp qua MCP; thu_cong = Claude soạn 'gói việc', người dùng làm trên app rồi thả file vào thư mục dự án; nguoi_dung = người dùng tự làm, AI chỉ đọc; ai = agent AI làm nháp để người dùng duyệt; tat = bỏ qua mảnh này. Thêm lựa chọn mới: thêm một phần tử vào 'lua_chon' (và hồ sơ trong thu-vien/cong-cu/ nếu là công cụ).",
+  "manh_ghep": [
+    {
+      "id": "dao_dien",
+      "ten": "Đạo diễn",
+      "khung": "1_y_tuong",
+      "mo_ta": "Tầm nhìn tổng thể, cảm xúc, duyệt kịch bản",
+      "lua_chon": [
+        {
+          "id": "toi",
+          "ten": "Tôi tự đạo diễn",
+          "kieu": "nguoi_dung"
+        },
+        {
+          "id": "dao-dien-ai",
+          "ten": "Đạo Diễn AI đề xuất, tôi duyệt",
+          "kieu": "ai"
+        }
+      ]
+    },
+    {
+      "id": "kich_ban",
+      "ten": "Kịch bản",
+      "khung": "5_kich_ban",
+      "mo_ta": "Ý tưởng, cảnh, lời thoại, lời dẫn",
+      "lua_chon": [
+        {
+          "id": "toi",
+          "ten": "Tôi tự viết",
+          "kieu": "nguoi_dung"
+        },
+        {
+          "id": "bien-kich-ai",
+          "ten": "Biên Kịch AI viết nháp, tôi duyệt",
+          "kieu": "ai"
+        }
+      ]
+    },
+    {
+      "id": "nhan_vat",
+      "ten": "Nhân vật nhất quán",
+      "khung": "3_tham_chieu",
+      "mo_ta": "Giữ mặt, trang phục, sản phẩm giống nhau qua mọi cảnh",
+      "lua_chon": [
+        {
+          "id": "higgsfield-elements",
+          "ten": "Higgsfield Elements",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield"
+        },
+        {
+          "id": "higgsfield-soul",
+          "ten": "Higgsfield Soul (huấn luyện 1 người thật)",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield"
+        },
+        {
+          "id": "flow-ingredients",
+          "ten": "Google Flow Ingredients",
+          "kieu": "thu_cong",
+          "cong_cu": "google-flow"
+        },
+        {
+          "id": "anh-tham-chieu",
+          "ten": "Chỉ dùng ảnh tham chiếu + mô tả",
+          "kieu": "ai"
+        }
+      ]
+    },
+    {
+      "id": "quay_phim",
+      "ten": "Quay phim (shot list, máy, ống kính)",
+      "khung": "6_storyboard",
+      "mo_ta": "Chia shot, góc máy, chuyển động, tiêu cự, ánh sáng",
+      "lua_chon": [
+        {
+          "id": "toi",
+          "ten": "Tôi tự chia shot",
+          "kieu": "nguoi_dung"
+        },
+        {
+          "id": "quay-phim-ai",
+          "ten": "Quay Phim AI làm nháp, tôi sửa/duyệt",
+          "kieu": "ai"
+        }
+      ]
+    },
+    {
+      "id": "storyboard",
+      "ten": "Ảnh storyboard",
+      "khung": "6_storyboard",
+      "mo_ta": "Ảnh từng shot, dùng làm khung đầu video",
+      "lua_chon": [
+        {
+          "id": "higgsfield",
+          "ten": "Higgsfield (tự động)",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield",
+          "model": "model_anh"
+        },
+        {
+          "id": "google-flow",
+          "ten": "Google Flow — Nano Banana (thủ công)",
+          "kieu": "thu_cong",
+          "cong_cu": "google-flow"
+        },
+        {
+          "id": "toi",
+          "ten": "Tôi tự vẽ / tải ảnh lên",
+          "kieu": "nguoi_dung"
+        },
+        {
+          "id": "tat",
+          "ten": "Không làm storyboard ảnh",
+          "kieu": "tat"
+        }
+      ]
+    },
+    {
+      "id": "tao_sinh",
+      "ten": "Tạo sinh video",
+      "khung": "7_san_xuat",
+      "mo_ta": "Tuyến và model tạo video (từng shot có thể đổi riêng ở Khung 7)",
+      "lua_chon": [
+        {
+          "id": "higgsfield",
+          "ten": "Higgsfield (tự động)",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield",
+          "model": "model_video"
+        },
+        {
+          "id": "google-flow",
+          "ten": "Google Flow — Veo / Omni (thủ công)",
+          "kieu": "thu_cong",
+          "cong_cu": "google-flow",
+          "model": "model_flow"
+        },
+        {
+          "id": "dreamina",
+          "ten": "Dreamina — Seedance (thủ công)",
+          "kieu": "thu_cong",
+          "cong_cu": "seedance-2-5"
+        }
+      ]
+    },
+    {
+      "id": "chinh_sua",
+      "ten": "Chỉnh sửa video",
+      "khung": "7_san_xuat",
+      "mo_ta": "Sửa lỗi, thay đồ vật, chép động tác, nối dài",
+      "lua_chon": [
+        {
+          "id": "higgsfield",
+          "ten": "Higgsfield — edit / Genjutsu (tự động)",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield",
+          "model": "model_edit"
+        },
+        {
+          "id": "google-flow",
+          "ten": "Google Flow — Omni sửa bằng lời, Extend (thủ công)",
+          "kieu": "thu_cong",
+          "cong_cu": "google-flow",
+          "model": "model_flow_edit"
+        },
+        {
+          "id": "tao-lai",
+          "ten": "Không sửa — tạo lại shot lỗi",
+          "kieu": "ai"
+        },
+        {
+          "id": "tat",
+          "ten": "Không chỉnh sửa",
+          "kieu": "tat"
+        }
+      ]
+    },
+    {
+      "id": "long_tieng",
+      "ten": "Lồng tiếng / giọng dẫn",
+      "khung": "8_dung_phim",
+      "mo_ta": "Giọng đọc, lời thoại, nhân bản giọng",
+      "lua_chon": [
+        {
+          "id": "elevenlabs",
+          "ten": "ElevenLabs (MCP, tự động)",
+          "kieu": "tu_dong",
+          "cong_cu": "elevenlabs"
+        },
+        {
+          "id": "higgsfield",
+          "ten": "Higgsfield — Seed Audio (tự động)",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield"
+        },
+        {
+          "id": "app-giong-may",
+          "ten": "App giọng trên máy tôi (chọn app)",
+          "kieu": "thu_cong",
+          "cong_cu": "voice-studio-local",
+          "model": "app_giong_may"
+        },
+        {
+          "id": "am-thanh-goc",
+          "ten": "Dùng giọng/thoại có sẵn trong video (Veo, Seedance…)",
+          "kieu": "ai"
+        },
+        {
+          "id": "tu-thu",
+          "ten": "Tôi tự thu âm",
+          "kieu": "nguoi_dung"
+        },
+        {
+          "id": "tat",
+          "ten": "Không lồng tiếng",
+          "kieu": "tat"
+        }
+      ]
+    },
+    {
+      "id": "nhac",
+      "ten": "Nhạc & hiệu ứng âm thanh",
+      "khung": "8_dung_phim",
+      "mo_ta": "Nhạc nền, tiếng động",
+      "lua_chon": [
+        {
+          "id": "elevenlabs",
+          "ten": "ElevenLabs — nhạc & SFX (MCP, tự động)",
+          "kieu": "tu_dong",
+          "cong_cu": "elevenlabs"
+        },
+        {
+          "id": "file-cua-toi",
+          "ten": "File nhạc của tôi",
+          "kieu": "nguoi_dung"
+        },
+        {
+          "id": "am-thanh-goc",
+          "ten": "Âm thanh gốc của video",
+          "kieu": "ai"
+        },
+        {
+          "id": "tat",
+          "ten": "Không nhạc",
+          "kieu": "tat"
+        }
+      ]
+    },
+    {
+      "id": "dung_phim",
+      "ten": "Dựng phim",
+      "khung": "8_dung_phim",
+      "mo_ta": "Ghép shot, nhịp, chuyển cảnh",
+      "lua_chon": [
+        {
+          "id": "ffmpeg",
+          "ten": "Studio tự ghép (ffmpeg, miễn phí)",
+          "kieu": "tu_dong"
+        },
+        {
+          "id": "higgsedit",
+          "ten": "Higgsfield Higgsedit — có chữ động (tự động)",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield"
+        },
+        {
+          "id": "flow-scenebuilder",
+          "ten": "Google Flow Scenebuilder (thủ công)",
+          "kieu": "thu_cong",
+          "cong_cu": "google-flow"
+        },
+        {
+          "id": "davinci-resolve",
+          "ten": "DaVinci Resolve (tôi tự dựng)",
+          "kieu": "nguoi_dung"
+        }
+      ]
+    },
+    {
+      "id": "hau_ky",
+      "ten": "Hậu kỳ (chữ, phụ đề, upscale, tỉ lệ)",
+      "khung": "8_dung_phim",
+      "mo_ta": "Hoàn thiện để đăng",
+      "lua_chon": [
+        {
+          "id": "higgsfield",
+          "ten": "Higgsfield (tự động)",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield"
+        },
+        {
+          "id": "davinci-resolve",
+          "ten": "DaVinci Resolve (tôi tự làm)",
+          "kieu": "nguoi_dung"
+        },
+        {
+          "id": "tat",
+          "ten": "Không hậu kỳ",
+          "kieu": "tat"
+        }
+      ]
+    },
+    {
+      "id": "kiem_dinh",
+      "ten": "Kiểm định",
+      "khung": "9_kiem_dinh",
+      "mo_ta": "Soi lỗi trước khi tốn tiền và trước khi đăng",
+      "lua_chon": [
+        {
+          "id": "kiem-dinh-ai",
+          "ten": "Kiểm Định AI",
+          "kieu": "ai"
+        },
+        {
+          "id": "kiem-dinh-ai-viral",
+          "ten": "Kiểm Định AI + dự đoán viral (Higgsfield, tốn credit)",
+          "kieu": "tu_dong",
+          "cong_cu": "higgsfield"
+        },
+        {
+          "id": "toi",
+          "ten": "Tôi tự kiểm tra",
+          "kieu": "nguoi_dung"
+        }
+      ]
+    }
+  ],
+  "danh_sach_model": {
+    "model_anh": [
+      "gpt_image_2_5",
+      "nano_banana_pro",
+      "nano_banana_2",
+      "cinematic_studio_2_5",
+      "soul_2",
+      "soul_cinematic",
+      "marketing_studio_image",
+      "seedream_v4_5"
+    ],
+    "model_video": [
+      "cinematic_studio_3_0",
+      "cinematic_studio_video_v2",
+      "seedance_2_5",
+      "seedance_2_0",
+      "kling3_0",
+      "kling3_0_turbo",
+      "gemini_omni_flash_1_1",
+      "veo3_1",
+      "veo3_1_lite",
+      "wan3_0",
+      "wan3_0_prime",
+      "minimax_h3",
+      "flux_3_video",
+      "marketing_studio_video"
+    ],
+    "model_edit": [
+      "gemini_omni_flash_1_1 (edit)",
+      "kling_video_edit",
+      "seedance_2_5 (video_edit)",
+      "seedance_2_5 (video_extension)",
+      "hf_mult_replace_object",
+      "hf_mult_motion_control",
+      "flux_3_video_edit"
+    ],
+    "model_flow": [
+      "Veo 3.1 — Quality",
+      "Veo 3.1 — Fast",
+      "Gemini Omni Flash"
+    ],
+    "model_flow_edit": [
+      "Gemini Omni Flash — sửa bằng lời",
+      "Veo 3.1 — Extend",
+      "Veo 3.1 — Frames to Video"
+    ],
+    "app_giong_may": []
+  },
+  "_app_giong_may": "Danh sách tên các app tạo giọng chạy trên máy bạn. Gõ tên app mới vào ô chọn trên Bảng kết nối là dùng được; muốn lưu sẵn thì thêm vào mảng danh_sach_model.app_giong_may (hoặc bảo Thủ Thư thêm)."
+}

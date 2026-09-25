@@ -1,10 +1,29 @@
 # 🎬 Ari Film Studio
 
-Xưởng phim AI chạy trên máy của bạn. Mỗi bộ phim đi qua **9 khung**, mỗi khung có **AI chuyên biệt** phụ trách. Bạn xem, sửa, khoá, duyệt mọi thứ trên **bảng điều khiển dạng lưới**; các AI làm việc trong **Claude Code** (dùng gói Claude Max bạn đang có).
+Xưởng phim AI tạo sinh chạy trên máy của bạn. Một bộ phim vài phút được lắp từ nhiều **mảnh ghép** — đạo diễn, kịch bản, nhân vật, quay phim, storyboard, tạo sinh, chỉnh sửa, lồng tiếng, nhạc, dựng, hậu kỳ, kiểm định. Trên **Bảng kết nối**, **bạn chọn** công cụ cho từng mảnh (Higgsfield, Google Flow Veo/Omni, ElevenLabs, các app giọng trên máy, DaVinci Resolve…); các **AI chuyên biệt** trong **Claude Code** làm đúng theo lựa chọn đó, qua **9 khung** có cổng duyệt.
 
 ```
 Ý tưởng → Phong cách → Tham chiếu → Ép cảnh → Kịch bản → Storyboard & Máy quay → Sản xuất video → Dựng phim → Kiểm định
 ```
+
+## Bảng kết nối — bạn chọn từng mảnh ghép
+| Mảnh ghép | Lựa chọn |
+|---|---|
+| Đạo diễn · Kịch bản · Quay phim | Tôi tự làm / AI làm nháp để tôi duyệt |
+| Nhân vật nhất quán | Higgsfield Elements · Higgsfield Soul · Google Flow Ingredients · chỉ ảnh + mô tả |
+| Ảnh storyboard | Higgsfield (chọn model) · Google Flow Nano Banana · tôi tự tải · không làm |
+| Tạo sinh video | **Higgsfield** (chọn model: Cinema Studio, Seedance, Kling, Veo, Omni, Wan…) · **Google Flow** (Veo 3.1 Quality/Fast, Gemini Omni Flash) · Dreamina |
+| Chỉnh sửa video | Higgsfield edit/Genjutsu · Google Flow Omni/Extend · tạo lại · không |
+| Lồng tiếng | **ElevenLabs** (MCP) · Higgsfield Seed Audio · **app giọng trên máy tôi** (chọn tên app) · giọng gốc trong video · tôi tự thu |
+| Nhạc & hiệu ứng | ElevenLabs · file của tôi · âm thanh gốc · không |
+| Dựng phim | Studio tự ghép (ffmpeg) · Higgsedit · Flow Scenebuilder · DaVinci Resolve (tôi tự dựng) |
+| Hậu kỳ | Higgsfield (chữ, phụ đề, upscale, đổi tỉ lệ) · DaVinci Resolve · không |
+| Kiểm định | Kiểm Định AI · + dự đoán viral · tôi tự kiểm tra |
+
+- **⚡ Tự động:** Claude gọi thẳng qua MCP (Higgsfield, ElevenLabs).
+- **✋ Thủ công:** Claude soạn **gói việc** trong `du-an/<ten>/goi-viec/` (prompt, ảnh cần tải, cài đặt). Bạn làm trên app (Google Flow, Dreamina, app giọng trên máy), lưu file đặt tên theo mã (`video/S03.mp4`, `video/K02.mp4`, `am-thanh/A01.wav`), rồi bấm **⟳ Quét file mới** — studio tự gắn vào đúng shot/track.
+- Mảnh nào chưa chọn, AI **dừng lại hỏi** — không tự chọn thay bạn. Từng shot/track vẫn đổi riêng tuyến/model/app được.
+- Thêm công cụ hoặc app mới: bảo `/hoc-hoi thêm app giọng X` hoặc sửa `thu-vien/bang-ket-noi.json`.
 
 ## Đội ngũ AI
 
@@ -14,10 +33,13 @@ Xưởng phim AI chạy trên máy của bạn. Mỗi bộ phim đi qua **9 khun
 | **Đạo Diễn** `dao-dien` | Tầm nhìn tổng thể, duyệt kịch bản, ghi nhận ép cảnh |
 | **Biên Kịch** `bien-kich` | 3 phương án ý tưởng, kịch bản phân cảnh, lời thoại |
 | **Chỉ Đạo Hình Ảnh** `chi-dao-hinh-anh` | Phong cách, bảng màu, hồ sơ nhân vật/sản phẩm từ ảnh |
+| **Chuyên Gia Nhân Vật** `chuyen-gia-nhan-vat` | Khoá danh tính: Elements/Soul (Higgsfield) hoặc Ingredients (Flow) |
 | **Quay Phim** `quay-phim` | Chia shot, cỡ cảnh, góc máy, chuyển động, ống kính, máy quay, ánh sáng |
 | **Họa Sĩ Storyboard** `hoa-si-storyboard` | Vẽ ảnh storyboard từng shot (qua Higgsfield) |
-| **Kỹ Thuật Viên AI** `ky-thuat-vien-ai` | Chọn công cụ (Seedance 2.5, Gemini Omni Flash, Veo 3.1, Higgsfield…), viết prompt, tạo video |
-| **Biên Tập Viên** `bien-tap-vien` | Dựng timeline, nhịp, chuyển cảnh, nhạc, xuất phim |
+| **Kỹ Thuật Viên AI** `ky-thuat-vien-ai` | Viết prompt đúng tuyến/model bạn chọn, tạo video (Higgsfield) hoặc soạn gói việc (Flow, Dreamina), sửa video lỗi |
+| **Kỹ Sư Âm Thanh** `ky-su-am-thanh` | Giọng dẫn, thoại, nhạc qua ElevenLabs / Higgsfield / app giọng trên máy |
+| **Biên Tập Viên** `bien-tap-vien` | Dựng timeline, nhịp, chuyển cảnh, nhạc, xuất bản sạch |
+| **Hậu Kỳ AI** `hau-ky-ai` | Chữ, phụ đề, upscale, đổi tỉ lệ từng nền tảng, thumbnail |
 | **Kiểm Định** `kiem-dinh` | Soi lỗi, chấm điểm, báo cáo |
 | **Thủ Thư** `thu-thu` | Học phong cách mới, cập nhật công cụ, ghi bài học, nâng cấp agent |
 
@@ -30,20 +52,24 @@ Xưởng phim AI chạy trên máy của bạn. Mỗi bộ phim đi qua **9 khun
    pip install imageio-ffmpeg
    ```
 4. Tải thư mục `ari-film-studio` về máy (clone repo `rockvsmile/ariyoga` bằng GitHub Desktop).
-5. **Kết nối Higgsfield cho Claude Code** (để AI tự tạo ảnh/video): nếu Claude Code đăng nhập cùng tài khoản claude.ai đã kết nối Higgsfield, connector thường có sẵn — gõ `/mcp` trong Claude Code để kiểm tra. Nếu chưa có, thêm theo hướng dẫn MCP của Higgsfield. Không có Higgsfield studio vẫn chạy: AI viết prompt để bạn dán vào Dreamina / Gemini / Flow.
+5. **Kết nối các dịch vụ tự động** (chỉ cần những cái bạn dùng):
+   - **Higgsfield:** nếu Claude Code đăng nhập cùng tài khoản claude.ai đã kết nối Higgsfield, connector thường có sẵn — gõ `/mcp` để kiểm tra; chưa có thì thêm theo hướng dẫn MCP của Higgsfield.
+   - **ElevenLabs:** `claude mcp add --transport http elevenlabs https://api.elevenlabs.io/v1/mcp` rồi gõ `/mcp` để đăng nhập tài khoản ElevenLabs.
+   - **Google Flow, Dreamina, app giọng trên máy:** không cần kết nối — dùng gói việc + Quét file.
 
 ## Mỗi lần làm phim
 
 1. **Mở bảng điều khiển:** bấm đúp `mo-studio.bat` (Windows) hoặc chạy `python studio.py` → trình duyệt mở http://127.0.0.1:8765
 2. **Mở Claude Code** trong thư mục `ari-film-studio`.
 3. Gõ `/phim-moi Tên phim` và kể ý tưởng, hoặc bấm **+ Dự án mới** trên bảng điều khiển.
-4. Vòng lặp mỗi khung:
+4. Mở **Bảng kết nối** (ô đầu tiên trên thanh quy trình) và chọn công cụ cho từng mảnh ghép.
+5. Vòng lặp mỗi khung:
    - Gõ lệnh hiện ở thanh dưới bảng điều khiển (vd `/tiep-tuc ten-du-an`) vào Claude Code.
    - AI làm xong → bảng điều khiển **tự cập nhật** sau vài giây.
    - Bạn xem, sửa trực tiếp trong lưới, **khoá** dòng muốn giữ, ghi **lời nhắn cho AI**, rồi bấm **Duyệt khung** hoặc **Yêu cầu sửa**.
-5. Khung 7: `/tao-video` — AI báo chi phí, chờ bạn đồng ý rồi mới tạo.
-6. Khung 8: `/dung-phim` — ghép thành phim trong `du-an/<ten>/xuat/`.
-7. Bất cứ lúc nào: `/kiem-tra` để soi lỗi.
+6. Khung 7: `/tao-video` — tuyến tự động: AI báo chi phí, chờ bạn đồng ý rồi mới tạo; tuyến thủ công: AI soạn gói việc, bạn làm rồi bấm Quét.
+7. Khung 8: `/dung-phim` — lồng tiếng, dựng, hậu kỳ theo lựa chọn của bạn; phim nằm trong `du-an/<ten>/xuat/`.
+8. Bất cứ lúc nào: `/kiem-tra` để soi lỗi.
 
 ## Kiểm soát
 - **Chế độ Từng bước** (mặc định): AI dừng ở mỗi khung chờ duyệt. **Tự động**: AI chạy liền tới trước khi tạo video.
@@ -61,16 +87,16 @@ Xưởng phim AI chạy trên máy của bạn. Mỗi bộ phim đi qua **9 khun
 ```
 ari-film-studio/
 ├── CLAUDE.md                 luật điều phối cho Nhà Sản Xuất
-├── .claude/agents/           9 agent chuyên biệt
+├── .claude/agents/           12 agent chuyên biệt
 ├── .claude/skills/           lệnh tắt /phim-moi /tiep-tuc /tao-video /dung-phim /kiem-tra /hoc-hoi
 ├── studio.py                 máy chủ bảng điều khiển (chỉ dùng thư viện chuẩn Python)
 ├── giao-dien/                bảng điều khiển (HTML/JS/CSS)
-├── thu-vien/                 phong cách · thể loại · công cụ · lựa chọn menu · sổ bài học
+├── thu-vien/                 bảng kết nối · phong cách · thể loại · công cụ · lựa chọn menu · sổ bài học
 ├── tools/                    tạo dự án · kiểm tra dự án · ghép phim
 └── du-an/<ten>/              project.json + tham-chieu/ storyboard/ video/ xuat/
 ```
 
 ## Giới hạn của bản đầu
-- Tạo video **tự động** chỉ qua Higgsfield MCP; Seedance (Dreamina), Gemini Omni Flash, Veo làm qua prompt dán tay. Kết nối API trực tiếp sẽ thêm ở bản sau.
-- Ghép phim cơ bản (cắt, hoà tan, qua đen, nhạc nền). Chữ, logo, chỉnh màu, mix âm thanh làm tiếp trong CapCut/Premiere.
+- Tuyến **tự động**: Higgsfield và ElevenLabs (qua MCP). Google Flow, Dreamina và app giọng trên máy là **thủ công** (gói việc + Quét file) vì chưa có kết nối trực tiếp; app nào có API trên máy thì có thể nâng cấp thành tự động.
+- Studio tự ghép (ffmpeg) ở mức cơ bản: cắt, hoà tan, qua đen, nhạc nền, track giọng theo thời điểm. Chữ, phụ đề, upscale làm ở Hậu kỳ (Higgsfield) hoặc DaVinci Resolve.
 - Các agent chưa được chạy thử trong một dự án thật — lần đầu dùng hãy làm từng bước và góp ý để Thủ Thư tinh chỉnh.

@@ -18,12 +18,12 @@ ROOT = Path(__file__).resolve().parent.parent
 KHUNG = [
     ("1_y_tuong", "Ý tưởng", "dao-dien, bien-kich"),
     ("2_phong_cach", "Phong cách & Thể loại", "chi-dao-hinh-anh"),
-    ("3_tham_chieu", "Tham chiếu", "chi-dao-hinh-anh"),
+    ("3_tham_chieu", "Tham chiếu & Nhân vật", "chi-dao-hinh-anh, chuyen-gia-nhan-vat"),
     ("4_ep_canh", "Yêu cầu đặc biệt (ép cảnh)", "người dùng"),
     ("5_kich_ban", "Kịch bản", "bien-kich"),
     ("6_storyboard", "Storyboard & Máy quay", "quay-phim, hoa-si-storyboard"),
-    ("7_san_xuat", "Sản xuất video", "ky-thuat-vien-ai"),
-    ("8_dung_phim", "Dựng phim", "bien-tap-vien"),
+    ("7_san_xuat", "Sản xuất video (Higgsfield)", "ky-thuat-vien-ai"),
+    ("8_dung_phim", "Âm thanh & Dựng phim", "ky-su-am-thanh, bien-tap-vien, hau-ky-ai"),
     ("9_kiem_dinh", "Kiểm định", "kiem-dinh"),
 ]
 
@@ -38,6 +38,13 @@ def safe_name(text: str) -> str:
     return text or "du-an"
 
 
+def bang_ket_noi_rong() -> dict:
+    """Mỗi mảnh ghép trong thu-vien/bang-ket-noi.json một ô trống — người dùng tự chọn."""
+    with open(ROOT / "thu-vien" / "bang-ket-noi.json", encoding="utf-8") as f:
+        cfg = json.load(f)
+    return {m["id"]: {"nguon": "", "model": "", "ghi_chu": ""} for m in cfg["manh_ghep"]}
+
+
 def empty_project(ten: str) -> dict:
     now = datetime.now().isoformat(timespec="seconds")
     noi_dung = {
@@ -50,8 +57,10 @@ def empty_project(ten: str) -> dict:
         "4_ep_canh": {"toan_phim": [], "theo_canh": []},
         "5_kich_ban": {"canh": []},
         "6_storyboard": {"shots": []},
-        "7_san_xuat": {"cong_cu_mac_dinh": "", "nhat_ky": []},
-        "8_dung_phim": {"danh_sach": [], "nhac": "", "am_luong_nhac": 0.6, "chuyen_canh_mac_dinh": "cat",
+        "7_san_xuat": {"cong_cu_mac_dinh": "", "model_mac_dinh": "", "chat_luong": "nhap",
+                       "ngan_sach_credit": None, "da_dung_credit": 0, "nhat_ky": []},
+        "8_dung_phim": {"danh_sach": [], "am_thanh": [], "nhac": "", "am_luong_nhac": 0.6, "chuyen_canh_mac_dinh": "cat",
+                        "cong_cu_dung": "ffmpeg", "hau_ky": {"upscale": "", "reframe": [], "phu_de": False},
                         "do_phan_giai": "1920x1080", "fps": 24, "xuat": "xuat/phim-hoan-chinh.mp4", "ghi_chu": ""},
         "9_kiem_dinh": {"bao_cao": []},
     }
@@ -61,6 +70,7 @@ def empty_project(ten: str) -> dict:
         "tao_luc": now,
         "cap_nhat": now,
         "che_do": "tung_buoc",  # tung_buoc = dừng chờ duyệt ở mỗi khung; tu_dong = chạy liền
+        "bang_ket_noi": bang_ket_noi_rong(),  # người dùng chọn công cụ cho từng mảnh ghép
         "khung": {
             ma: {"ten": ten_khung, "phu_trach": ai, "trang_thai": "nhap", "khoa": False,
                  "noi_dung": noi_dung[ma], "ghi_chu_nguoi_dung": "", "de_xuat_ai": ""}
@@ -76,7 +86,7 @@ def create_project(ten: str, projects_dir: Path = ROOT / "du-an") -> str:
     if (folder / "project.json").exists():
         raise FileExistsError(pid)
     for sub in ["tham-chieu/nhan-vat", "tham-chieu/trang-phuc", "tham-chieu/san-pham",
-                "tham-chieu/boi-canh", "tham-chieu/khac", "storyboard", "video", "xuat"]:
+                "tham-chieu/boi-canh", "tham-chieu/khac", "storyboard", "video", "am-thanh", "am-thanh/kich-ban-giong", "goi-viec", "xuat"]:
         (folder / sub).mkdir(parents=True, exist_ok=True)
     with open(folder / "project.json", "w", encoding="utf-8") as f:
         json.dump(empty_project(ten), f, ensure_ascii=False, indent=2)

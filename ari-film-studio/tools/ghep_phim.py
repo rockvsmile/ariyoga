@@ -110,18 +110,39 @@ def build(pid: str):
             total += segs[i]["len"]
         v, a = f"vx{i}", f"ax{i}"
 
+    # Nhạc nền (kéo dài hết phim, tự mờ dần) + các track âm thanh đặt theo thời điểm
+    extra = []
     music = cfg.get("nhac")
     if music:
         mpath = folder / music
         if not mpath.is_file():
             sys.exit(f"Không thấy file nhạc {mpath}")
-        inputs += ["-i", str(mpath)]
-        mi = len(items)
         vol = float(cfg.get("am_luong_nhac") if cfg.get("am_luong_nhac") is not None else 0.6)
-        fade_out = min(2.0, total / 4)
-        filters.append(f"[{mi}:a]atrim=0:{total},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,"
-                       f"volume={vol},afade=t=out:st={total - fade_out}:d={fade_out}[mus]")
-        filters.append(f"[{a}][mus]amix=inputs=2:duration=first:normalize=0[afinal]")
+        extra.append({"file": mpath, "start": 0.0, "vol": vol, "fade": True})
+    for tr in cfg.get("am_thanh", []) or []:
+        if not tr.get("file"):
+            continue
+        tpath = folder / tr["file"]
+        if not tpath.is_file():
+            sys.exit(f"Không thấy file âm thanh {tpath} (track {tr.get('id', '?')})")
+        vol = float(tr["am_luong"]) if tr.get("am_luong") not in (None, "") else 1.0
+        extra.append({"file": tpath, "start": float(tr.get("bat_dau") or 0), "vol": vol, "fade": False})
+    if extra:
+        labels = [a]
+        for j, e in enumerate(extra):
+            idx = len(items) + j
+            inputs += ["-i", str(e["file"])]
+            chain = f"[{idx}:a]aresample=48000,aformat=channel_layouts=stereo,volume={e['vol']}"
+            if e["fade"]:
+                fade_out = min(2.0, total / 4)
+                chain += f",atrim=0:{total},asetpts=PTS-STARTPTS,afade=t=out:st={total - fade_out}:d={fade_out}"
+            if e["start"] > 0:
+                ms = int(e["start"] * 1000)
+                chain += f",adelay={ms}|{ms}"
+            filters.append(chain + f"[ex{j}]")
+            labels.append(f"ex{j}")
+        filters.append("".join(f"[{l}]" for l in labels) +
+                       f"amix=inputs={len(labels)}:duration=first:normalize=0,atrim=0:{total}[afinal]")
         a = "afinal"
 
     out = folder / (cfg.get("xuat") or "xuat/phim-hoan-chinh.mp4")

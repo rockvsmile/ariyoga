@@ -28,7 +28,7 @@ UI = ROOT / "giao-dien"
 PORT = int(os.environ.get("STUDIO_PORT", "8765"))
 
 sys.path.insert(0, str(ROOT / "tools"))
-from tao_du_an import create_project, safe_name  # noqa: E402
+from tao_du_an import bang_ket_noi_rong, create_project, safe_name  # noqa: E402
 
 
 def read_json(path: Path):
@@ -123,6 +123,7 @@ class Handler(SimpleHTTPRequestHandler):
                 "the_loai": list_library("the-loai"),
                 "cong_cu": list_library("cong-cu"),
                 "tuy_chon": read_json(LIBRARY / "tuy-chon.json"),
+                "bang_ket_noi": read_json(LIBRARY / "bang-ket-noi.json"),
             })
         m = re.fullmatch(r"/api/project/([^/]+)", path)
         if m:
@@ -133,6 +134,8 @@ class Handler(SimpleHTTPRequestHandler):
                 data = read_json(f)
             except json.JSONDecodeError as e:
                 return self.send_json({"loi": f"project.json bị lỗi cú pháp: {e}"}, HTTPStatus.CONFLICT)
+            for k, v in bang_ket_noi_rong().items():  # dự án cũ / mảnh ghép mới thêm
+                data.setdefault("bang_ket_noi", {}).setdefault(k, v)
             return self.send_json(data, headers={"X-Version": version_of(f)})
         m = re.fullmatch(r"/api/version/([^/]+)", path)
         if m:
@@ -164,6 +167,9 @@ class Handler(SimpleHTTPRequestHandler):
             except FileExistsError:
                 return self.send_json({"loi": "Dự án đã tồn tại"}, HTTPStatus.CONFLICT)
             return self.send_json({"id": pid})
+        m = re.fullmatch(r"/api/quet/([^/]+)", path)
+        if m:
+            return self.scan_files(m.group(1))
         m = re.fullmatch(r"/api/upload/([^/]+)", path)
         if m:
             # body: {"loai": "nhan-vat|trang-phuc|san-pham|boi-canh|khac", "ten_file": "...", "du_lieu": "<base64>"}
@@ -182,6 +188,50 @@ class Handler(SimpleHTTPRequestHandler):
             rel = dest.relative_to(PROJECTS / safe_name(m.group(1))).as_posix()
             return self.send_json({"duong_dan": rel})
         return self.send_error(HTTPStatus.NOT_FOUND)
+
+    def scan_files(self, pid: str):
+        """Gắn file người dùng thả vào thư mục dự án (tên file = mã shot/clip/track) vào ô còn trống."""
+        folder = PROJECTS / safe_name(pid)
+        f = folder / "project.json"
+        if not f.is_file():
+            return self.send_json({"loi": "Không tìm thấy dự án"}, HTTPStatus.NOT_FOUND)
+        d = read_json(f)
+
+        def find(sub, key, exts):
+            for ext in exts:
+                for cand in (folder / sub).glob(f"{key}{ext}"):
+                    return cand.relative_to(folder).as_posix()
+            return None
+
+        vids, auds = (".mp4", ".mov", ".webm", ".MP4", ".MOV"), (".mp3", ".wav", ".m4a", ".aac", ".ogg", ".MP3", ".WAV")
+        found = []
+        for s in d["khung"]["6_storyboard"]["noi_dung"].get("shots", []):
+            if s.get("khoa"):
+                continue
+            if not s.get("video"):
+                rel = (find("video", s.get("id", ""), vids) if s.get("id") else None) or \
+                      (find("video", s["clip"], vids) if s.get("clip") else None)
+                if rel:
+                    s["video"] = rel
+                    s["trang_thai"] = "xong"
+                    found.append(f"{s['id']} ← {rel}")
+            if not s.get("anh_storyboard") and s.get("id"):
+                rel = find("storyboard", s["id"], (".png", ".jpg", ".jpeg", ".webp", ".PNG", ".JPG"))
+                if rel:
+                    s["anh_storyboard"] = rel
+                    found.append(f"{s['id']} ← {rel}")
+        for t in d["khung"]["8_dung_phim"]["noi_dung"].get("am_thanh", []) or []:
+            if t.get("khoa") or t.get("file") or not t.get("id"):
+                continue
+            rel = find("am-thanh", t["id"], auds)
+            if rel:
+                t["file"] = rel
+                found.append(f"{t['id']} ← {rel}")
+        if found:
+            d["cap_nhat"] = datetime.now().isoformat(timespec="seconds")
+            d.setdefault("nhat_ky", []).append({"luc": d["cap_nhat"], "ai": "bang-dieu-khien", "viec": f"Quét file: {len(found)} file mới"})
+            write_json(f, d)
+        return self.send_json({"tim_thay": found}, headers={"X-Version": version_of(f)})
 
     def do_PUT(self):
         path = unquote(urlparse(self.path).path)

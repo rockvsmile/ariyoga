@@ -1,6 +1,7 @@
 # Seedance 2.5 (ByteDance)
 
-- **Truy cập:** web Dreamina/CapCut, API BytePlus, hoặc qua Higgsfield (MCP). Trong v1 của studio: dán prompt thủ công vào Dreamina, hoặc gọi qua Higgsfield nếu model có trong danh sách của Higgsfield.
+- **Truy cập:** **qua Higgsfield — model `seedance_2_5`** (tự động, ưu tiên). Ngoài ra: web Dreamina/CapCut, API BytePlus (dán tay).
+- **Chế độ trên Higgsfield:** `t2v` (chỉ chữ), `omni_reference` (ảnh/video/âm thanh tham chiếu), `video_edit` (sửa một video), `video_extension` (nối dài trước/sau). Bản 2.0 (`seedance_2_0`, 4–15s) hỗ trợ Elements để giữ nhân vật.
 - **Độ dài:** tối đa **30 giây một lần tạo**, có âm thanh gốc; nối dài nhiều lượt (beta) tới ~180 giây.
 - **Tham chiếu:** tối đa ~50 (khoảng 30 ảnh, 10 video, 10 âm thanh) — gọi `@image1`, `@video1`, `@audio1`.
 - **Mạnh nhất ở:** nhiều shot trong một clip (multi-shot có nhãn và mốc giờ), giữ nhất quán sản phẩm/nhân vật nhờ nhiều ảnh tham chiếu, TVC thời trang/sản phẩm.

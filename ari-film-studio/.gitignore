@@ -2,6 +2,7 @@
 du-an/*/tham-chieu/**/*
 du-an/*/storyboard/*
 du-an/*/video/*
+du-an/*/am-thanh/*
 du-an/*/xuat/*
 du-an/*/tmp-khung/
 !du-an/*/**/.gitkeep

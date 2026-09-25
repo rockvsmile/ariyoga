@@ -50,9 +50,18 @@ async function loadProjects(selectId) {
 async function openProject(pid) {
   const r = await api(`/api/project/${encodeURIComponent(pid)}`);
   if (!r.ok) { showBanner(r.body?.loi || "Không mở được dự án"); return; }
-  state.pid = pid; state.data = r.body; state.version = r.version; state.dirty = false;
+  state.pid = pid; state.data = withDefaults(r.body); state.version = r.version; state.dirty = false;
   try { localStorage.setItem("studio.pid", pid); } catch (_) {}
   hideBanner(); render();
+}
+
+// Dự án tạo từ bản cũ có thể thiếu trường mới — bổ sung giá trị mặc định khi mở
+function withDefaults(d) {
+  const sx = d.khung["7_san_xuat"].noi_dung, dp = d.khung["8_dung_phim"].noi_dung;
+  sx.cong_cu_mac_dinh ??= ""; sx.model_mac_dinh ??= ""; sx.chat_luong ??= "nhap";
+  sx.ngan_sach_credit ??= null; sx.da_dung_credit ??= 0; sx.nhat_ky ??= [];
+  dp.am_thanh ??= []; dp.cong_cu_dung ??= "ffmpeg"; dp.hau_ky ??= { upscale: "", reframe: [], phu_de: false };
+  return d;
 }
 
 function markDirty() {
@@ -162,9 +171,62 @@ function cell(row, c) {
     case "list": return h("input", { type: "text", value: (row[c.key] || []).join(", "), placeholder: c.placeholder || "", oninput: e => { row[c.key] = e.target.value.split(",").map(s => s.trim()).filter(Boolean); markDirty(); } });
     case "image": return row[c.key] ? h("a", { href: fileUrl(row[c.key]), target: "_blank" }, h("img", { class: "thumb", src: fileUrl(row[c.key]), alt: "" })) : h("span", { class: "status" }, "—");
     case "video": return row[c.key] ? h("video", { class: "thumb", src: fileUrl(row[c.key]), controls: true, preload: "metadata" }) : h("span", { class: "status" }, "—");
+    case "audio": return row[c.key] ? h("audio", { src: fileUrl(row[c.key]), controls: true, preload: "none", style: "width:180px" }) : h("span", { class: "status" }, "—");
     case "readonly": return h("span", { class: "status" }, String(row[c.key] ?? ""));
     default: return input(row, c.key);
   }
+}
+
+// ---------------- bảng kết nối ----------------
+const BKN = () => state.lib.bang_ket_noi;
+const KIEU = { tu_dong: "⚡ tự động", thu_cong: "✋ thủ công", nguoi_dung: "👤 tôi làm", ai: "🤖 AI làm nháp", tat: "⛔ tắt" };
+const slot = id => BKN().manh_ghep.find(m => m.id === id);
+const choice = id => state.data.bang_ket_noi?.[id] || { nguon: "", model: "", ghi_chu: "" };
+const choiceLabel = id => { const c = choice(id), o = slot(id)?.lua_chon.find(x => x.id === c.nguon); return o ? o.ten + (c.model ? ` · ${c.model}` : "") : ""; };
+const modelOpts = key => (BKN().danh_sach_model[key] || []).map(v => ({ value: v, label: v }));
+const GIAI_DOAN = [
+  ["Tiền kỳ", ["dao_dien", "kich_ban", "nhan_vat", "quay_phim", "storyboard"]],
+  ["Sản xuất", ["tao_sinh", "chinh_sua"]],
+  ["Âm thanh & Hậu kỳ", ["long_tieng", "nhac", "dung_phim", "hau_ky"]],
+  ["Kiểm soát", ["kiem_dinh"]],
+];
+
+function boardPanel() {
+  const d = state.data; d.bang_ket_noi ||= {};
+  const all = BKN().manh_ghep, done = all.filter(m => d.bang_ket_noi[m.id]?.nguon).length;
+  const card = m => {
+    const c = (d.bang_ket_noi[m.id] ||= { nguon: "", model: "", ghi_chu: "" });
+    const o = m.lua_chon.find(x => x.id === c.nguon);
+    return h("div", { class: "bcard" + (c.nguon ? "" : " unset") },
+      h("div", { class: "bhead" }, h("b", {}, m.ten), h("span", { class: "sub", style: "margin:0" }, m.mo_ta)),
+      h("select", { onchange: e => { c.nguon = e.target.value; c.model = ""; markDirty(); render(); } },
+        h("option", { value: "" }, "— Chưa chọn —"),
+        m.lua_chon.map(x => h("option", { value: x.id, selected: x.id === c.nguon }, `${x.ten}  (${KIEU[x.kieu] || x.kieu})`))),
+      o?.model ? combo(c, "model", modelOpts(o.model), { placeholder: o.model === "app_giong_may" ? "Tên app giọng (gõ tự do)" : "Chọn model" }) : null,
+      o ? h("div", { class: "kieu" }, KIEU[o.kieu] || "", o.cong_cu ? h("a", { href: `/thu-vien/cong-cu/${o.cong_cu}.md`, target: "_blank" }, " · hồ sơ công cụ") : null) : null,
+      input(c, "ghi_chu", "text", { placeholder: "Ghi chú cho AI (tuỳ chọn)" }));
+  };
+  return [
+    h("p", { class: "sub" }, `Bạn chọn công cụ cho từng mảnh ghép — AI chỉ làm theo lựa chọn này. Mảnh chưa chọn: AI sẽ dừng lại hỏi, không tự chọn. Đã chọn ${done}/${all.length}.`),
+    h("div", { class: "board" }, GIAI_DOAN.flatMap(([ten, ids], gi) => [
+      gi ? h("div", { class: "arrow" }, "➜") : null,
+      h("div", { class: "stage" }, h("h3", {}, ten), ids.map(id => slot(id)).filter(Boolean).map(card))])),
+  ];
+}
+
+function slotChips(code) {
+  const ms = (BKN()?.manh_ghep || []).filter(m => m.khung === code);
+  if (!ms.length) return null;
+  return h("div", { class: "chips", style: "margin-bottom:10px" }, ms.map(m => h("span", { class: "chip" + (choice(m.id).nguon ? "" : " unset"), title: "Đổi ở Bảng kết nối" },
+    `${m.ten}: ${choiceLabel(m.id) || "chưa chọn"}`)), h("button", { class: "btn small", onclick: () => { state.active = "0_bang_ket_noi"; render(); } }, "Mở Bảng kết nối"));
+}
+
+async function scanFiles() {
+  if (state.dirty) await save();
+  const r = await api(`/api/quet/${encodeURIComponent(state.pid)}`, { method: "POST" });
+  if (!r.ok) return alert(r.body?.loi || "Lỗi quét");
+  await openProject(state.pid);
+  alert(r.body.tim_thay.length ? "Đã gắn:\n" + r.body.tim_thay.join("\n") : "Không có file mới. Đặt tên file đúng mã shot/clip/track (vd S03.mp4, K02.mp4, A01.wav).");
 }
 
 // ---------------- khung ----------------
@@ -224,6 +286,9 @@ const PANELS = {
         n[key].map((r, i) => h("div", { class: "refcard" },
           h("div", { class: "chips" }, h("b", {}, r.id), input(r, "ten", "text", { placeholder: "Tên", style: "flex:1" })),
           input(r, "mo_ta", "textarea", { placeholder: "Mô tả chi tiết (AI dùng để giữ nhất quán)", rows: 3 }),
+          h("div", { class: "chips", title: "Mã trên Higgsfield — Chuyên Gia Nhân Vật tự điền sau khi tạo Element/Soul" },
+            input(r, "element_id", "text", { placeholder: "element_id", style: "width:100px;font-size:11px" }),
+            input(r, "soul_id", "text", { placeholder: "soul_id", style: "width:90px;font-size:11px" })),
           h("div", { class: "imgs" }, (r.anh || []).map((a, j) => h("span", { title: a },
             h("img", { src: fileUrl(a), alt: "", onclick: () => { if (confirm("Bỏ ảnh này khỏi thẻ?")) { r.anh.splice(j, 1); markDirty(); render(); } } })))),
           dropZone(folder, path => { (r.anh ||= []).push(path); markDirty(); render(); }),
@@ -285,17 +350,24 @@ const PANELS = {
   "7_san_xuat": () => {
     const n = ND("7_san_xuat");
     return [
-      h("div", { class: "form" }, field("Công cụ mặc định", select(n, "cong_cu_mac_dinh", libOptions("cong_cu")))),
-      h("p", { class: "sub" }, "Các shot có cùng mã Clip sẽ được tạo chung trong một lần (VD: Seedance 2.5 tạo nhiều shot liền trong 30s)."),
+      h("div", { class: "form" },
+        field("Lượt tạo", select(n, "chat_luong", Object.entries(state.lib.tuy_chon.chat_luong_mo_ta).map(([value, label]) => ({ value, label })))),
+        field("Ngân sách (credit)", input(n, "ngan_sach_credit", "number", { placeholder: "không giới hạn" })),
+        field("Đã dùng (credit)", h("div", { class: "ai-note", style: "min-height:0" }, String(n.da_dung_credit ?? 0)))),
+      h("p", { class: "sub" }, "Tuyến & model lấy từ Bảng kết nối; muốn shot nào khác thì chọn riêng ở cột Tuyến/Model. Các shot cùng mã Clip được tạo chung một lần. Làm thủ công (Flow, Dreamina) → thả file vào video/ đặt tên S03.mp4 hoặc K02.mp4 rồi bấm Quét."),
+      h("button", { class: "btn", onclick: scanFiles, style: "margin-bottom:8px" }, "⟳ Quét file mới"),
       shotsPanel([
         { key: "id", label: "Shot", cls: "w-xs" },
         { key: "clip", label: "Clip", cls: "w-xs" },
         { key: "thoi_luong", label: "Giây", type: "number", cls: "w-xs" },
         { key: "anh_storyboard", label: "Storyboard", type: "image" },
-        { key: "cong_cu", label: "Công cụ", type: "select", options: () => libOptions("cong_cu") },
+        { key: "cong_cu", label: "Tuyến (trống = theo bảng)", type: "select", options: () => slot("tao_sinh").lua_chon.map(x => ({ value: x.id, label: x.ten })) },
+        { key: "model", label: "Model (trống = theo bảng)", type: "combo", options: () => [...modelOpts("model_video"), ...modelOpts("model_flow")] },
+        { key: "che_do_tao", label: "Chế độ", type: "combo", options: () => opt("che_do_tao") },
         { key: "prompt", label: "Prompt", type: "textarea" },
         { key: "video", label: "Video", type: "video" },
         { key: "trang_thai", label: "Trạng thái", type: "select", options: SHOT_TT },
+        { key: "job_id", label: "Job", type: "readonly" },
         { key: "ghi_chu_nguoi_dung", label: "Nhắn AI", type: "textarea" },
       ], false),
       h("h3", {}, "Nhật ký sản xuất"),
@@ -313,7 +385,25 @@ const PANELS = {
         field("Độ phân giải", input(n, "do_phan_giai")),
         field("FPS", input(n, "fps", "number")),
         field("File xuất", input(n, "xuat")),
+        field("Upscale bản cuối", select(n.hau_ky, "upscale", opt("upscale").filter(o => o.value))),
+        field("Xuất thêm tỉ lệ (reframe)", h("input", { type: "text", value: (n.hau_ky.reframe || []).join(", "), placeholder: "9:16, 1:1", oninput: e => { n.hau_ky.reframe = e.target.value.split(",").map(s => s.trim()).filter(Boolean); markDirty(); } })),
+        field("Phụ đề cháy vào hình", h("label", { class: "chip" }, input(n.hau_ky, "phu_de", "bool"), "Bật")),
         field("Ghi chú dựng (nhịp, cảm xúc, màu)", input(n, "ghi_chu", "textarea"), true)),
+      h("h3", {}, "Âm thanh (giọng dẫn, lời thoại, hiệu ứng)"),
+      h("p", { class: "sub" }, "Nguồn giọng lấy từ Bảng kết nối; từng track có thể chọn nguồn/app riêng. App giọng trên máy: Kỹ Sư Âm Thanh xuất lời ra am-thanh/kich-ban-giong/, bạn tạo giọng rồi lưu am-thanh/A01.wav… và bấm Quét."),
+      h("button", { class: "btn", onclick: scanFiles, style: "margin-bottom:8px" }, "⟳ Quét file mới"),
+      grid(n.am_thanh, [
+        { key: "id", label: "Mã", cls: "w-xs" },
+        { key: "loai", label: "Loại", type: "combo", options: () => opt("loai_am_thanh") },
+        { key: "noi_dung", label: "Lời / mô tả", type: "textarea" },
+        { key: "nguon", label: "Nguồn (trống = theo bảng)", type: "select", options: () => slot("long_tieng").lua_chon.map(x => ({ value: x.id, label: x.ten })) },
+        { key: "app", label: "App / dịch vụ", type: "combo", options: () => modelOpts("app_giong_may") },
+        { key: "giong", label: "Giọng" },
+        { key: "bat_dau", label: "Bắt đầu (s)", type: "number", cls: "w-xs" },
+        { key: "am_luong", label: "Âm lượng", type: "number", cls: "w-xs" },
+        { key: "file", label: "File" },
+        { key: "file", label: "Nghe", type: "audio" },
+      ], { newRow: rows => ({ id: nextId(rows, "A"), loai: "vo (giọng dẫn)", noi_dung: "", nguon: "", app: "", giong: "", bat_dau: 0, am_luong: 1, file: "", khoa: false }) }),
       h("h3", {}, "Timeline"),
       grid(n.danh_sach, [
         { key: "shot", label: "Shot", type: "combo", options: () => ND("6_storyboard").shots.map(s => ({ value: s.id, label: s.id })) },
@@ -385,14 +475,15 @@ function nextId(rows, prefix) {
 
 // ---------------- render ----------------
 const CMD = {
+  "0_bang_ket_noi": ["/tiep-tuc", "Chọn đủ các mảnh ghép rồi chạy lệnh — AI làm đúng theo lựa chọn của bạn"],
   "1_y_tuong": ["/tiep-tuc", "Đạo Diễn + Biên Kịch đề xuất 3 phương án ý tưởng"],
   "2_phong_cach": ["/tiep-tuc", "Chỉ Đạo Hình Ảnh đề xuất phong cách, bảng màu"],
-  "3_tham_chieu": ["/tiep-tuc", "Chỉ Đạo Hình Ảnh viết hồ sơ nhân vật/sản phẩm từ ảnh"],
+  "3_tham_chieu": ["/tiep-tuc", "Chỉ Đạo Hình Ảnh viết hồ sơ; Chuyên Gia Nhân Vật tạo Element/Soul trên Higgsfield"],
   "4_ep_canh": ["/tiep-tuc", "Đạo Diễn ghi nhận yêu cầu bắt buộc"],
   "5_kich_ban": ["/tiep-tuc", "Biên Kịch viết kịch bản theo cảnh"],
   "6_storyboard": ["/tiep-tuc", "Quay Phim chia shot, chọn máy/ống kính; Họa Sĩ vẽ storyboard"],
-  "7_san_xuat": ["/tao-video", "Kỹ Thuật Viên AI chọn công cụ, viết prompt, tạo video"],
-  "8_dung_phim": ["/dung-phim", "Biên Tập Viên sắp timeline và xuất phim"],
+  "7_san_xuat": ["/tao-video", "Kỹ Thuật Viên AI chọn model Higgsfield, báo credit, tạo video"],
+  "8_dung_phim": ["/dung-phim", "Kỹ Sư Âm Thanh + Biên Tập Viên + Hậu Kỳ AI hoàn thiện phim"],
   "9_kiem_dinh": ["/kiem-tra", "Kiểm Định chấm điểm và báo lỗi"],
 };
 
@@ -403,19 +494,30 @@ function render() {
   if (!d) { $("#pipeline").replaceChildren(); return; }
   $("#modeSelect").value = d.che_do || "tung_buoc";
 
-  $("#pipeline").replaceChildren(...Object.entries(d.khung).map(([code, k], i) =>
+  const nDone = BKN().manh_ghep.filter(m => d.bang_ket_noi?.[m.id]?.nguon).length, nAll = BKN().manh_ghep.length;
+  $("#pipeline").replaceChildren(
+    h("button", { class: "step board-step" + (state.active === "0_bang_ket_noi" ? " active" : ""), onclick: () => { state.active = "0_bang_ket_noi"; render(); } },
+      h("span", { class: "dot " + (nDone === nAll ? "st-da_duyet" : "st-can_sua") }),
+      h("div", { class: "num" }, "Bắt đầu"), h("div", { class: "name" }, "Bảng kết nối"), h("div", { class: "who" }, `${nDone}/${nAll} mảnh ghép đã chọn`)),
+    ...Object.entries(d.khung).map(([code, k], i) =>
     h("button", { class: "step" + (code === state.active ? " active" : ""), onclick: () => { state.active = code; render(); } },
       h("span", { class: "dot st-" + k.trang_thai, title: TRANG_THAI_TEN[k.trang_thai] }),
       h("div", { class: "num" }, `Khung ${i + 1}`), h("div", { class: "name" }, k.ten), h("div", { class: "who" }, k.phu_trach),
       k.khoa ? h("span", { class: "lock-ico", title: "Đã khoá" }, "🔒") : null)));
 
-  const k = K(state.active);
   const [cmd, hint] = CMD[state.active];
+  if (state.active === "0_bang_ket_noi") {
+    $("#cmdText").textContent = `${cmd} ${state.pid}`; $("#cmdHint").textContent = hint;
+    $("#panel").replaceChildren(h("h2", {}, "Bảng kết nối"), ...boardPanel());
+    return;
+  }
+  const k = K(state.active);
   $("#cmdText").textContent = `${cmd} ${state.pid}`;
   $("#cmdHint").textContent = hint;
 
   $("#panel").replaceChildren(
     h("h2", {}, k.ten), h("p", { class: "sub" }, `Phụ trách: ${k.phu_trach} · Trạng thái: ${TRANG_THAI_TEN[k.trang_thai]}${k.khoa ? " · 🔒 Đã khoá (AI không được sửa)" : ""}`),
+    slotChips(state.active),
     ...[PANELS[state.active]()].flat(),
     h("div", { class: "footer" },
       field("Lời nhắn của bạn cho AI ở khung này", input(k, "ghi_chu_nguoi_dung", "textarea", { placeholder: "VD: Cảnh 3 cho mưa, bỏ nhân vật phụ…" })),
@@ -435,7 +537,7 @@ $("#newProjectBtn").addEventListener("click", async () => {
   if (!ten) return;
   const r = await api("/api/projects", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ten }) });
   if (!r.ok) return alert(r.body?.loi || "Không tạo được");
-  state.active = "1_y_tuong"; await loadProjects(r.body.id);
+  state.active = "0_bang_ket_noi"; await loadProjects(r.body.id);
 });
 $("#copyCmd").addEventListener("click", () => navigator.clipboard?.writeText($("#cmdText").textContent).then(() => setSave("Đã sao chép lệnh")));
 window.addEventListener("beforeunload", e => { if (state.dirty) { e.preventDefault(); e.returnValue = ""; } });

@@ -2,8 +2,70 @@
   "ten": "Mẫu — Ari Legacy: 3 năm đồng hành",
   "phien_ban_cau_truc": 1,
   "tao_luc": "2026-09-25T11:52:41",
-  "cap_nhat": "2026-09-25T11:54:11",
+  "cap_nhat": "2026-09-25T12:11:50",
   "che_do": "tung_buoc",
+  "bang_ket_noi": {
+    "dao_dien": {
+      "nguon": "dao-dien-ai",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "kich_ban": {
+      "nguon": "bien-kich-ai",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "nhan_vat": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "quay_phim": {
+      "nguon": "quay-phim-ai",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "storyboard": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "tao_sinh": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "chinh_sua": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "long_tieng": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "nhac": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "dung_phim": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "hau_ky": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    },
+    "kiem_dinh": {
+      "nguon": "",
+      "model": "",
+      "ghi_chu": ""
+    }
+  },
   "khung": {
     "1_y_tuong": {
       "ten": "Ý tưởng",
@@ -74,8 +136,8 @@
       "de_xuat_ai": ""
     },
     "3_tham_chieu": {
-      "ten": "Tham chiếu",
-      "phu_trach": "chi-dao-hinh-anh",
+      "ten": "Tham chiếu & Nhân vật",
+      "phu_trach": "chi-dao-hinh-anh, chuyen-gia-nhan-vat",
       "trang_thai": "da_duyet",
       "khoa": false,
       "noi_dung": {
@@ -425,20 +487,24 @@
       "de_xuat_ai": "Cảnh quá khứ (C02) dùng look Film 16mm cầm tay để tách biệt với hiện tại mượt mà (ARRI + Steadicam). S05 và S03 cùng tư thế chiến binh II → Biên Tập Viên có thể match cut."
     },
     "7_san_xuat": {
-      "ten": "Sản xuất video",
+      "ten": "Sản xuất video (Higgsfield)",
       "phu_trach": "ky-thuat-vien-ai",
       "trang_thai": "nhap",
       "khoa": false,
       "noi_dung": {
         "cong_cu_mac_dinh": "",
-        "nhat_ky": []
+        "nhat_ky": [],
+        "model_mac_dinh": "",
+        "chat_luong": "nhap",
+        "ngan_sach_credit": null,
+        "da_dung_credit": 0
       },
       "ghi_chu_nguoi_dung": "",
       "de_xuat_ai": ""
     },
     "8_dung_phim": {
-      "ten": "Dựng phim",
-      "phu_trach": "bien-tap-vien",
+      "ten": "Âm thanh & Dựng phim",
+      "phu_trach": "ky-su-am-thanh, bien-tap-vien, hau-ky-ai",
       "trang_thai": "nhap",
       "khoa": false,
       "noi_dung": {
@@ -449,7 +515,14 @@
         "do_phan_giai": "1920x1080",
         "fps": 24,
         "xuat": "xuat/phim-hoan-chinh.mp4",
-        "ghi_chu": ""
+        "ghi_chu": "",
+        "am_thanh": [],
+        "cong_cu_dung": "ffmpeg",
+        "hau_ky": {
+          "upscale": "",
+          "reframe": [],
+          "phu_de": false
+        }
       },
       "ghi_chu_nguoi_dung": "",
       "de_xuat_ai": ""

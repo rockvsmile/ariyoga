@@ -1,6 +1,6 @@
 # Veo 3.1 (Google)
 
-- **Truy cập:** Gemini API, Vertex AI, Google Flow, app Gemini.
+- **Truy cập:** **qua Higgsfield — model `veo3_1`** (4/6/8s, quality basic/high/ultra; bản rẻ `veo3_1_lite`). Ngoài ra: Gemini API, Vertex AI, Google Flow.
 - **Độ dài:** tối đa **8 giây** mỗi clip; 720p / 1080p / 4K; có âm thanh gốc (thoại, tiếng động, nhạc).
 - **Tham chiếu:** tối đa **3 ảnh** để giữ nhất quán nhân vật/phong cách; hỗ trợ khung đầu – khung cuối.
 - **Mạnh nhất ở:** chất lượng hình ảnh điện ảnh cao, **lời thoại khớp môi**, xuất 4K.

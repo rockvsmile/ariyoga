@@ -123,6 +123,35 @@ def check(pid: str):
             warns.append(f"Timeline dòng {i}: không thấy video {t['video']}")
         if t.get("shot") and t["shot"] not in shot_ids:
             warns.append(f"Timeline dòng {i}: shot {t['shot']} không có trong storyboard")
+    for tr in nd["8_dung_phim"].get("am_thanh", []) or []:
+        if tr.get("file") and not (folder / tr["file"]).is_file():
+            warns.append(f"Track âm thanh {tr.get('id', '?')}: không thấy file {tr['file']}")
+        if not tr.get("file") and tr.get("noi_dung"):
+            warns.append(f"Track âm thanh {tr.get('id', '?')}: có lời nhưng chưa tạo file (Kỹ Sư Âm Thanh)")
+
+    # Bảng kết nối: mảnh ghép chưa chọn (người dùng phải tự chọn)
+    try:
+        cfg = json.loads((ROOT / "thu-vien" / "bang-ket-noi.json").read_text(encoding="utf-8"))
+        chon = d.get("bang_ket_noi", {})
+        thieu = [m["ten"] for m in cfg["manh_ghep"] if not chon.get(m["id"], {}).get("nguon")]
+        if thieu:
+            warns.append("Bảng kết nối — chưa chọn: " + ", ".join(thieu))
+    except (OSError, json.JSONDecodeError, KeyError):
+        warns.append("Không đọc được thu-vien/bang-ket-noi.json")
+
+    # Ngân sách credit
+    sx = nd["7_san_xuat"]
+    budget, used = sx.get("ngan_sach_credit"), sx.get("da_dung_credit") or 0
+    if budget not in (None, "") and float(used) > float(budget):
+        warns.append(f"Đã dùng {used} credit, vượt ngân sách {budget}")
+    elif budget not in (None, "") and float(used) > 0.8 * float(budget):
+        warns.append(f"Đã dùng {used}/{budget} credit (trên 80% ngân sách)")
+
+    # Mã Higgsfield của tham chiếu
+    for group in ["nhan_vat", "trang_phuc", "san_pham", "boi_canh"]:
+        for r in nd["3_tham_chieu"].get(group, []):
+            if r.get("anh") and not (r.get("element_id") or r.get("soul_id")) and khung["6_storyboard"]["trang_thai"] == "da_duyet":
+                warns.append(f"Tham chiếu {r.get('id')}: chưa có element_id/soul_id trên Higgsfield — nhân vật/sản phẩm dễ lệch giữa các clip")
     return errors, warns
 
 
